@@ -3,7 +3,7 @@ set -e
 I3_INCLUDE_PATH="${I3_INCLUDE_PATH:-$HOME/.i3/include/}"
 I3_CONFIG="$HOME/.i3/config"
 
-rm $I3_CONFIG
+rm -f $I3_CONFIG
 for f in "${I3_INCLUDE_PATH}"*.config
 do
     cat "${f}" >> "${I3_CONFIG}"
