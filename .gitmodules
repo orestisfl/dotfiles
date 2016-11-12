@@ -1,0 +1,12 @@
+[submodule "zsh/.zsh/zsh-completions"]
+	path = zsh/.zsh/zsh-completions
+	url = https://github.com/zsh-users/zsh-completions
+[submodule "zsh/.zsh/alias-tips"]
+	path = zsh/.zsh/alias-tips
+	url = https://github.com/djui/alias-tips
+[submodule "zsh/.zsh/zsh-saneopt"]
+	path = zsh/.zsh/zsh-saneopt
+	url = https://github.com/willghatch/zsh-saneopt
+[submodule "i3blocks/bin/i3blocks"]
+	path = i3blocks/bin/i3blocks
+	url = https://github.com/orestisf1993/i3blocks.git
