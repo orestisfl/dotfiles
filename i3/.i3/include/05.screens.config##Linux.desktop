@@ -1,0 +1,21 @@
+# screens
+# DFP10 (AOC IPS - 19/01/2015) : odd number workspaces
+# CRT1 (old LG - 19/01/2015)  : even number workspaces
+set $my_main_screen DVI-0
+set $my_alt_screen "DVI-1"
+
+workspace $tag1 output $my_main_screen
+workspace $tag3 output $my_main_screen
+workspace $tag5 output $my_main_screen
+workspace $tag7 output $my_main_screen
+workspace $tag9 output $my_main_screen
+workspace $tage1 output $my_main_screen
+workspace $tage3 output $my_main_screen
+
+workspace $tag2 output $my_alt_screen
+workspace $tag6 output $my_alt_screen
+workspace $tag4 output $my_alt_screen
+workspace $tag8 output $my_alt_screen
+workspace $tag10 output $my_alt_screen
+workspace $tage2 output $my_alt_screen
+workspace $tage4 output $my_alt_screen
