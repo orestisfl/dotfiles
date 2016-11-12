@@ -2,5 +2,5 @@
 while true
 do
     feh --bg-fill -z ~/Pictures/wall
-    sleep 10
+    sleep 15m
 done
