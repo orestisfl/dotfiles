@@ -1,0 +1,4 @@
+export LIBVA_DRIVER_NAME=vdpau
+export AUTOLOCK_TIME=15
+export LOCK_RESOLUTION="1920*1080"
+export BORG_REPO="/media/shared/Backup/borg"

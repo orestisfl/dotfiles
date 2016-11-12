@@ -1,0 +1,9 @@
+[Unit]
+Description=Backup by using borg
+
+[Service]
+Type=simple
+ExecStart=/bin/bash -c %h/bin/backup.sh
+
+[Install]
+WantedBy=multi-user.target

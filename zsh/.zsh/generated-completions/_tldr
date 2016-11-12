@@ -1,0 +1,35 @@
+#compdef tldr
+
+# zsh completions for 'tldr'
+# automatically generated with http://github.com/RobSis/zsh-completion-generator
+local arguments
+
+arguments=(
+    '-h[]'
+    '--help[output]'
+    '-V[]'
+    '--version[output]'
+    '-l[]'
+    '--list[List]'
+    '-r[]'
+    '--random[Show]'
+    '-e[]'
+    '--random-example[Show]'
+    '-f[]'
+    '--render[\[file\]]'
+    '-u[]'
+    '--update[Update]'
+    '-c[]'
+    '--clear-cache[Clear]'
+    '-o[]'
+    '--os[\[type\]]'
+    '--list[$]'
+    '--random[$]'
+    '--random-example[To]'
+    '--update[$]'
+    '--clear-cache[To]'
+    '--render[/path/to/file.md]'
+    '*:filename:_files'
+)
+
+_arguments -s $arguments

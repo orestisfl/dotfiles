@@ -1,0 +1,26 @@
+[user]
+    name = orestisf
+    email = orestisf1993@gmail.com
+[color]
+    ui = true
+[diff]
+    tool = meld
+[format]
+    pretty = oneline
+[credential]
+	helper = /usr/lib/git-core/git-credential-gnome-keyring
+[merge]
+	conflictstyle = diff3
+[rerere]
+	enabled = true
+[alias]
+    ls = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate
+    ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
+    find = "!git ls-files | grep -i"
+	grep = grep --break --heading --line-number
+    s = status -sb
+    diff = diff --word-diff --minimal
+    addp = add --patch
+[grep]
+	extendRegexp = true
+	lineNumber = true

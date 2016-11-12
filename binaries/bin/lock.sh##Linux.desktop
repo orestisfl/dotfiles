@@ -1,0 +1,11 @@
+#!/bin/bash
+SCREEN=/tmp/screen.png
+LOGO=$HOME/.local/share/logo.png
+RES=${LOCK_RESOLUTION}
+
+$HOME/.screenlayout/1920-1080-radeon-single.sh&
+ffmpeg -f x11grab -video_size $RES -y -i $DISPLAY -i $LOGO -filter_complex "boxblur=5:1,overlay=(main_w-overlay_w)/2:(main_h-overlay_h)/2" -vframes 1 $SCREEN -loglevel quiet
+xset dpms force suspend
+i3lock -i $SCREEN -t -f -n
+$HOME/.screenlayout/1920-1080-radeon-dual.sh&
+rm $SCREEN

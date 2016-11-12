@@ -1,0 +1,321 @@
+# Please see http://i3wm.org/docs/userguide.html for a complete reference!
+
+# Apparence
+
+hide_edge_borders both
+
+# Start i3
+# software used/referred:
+# i3
+# j4-dmenu-desktop
+# i3-exit
+# python2
+# python3
+# xset
+# xbindkeys
+# nm applet
+# gnome sound applet
+# amd overdrive ctrl
+# vlc
+# spotify
+# mpv
+# mplayer2
+# smplayer
+# firefox
+# chromium
+# rofi
+# playerctl
+
+set $my_browser chromium --password-store=basic
+#set $my_browser firefox
+set $my_file_manager i3-sensible-terminal -e ranger
+set $my_alt_file_manager thunar
+
+#run on startup
+exec_always --no-startup-id $HOME/bin/style-randomizer.py
+exec --no-startup-id $my_browser
+exec --no-startup-id "i3-msg workspace 2; urxvt -e $SHELL -c 'screenfetch;$SHELL -i'"
+
+# button for alternative actions. Mod4 == win key
+set $mod Mod4
+#main button $mod button. Mod1 == Alt key
+set $alt Mod1
+
+# Font for window titles. Will also be used by the bar unless a different font
+# is used in the bar {} block below.
+# This font is widely installed, provides lots of unicode glyphs, right-to-left
+# text rendering and scalability on retina/hidpi displays (thanks to pango).
+font pango:open Sans Mono 8
+# Before i3 v4.8, we used to recommend this one as the default:
+# font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
+# The font above is very space-efficient, that is, it looks good, sharp and
+# clear in small sizes. However, its unicode glyph coverage is limited, the old
+# X core fonts rendering does not support right-to-left and this being a bitmap
+# font, it doesn’t scale on retina/hidpi displays.
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# start a terminal
+bindsym $mod+Return exec i3-sensible-terminal
+bindsym Control+Mod1+t exec i3-sensible-terminal
+
+# bind calculator button
+bindsym XF86Calculator exec $my_browser
+bindsym XF86WWW exec $my_browser
+
+# media / volume buttons
+bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -q set Master 2dB+ unmute
+bindsym XF86AudioLowerVolume exec --no-startup-id amixer -q set Master 2dB- unmute
+bindsym XF86AudioMute exec --no-startup-id $HOME/bin/toggle_mute.sh
+# ~ bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 1 toggle
+# spotify play/next/previous: https://wiki.archlinux.org/index.php/spotify#D-Bus
+# ~ bindsym XF86AudioPlay exec --no-startup-id dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause
+bindsym XF86AudioPlay exec playerctl play-pause
+bindsym XF86AudioNext exec playerctl next
+bindsym $mod+Next exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
+bindsym $mod+Prior exec playerctl previous
+
+# brightness buttons
+bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc +5
+bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec +5
+
+# start file manager
+bindsym $alt+e exec --no-startup-id $my_file_manager
+bindsym Control+$alt+e exec --no-startup-id $my_alt_file_manager
+
+# Toggle onboard keyboard
+bindsym $mod+Shift+o exec --no-startup-id dbus-send --type=method_call --dest=org.onboard.Onboard /org/onboard/Onboard/Keyboard org.onboard.Onboard.Keyboard.ToggleVisible
+
+# open the link in the clipboard with mpv fullscreen
+bindsym $mod+y exec mpv --fullscreen $(xclip -o)
+
+# kill focused window
+bindsym $mod+Shift+q kill
+
+bindsym $mod+$alt+d exec angrysearch
+bindsym $mod+d exec $HOME/bin/binaries-desktop-launcher.sh
+bindsym $mod+Shift+d exec rofi -show run
+
+# change focus
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# move focused window
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# split in horizontal orientation
+bindsym $mod+z split h
+
+# split in vertical orientation
+bindsym $mod+v split v
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# toggle borderless + sticky + floating
+bindsym $mod+Control+space exec ~/bin/toggle-sticky.py
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# focus the parent container
+bindsym $mod+a focus parent
+
+# focus the child container
+bindsym $mod+Shift+a focus child
+
+# set workspace names
+set $tag1 "1:"
+set $tag2 "2"
+set $tag3 "3"
+set $tag4 "4"
+set $tag5 "5"
+set $tag6 "6"
+set $tag7 "7"
+set $tag8 "8"
+set $tag9 "9"
+set $tag10 "10"
+set $tage1 "e-1"
+set $tage2 "e-2"
+set $tage3 "e-3"
+set $tage4 "e-4"
+
+# switch to workspace
+bindsym $mod+1 workspace $tag1
+bindsym $mod+2 workspace $tag2
+bindsym $mod+3 workspace $tag3
+bindsym $mod+4 workspace $tag4
+bindsym $mod+5 workspace $tag5
+bindsym $mod+6 workspace $tag6
+bindsym $mod+7 workspace $tag7
+bindsym $mod+8 workspace $tag8
+bindsym $mod+9 workspace $tag9
+bindsym $mod+0 workspace $tag10
+# F-keys to workspaces:
+bindsym $mod+F1 workspace $tage1
+bindsym $mod+F2 workspace $tage2
+bindsym $mod+F3 workspace $tage3
+bindsym $mod+F4 workspace $tage4
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace $tag1
+bindsym $mod+Shift+2 move container to workspace $tag2
+bindsym $mod+Shift+3 move container to workspace $tag3
+bindsym $mod+Shift+4 move container to workspace $tag4
+bindsym $mod+Shift+5 move container to workspace $tag5
+bindsym $mod+Shift+6 move container to workspace $tag6
+bindsym $mod+Shift+7 move container to workspace $tag7
+bindsym $mod+Shift+8 move container to workspace $tag8
+bindsym $mod+Shift+9 move container to workspace $tag9
+bindsym $mod+Shift+0 move container to workspace $tag10
+# F-keys to workspaces:
+bindsym $mod+Shift+F1 move container to workspace $tage1
+bindsym $mod+Shift+F2 move container to workspace $tage2
+bindsym $mod+Shift+F3 move container to workspace $tage3
+bindsym $mod+Shift+F4 move container to workspace $tage4
+
+# assign applications to specific workspaces
+# (?i) stands for case-insensitive
+assign [class="(?i)firefox" window_role="browser"] $tag1
+assign [class="(?i)chromium" window_role="browser"] $tag1
+assign [class="(?i)chrome" window_role="browser"] $tag1
+assign [class="(?i)telegram"] $tag9
+assign [class="(?i)skype"] $tag9
+assign [class="(?i)spotify"] $tag6
+
+# custom borders
+for_window [class=".*"] border normal
+# Recommended by the i3-gaps doc but I didn't notice any problems without it:
+#for_window [class=".*"] border pixel 0
+for_window [class="(?i)firefox"] border none
+for_window [class="(?i)chromium"] border none
+for_window [class="(?i)chrome"] border none
+for_window [class="(?i)spotify"] border pixel 5
+for_window [class="(?i)wine"] border none
+for_window [title="(?i)angrysearch"] border none
+for_window [class="(?i)i3-exit"] border none
+
+# manage floating for some window roles script to find out roles: https://faq.i3wm.org/question/2172/how-do-i-find-the-criteria-for-use-with-i3-config-commands-like-for_window-eg-to-force-splashscreens-and-dialogs-to-show-in-floating-mode/?answer=2174#post-id-2174
+# open / save as etc... window
+for_window [window_role="GtkFileChooserDialog"] floating disable
+for_window [title="Weka GUI Chooser"] floating enable
+for_window [class="(?i)zenity"] floating disable
+for_window [title="(?i)guake"] floating enable
+for_window [title="(?i)Torrent Options"] floating disable
+for_window [title="(?i)angrysearch"] floating enable
+for_window [title="(?i)angrysearch"] sticky enable
+for_window [class="(?i)i3-exit"] sticky enable
+for_window [class="(?i)i3-exit"] floating enable
+
+# move back and forth between 2 workspaces
+bindsym $mod+b workspace back_and_forth
+
+# move the whole workspace to the next output
+bindsym $mod+x move workspace to output right
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+# i3-exit: https://gist.github.com/jonyamo/5675359
+bindsym $mod+Shift+e exec $HOME/bin/i3-exit
+
+# gaps
+gaps inner 8
+gaps outer 0
+smart_gaps on
+smart_borders on
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+        # These bindings trigger as soon as you enter the resize mode
+
+        # Pressing left will shrink the window’s width.
+        # Pressing right will grow the window’s width.
+        # Pressing up will shrink the window’s height.
+        # Pressing down will grow the window’s height.
+        bindsym j resize shrink width 10 px or 10 ppt
+        bindsym k resize grow height 10 px or 10 ppt
+        bindsym l resize shrink height 10 px or 10 ppt
+        bindsym semicolon resize grow width 10 px or 10 ppt
+
+        # same bindings, but for the arrow keys
+        bindsym Left resize shrink width 10 px or 10 ppt
+        bindsym Down resize grow height 10 px or 10 ppt
+        bindsym Up resize shrink height 10 px or 10 ppt
+        bindsym Right resize grow width 10 px or 10 ppt
+
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+bindsym $mod+r mode "resize"
+
+# focus doesn't follow mouse
+focus_follows_mouse no
+
+#bar
+bindsym $mod+Shift+M bar mode toggle
+
+# escrotum == screenshot
+# --release will trigger the binding on keyrelease event
+bindsym --release $mod+Shift+Print exec escrotum -s '%d-%m-%Y-%H-%M-%S_$wx$h_escrotum.png' -e 'mv $f ~/Pictures/Screenshots/'
+bindsym --release Print exec escrotum '%d-%m-%Y-%H-%M-%S_$wx$h_escrotum.png' -e 'mv $f ~/Pictures/Screenshots/'
+bindsym --release $mod+Print exec imgur-screenshot
+
+# Make the currently focused window a scratchpad
+bindsym $mod+Shift+minus move scratchpad
+
+# Show the first scratchpad window
+bindsym $mod+minus scratchpad show
+
+# change with i3-style:
+# https://github.com/acrisci/i3-style
+bar {
+  status_command i3blocks -c ~/.config/i3blocks.conf
+  font pango:Droid Sans, FontAwesome 10
+  colors {
+    separator #969896
+    background #1d1f21
+    statusline #c5c8c6
+    focused_workspace #81a2be #81a2be #1d1f21
+    active_workspace #373b41 #373b41 #ffffff
+    inactive_workspace #282a2e #282a2e #969896
+    urgent_workspace #cc6666 #cc6666 #ffffff
+  }
+}
+
+client.focused #81a2be #81a2be #1d1f21 #282a2e
+client.focused_inactive #373b41 #373b41 #969896 #282a2e
+client.unfocused #282a2e #282a2e #969896 #282a2e
+client.urgent #373b41 #cc6666 #ffffff #cc6666
+
+# vim:filetype=i3

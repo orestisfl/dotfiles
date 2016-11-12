@@ -1,0 +1,11 @@
+[Unit]
+Description=Execute backup twice per day
+
+[Timer]
+OnBootSec=5min
+Persistent=true
+OnCalendar=0/12:00:00
+Unit=backup.service
+
+[Install]
+WantedBy=multi-user.target

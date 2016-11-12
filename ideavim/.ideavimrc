@@ -1,0 +1,9 @@
+set smartcase
+set scrolloff=7
+set clibpoard+=unnamed
+
+set showmode
+
+nnoremap <Space>d :action CloseContent<CR>
+nnoremap <Space>o :action GotoClass<CR>
+nnoremap <Space>O :action GotoFile<CR>

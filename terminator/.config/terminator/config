@@ -1,0 +1,57 @@
+[global_config]
+  borderless = True
+  enabled_plugins = CustomCommandsMenu,
+  tab_position = bottom
+  title_font = Droid Sans Mono 11
+  title_hide_sizetext = True
+  title_inactive_bg_color = "#545454"
+  title_inactive_fg_color = "#a8a8a8"
+  title_transmit_bg_color = "#0eaf36"
+  title_use_system_font = False
+[keybindings]
+  resize_down = <Primary><Shift><Alt>Right
+  resize_left = <Primary><Shift><Alt>Left
+  resize_right = <Primary><Shift><Alt>Down
+  resize_up = <Primary><Shift><Alt>Up
+  split_vert = <Primary><Shift>e
+[layouts]
+  [[default]]
+    [[[child1]]]
+      parent = window0
+      profile = default
+      type = Terminal
+    [[[window0]]]
+      parent = ""
+      type = Window
+[plugins]
+[profiles]
+  [[default]]
+    audible_bell = True
+    background_color = "#1d1f21"
+    background_image = None
+    cursor_blink = False
+    cursor_color = "#ffffff"
+    cursor_shape = ibeam
+    font = Source Code Pro for Powerline Medium 12
+    foreground_color = "#d6d6d6"
+    palette = "#b80398:#c82829:#718c00:#eab700:#4271ae:#8959a8:#3e999f:#d6d6d6:#969896:#c82829:#718c00:#eab700:#4271ae:#8959a8:#3e999f:#ffffff"
+    scroll_on_output = False
+    scrollback_infinite = True
+    scrollback_lines = 50000
+    scrollbar_position = hidden
+    urgent_bell = True
+    use_system_font = False
+  [[default_old]]
+    audible_bell = True
+    background_color = "#2d2d2d"
+    background_image = None
+    copy_on_selection = True
+    cursor_color = "#d3d0c8"
+    cursor_shape = underline
+    font = DejaVu Sans Mono 12
+    foreground_color = "#d3d0c8"
+    palette = "#c91919:#f2777a:#99cc99:#ffcc66:#6699cc:#cc99cc:#66cccc:#d3d0c8:#747369:#f2777a:#99cc99:#ffcc66:#6699cc:#cc99cc:#66cccc:#f2f0ec"
+    scrollback_infinite = True
+    scrollback_lines = 50000
+    scrollbar_position = hidden
+    use_system_font = False

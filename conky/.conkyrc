@@ -1,0 +1,130 @@
+conky.config = {
+    background = true,
+    double_buffer = true,
+
+    border_width = 1,
+    cpu_avg_samples = 2,
+    default_color = 'white',
+    default_outline_color = 'white',
+    default_shade_color = 'white',
+    draw_borders = false,
+    -- border_width=1,
+    draw_graph_borders = true,
+    draw_outline = false,
+    draw_shades = false,
+
+    net_avg_samples = 2,
+    no_buffers = true,
+    out_to_console = false,
+    out_to_stderr = false,
+    extra_newline = false,
+
+    own_window = true,
+    own_window_class = 'conky',
+    own_window_type = 'override',
+    own_window_transparent = true,
+    own_window_colour = '000000',
+    own_window_argb_visual = true,
+    own_window_argb_value = 191,
+    -- own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
+    own_window_hints = 'undecorated,sticky,skip_taskbar,skip_pager',
+    gap_x = 20,
+    gap_y = 50,
+    alignment = 'top_right',
+
+
+    maximum_width = 400,
+    minimum_width = 255,
+    minimum_height = 700,
+    stippled_borders = 0,
+    update_interval = 1.0,
+    uppercase = false,
+    use_spacer = none,
+
+    show_graph_scale = false,
+    show_graph_range = false,
+
+    use_xft = true,
+    xftalpha = 0.1,
+    font = 'Ubuntu:size=10',
+    color0 = 'white',
+    color1 = 'EAEAEA',
+    color2 = 'FFA300',
+    color3 = 'grey',
+}
+conky.text = [[
+${font Ubuntu:Bold:size=10}$alignc${color red}General
+${alignc}${font font:Bold:size=8}${color2}\
+${alignc}Kernel: ${execi 3600 uname -r}
+${alignc}${execi 200 whoami} ${color0}logged into ${color2}$nodename ${color0}for ${color2}$uptime
+${alignc}${color2}Updates: ${color0}${execpi 3600 checkupdates | wc -l}
+
+${font Ubuntu:Bold:size=10}$alignc${color red}System
+${color2}${font}${execi 10000 cat /proc/cpuinfo | grep -i 'Model Name' -m 1 |cut -c14-100} ${font}$alignr ${color0}${freq_g cpu0}GHz
+${color2}$memmax RAM $alignr ${color0}$mem
+${color2}CPU0  ${color3}${cpubar cpu0 10, 300} ${color0} ${cpu cpu0}%
+${color2}CPU1  ${color3}${cpubar cpu1 10, 300} ${color0} ${cpu cpu1}%
+${color2}CPU2  ${color3}${cpubar cpu2 10, 300} ${color0} ${cpu cpu2}%
+${color2}CPU3  ${color3}${cpubar cpu3 10, 300} ${color0} ${cpu cpu3}%
+${color2}CPU4  ${color3}${cpubar cpu4 10, 300} ${color0} ${cpu cpu4}%
+${color2}CPU5  ${color3}${cpubar cpu5 10, 300} ${color0} ${cpu cpu5}%
+${color2}CPU6  ${color3}${cpubar cpu6 10, 300} ${color0} ${cpu cpu6}%
+${color2}RAM   ${color3}${membar 10,300} ${color0} $memperc %
+
+${font Ubuntu:Bold:size=10}$alignc${color red}Disk
+${color2}${alignc}${font Ubuntu:bold:size=10}/dev/sda ${color0}  Read:$diskio_read Write:$diskio_write
+
+${font Ubuntu:Bold:size=10}$alignc${color red}Network
+${color2}Active Interface ${color0}${alignr}$gw_iface
+${if_up wlp6s0}\
+
+${color2}${font Ubuntu:Bold:size=10}wlp6s0 ${color0}$alignr ${addr wlp6s0}
+${color2}SSID${font Ubuntu:size=10}${alignr}${color0}${wireless_essid wlp6s0}
+Down: ${color red}${downspeed wlp6s0} ${color}${alignr}Up: ${color red}${upspeed wlp6s0}
+${color0}Total Down: ${color red}${totaldown wlp6s0} ${color}${alignr}${color0}Total Up: ${color red}${totalup wlp6s0}
+${endif}\
+${if_up enp2s0}\
+
+${color2}${font Ubuntu:size=10}$gw_iface ${color0}$alignr ${addr enp2s0}
+${color0}Down: ${color red}${downspeed enp2s0} ${color}${alignr}${color0}Up: ${color red}${upspeed enp2s0}
+${color0}Total Down: ${color red}${totaldown enp2s0} ${color}${alignr}${color0}Total Up: ${color red}${totalup enp2s0}
+${endif}\
+${font Ubuntu:Bold:size=10}$alignc${color red}Top CPU
+${color2}${top name 1}${color0}${alignr}${offset -11}${top time 1}${alignr}${top cpu 1} %
+${color2}${top name 2}${color0}${alignr}${offset -11}${top time 2}${alignr}${top cpu 2} %
+${color2}${top name 3}${color0}${alignr}${offset -11}${top time 3}${alignr}${top cpu 3} %
+${color2}${top name 4}${color0}${alignr}${offset -11}${top time 4}${alignr}${top cpu 4} %
+${color2}${top name 5}${color0}${alignr}${offset -11}${top time 5}${alignr}${top cpu 5} %
+\
+${font Ubuntu:Bold:size=10}$alignc${color red}Top CPU time
+${color2}${top_time name 1}${color0}${alignr}${offset -11}${top_time time 1}${alignr}${top_time cpu 1} %
+${color2}${top_time name 2}${color0}${alignr}${offset -11}${top_time time 2}${alignr}${top_time cpu 2} %
+${color2}${top_time name 3}${color0}${alignr}${offset -11}${top_time time 3}${alignr}${top_time cpu 3} %
+${color2}${top_time name 4}${color0}${alignr}${offset -11}${top_time time 4}${alignr}${top_time cpu 4} %
+${color2}${top_time name 5}${color0}${alignr}${offset -11}${top_time time 5}${alignr}${top_time cpu 5} %
+\
+${font Ubuntu:Bold:size=10}$alignc${color red}Top MEM
+${color2}${top_mem name 1}${color0}${alignr}${offset -11}${top_mem mem_res 1}${alignr}${top_mem mem 1} %
+${color2}${top_mem name 2}${color0}${alignr}${offset -11}${top_mem mem_res 2}${alignr}${top_mem mem 2} %
+${color2}${top_mem name 3}${color0}${alignr}${offset -11}${top_mem mem_res 3}${alignr}${top_mem mem 3} %
+${color2}${top_mem name 4}${color0}${alignr}${offset -11}${top_mem mem_res 4}${alignr}${top_mem mem 4} %
+${color2}${top_mem name 5}${color0}${alignr}${offset -11}${top_mem mem_res 5}${alignr}${top_mem mem 5} %
+\
+${if_match ${top_io io_perc 1} > 0}\
+${font Ubuntu:Bold:size=10}$alignc${color red}Top IO
+${color2}${top_io name 1}${color0}${alignc}${offset 44}${top_io io_read 1}| ${top_io io_write 1}${alignr}${top_io io_perc 1} %
+${if_match ${top_io io_perc 2} > 0}\
+${color2}${top_io name 2}${color0}${alignc}${offset 44}${top_io io_read 2}| ${top_io io_write 2}${alignr}${top_io io_perc 2} %
+${if_match ${top_io io_perc 3} > 0}\
+${color2}${top_io name 3}${color0}${alignc}${offset 44}${top_io io_read 3}| ${top_io io_write 3}${alignr}${top_io io_perc 3} %
+${if_match ${top_io io_perc 4} > 0}\
+${color2}${top_io name 4}${color0}${alignc}${offset 44}${top_io io_read 4}| ${top_io io_write 4}${alignr}${top_io io_perc 4} %
+${if_match ${top_io io_perc 5} > 0}\
+${color2}${top_io name 5}${color0}${alignc}${offset 44}${top_io io_read 5}| ${top_io io_write 5}${alignr}${top_io io_perc 5} %
+${endif}\
+${endif}\
+${endif}\
+${endif}\
+${endif}\
+# TODO: Add battery
+]]

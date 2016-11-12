@@ -1,0 +1,76 @@
+<?xml encoding="UTF-8" version="1.0"?>
+<actions>
+<action>
+	<icon>terminator</icon>
+	<name>Open Terminal Here</name>
+	<unique-id>1449159212504453-4</unique-id>
+	<command>i3-sensible-terminal --working-directory=%f</command>
+	<description>Example for a custom action</description>
+	<patterns>*</patterns>
+	<directories/>
+</action>
+<action>
+	<icon>Thunar</icon>
+	<name>Open as root</name>
+	<unique-id>1449159239230371-5</unique-id>
+	<command>gksu thunar %f</command>
+	<description>opens current directory as root with thunar</description>
+	<patterns>*</patterns>
+	<directories/>
+</action>
+<action>
+	<icon>geany</icon>
+	<name>Edit as root</name>
+	<unique-id>1449159267668261-6</unique-id>
+	<command>gksu geany %f</command>
+	<description>edit file as root with geany</description>
+	<patterns>*</patterns>
+	<other-files/>
+	<text-files/>
+</action>
+<action>
+	<icon></icon>
+	<name>Create symlink</name>
+	<unique-id>1449158752132321-2</unique-id>
+	<command>ln -s %f %n.symlink</command>
+	<description>Creates a symbolic link to the selected object</description>
+	<patterns>*</patterns>
+	<directories/>
+	<audio-files/>
+	<image-files/>
+	<other-files/>
+	<text-files/>
+	<video-files/>
+</action>
+<action>
+	<icon></icon>
+	<name>Join</name>
+	<unique-id>1449158968025442-2</unique-id>
+	<command>cat %F &gt; joined.txt</command>
+	<description>Join selected text files</description>
+	<patterns>*</patterns>
+	<other-files/>
+	<text-files/>
+</action>
+<action>
+	<icon>baobab</icon>
+	<name>Disk Usage</name>
+	<unique-id>1449159189592598-3</unique-id>
+	<command>baobab %d</command>
+	<description>baobab %d</description>
+	<patterns>*</patterns>
+	<startup-notify/>
+	<directories/>
+</action>
+<action>
+	<icon>meld</icon>
+	<name>Diff with meld</name>
+	<unique-id>1449159356097970-8</unique-id>
+	<command>meld %F</command>
+	<description>Compare with meld</description>
+	<patterns>*</patterns>
+	<directories/>
+	<other-files/>
+	<text-files/>
+</action>
+</actions>
