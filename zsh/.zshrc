@@ -45,9 +45,9 @@ source /home/orestis/dotfiles/zsh/.zsh/zsh-completions.zsh
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=10'
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export FZF_COMPLETION_TRIGGER='~~'
-#bindkey '^T' fzf-completion
+source /usr/share/fzf/completion.zsh
+source /usr/share/fzf/key-bindings.zsh
 
 # https://github.com/rimraf/k
 source /usr/share/zsh/plugins/zsh-k/k.sh
