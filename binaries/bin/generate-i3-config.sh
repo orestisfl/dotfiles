@@ -9,5 +9,6 @@ do
     cat "${f}" >> "${I3_CONFIG}"
 done
 
-random_style=$(ls $NPM_PACKAGES/lib/node_modules/i3-style/themes | shuf -n 1)
+#random_style=$(ls $NPM_PACKAGES/lib/node_modules/i3-style/themes | shuf -n 1)
+random_style=$(ls /usr/lib/node_modules/i3-style/themes/ | shuf -n 1)
 i3-style "${random_style}" -o "${I3_CONFIG}"
