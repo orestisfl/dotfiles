@@ -165,10 +165,11 @@ function RCMD() {
 }
 
 ASYNC_PROC=0
+TEMP_GIT_FILE="${TMPDIR:-/tmp}/.zsh_tmp_prompt"
 function precmd() {
     function async() {
         # save to temp file
-        printf "%s" "$(RCMD)" > "${HOME}/.zsh_tmp_prompt"
+        printf "%s" "$(RCMD)" > "${TEMP_GIT_FILE}"
 
         # signal parent
         kill -s USR1 $$
@@ -188,7 +189,7 @@ function precmd() {
 
 function TRAPUSR1() {
     # read from temp file
-    RPROMPT="$(cat ${HOME}/.zsh_tmp_prompt)"
+    RPROMPT="$(cat ${TEMP_GIT_FILE})"
 
     # reset proc number
     ASYNC_PROC=0
