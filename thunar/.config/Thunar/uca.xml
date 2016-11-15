@@ -3,8 +3,8 @@
 <action>
 	<icon>terminator</icon>
 	<name>Open Terminal Here</name>
-	<unique-id>1449159212504453-4</unique-id>
-	<command>i3-sensible-terminal --working-directory=%f</command>
+	<unique-id>1479157868089252-1</unique-id>
+	<command>i3-sensible-terminal -cd %f</command>
 	<description>Example for a custom action</description>
 	<patterns>*</patterns>
 	<directories/>
