@@ -1,0 +1,5 @@
+i3blocks:
+    display_wifi: False
+    display_battery: False
+
+network_interface: 'enp2s0'

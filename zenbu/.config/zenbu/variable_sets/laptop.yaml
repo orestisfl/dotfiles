@@ -1,0 +1,5 @@
+i3blocks:
+    display_wifi: True
+    display_battery: True
+
+network_interface: 'enp0s20u2'
