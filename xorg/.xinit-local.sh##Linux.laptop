@@ -1,2 +1,5 @@
 export AUTOLOCK_TIME=7
 export LOCK_RESOLUTION="1366*768"
+
+nm-applet&
+cbatticon -l 15 -r 3&
