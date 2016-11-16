@@ -30,3 +30,6 @@ alias v="xclip -o"
 alias ipy="python -c 'import IPython; IPython.terminal.ipapp.launch_new_instance()'"
 
 alias weather="curl wttr.in/Thessaloniki"
+
+# git aliases
+alias git-is='git show $(git log --pretty=oneline | fzf | cut -d=" " -f1)'
