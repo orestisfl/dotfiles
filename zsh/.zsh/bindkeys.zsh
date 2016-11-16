@@ -2,14 +2,12 @@
 # cat > /dev/null
 # And press it
 
-bindkey "^K" kill-whole-line
-bindkey "^R" history-incremental-search-backward
+#bindkey "^R" history-incremental-search-backward : Replaced by fzf.
 bindkey "^A" beginning-of-line
 bindkey "^E" end-of-line
 bindkey "^D" delete-char
 bindkey "^F" forward-char
 bindkey "^B" backward-char
-bindkey -e # default keymap
 
 # bind UP and DOWN arrow keys
 zmodload zsh/terminfo
@@ -58,5 +56,5 @@ bindkey "^X^E" edit-command-line
 # deer file manager
 bindkey '\ek' deer
 
-# jump, mark
+# jump
 bindkey "^J" jump

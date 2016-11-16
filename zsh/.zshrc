@@ -1,6 +1,7 @@
 export TERM=xterm-256color
 # Sane opts from https://github.com/willghatch/zsh-saneopt/
 # Load in the start so that they can get overriden later.
+bindkey -e # default keymap, first command so that it doesn't override anything.
 source ~/.zsh/zsh-saneopt/saneopt.plugin.zsh
 
 # http://zanshin.net/2013/02/02/zsh-configuration-from-the-ground-up/
@@ -10,7 +11,6 @@ source ~/.zsh/history.zsh
 source ~/.zsh/prompt.zsh
 source ~/.zsh/aliases.zsh
 source ~/.zsh/functions.zsh
-source ~/.zsh/bindkeys.zsh
 
 # https://github.com/wting/autojump
 source /usr/share/autojump/autojump.zsh
@@ -55,6 +55,9 @@ source /usr/share/zsh/plugins/zsh-k/k.sh
 # https://github.com/zsh-users/zsh-syntax-highlighting
 # sudo pacman -S zsh-syntax-highlighting
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# Custom bindkeys have higher priority.
+source ~/.zsh/bindkeys.zsh
 
 # generated completions should be the last choice
 fpath+=~/.zsh/generated-completions
