@@ -3,4 +3,5 @@ i3blocks:
     border_left: 0
     border_right: 0
     border_bottom: 0
+    display_xtitle: True
 network_interface: 'enp2s0'

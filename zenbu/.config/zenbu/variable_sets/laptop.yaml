@@ -1,6 +1,7 @@
 i3blocks:
     display_wifi: True
     display_battery: True
+    display_xtitle: False
     border_top: 0.5
 
 network_interface: 'enp0s20u2'
