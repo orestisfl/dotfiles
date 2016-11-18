@@ -185,6 +185,8 @@ function precmd() {
     # start background computation
     async &!
     ASYNC_PROC=$!
+    # Terminal title.
+    print -Pn "\e]0;zsh%L %(1j,%j job%(2j|s|); ,)%~\a"
 }
 
 function TRAPUSR1() {
@@ -196,4 +198,10 @@ function TRAPUSR1() {
 
     # redisplay
     zle && zle reset-prompt
+}
+
+# Write command and args to terminal title.
+# This is seen while the shell waits for a command to complete.
+function preexec() {
+    printf "\033]0;%s\a" "$1"
 }
