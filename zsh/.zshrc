@@ -12,6 +12,10 @@ source ~/.zsh/prompt.zsh
 source ~/.zsh/aliases.zsh
 source ~/.zsh/functions.zsh
 
+# Command-line productivity booster, offers quick access to files and directories, inspired by autojump, z and v.
+# https://github.com/clvv/fasd
+eval "$(fasd --init zsh-hook zsh-ccomp zsh-ccomp-install zsh-wcomp zsh-wcomp-install)"
+
 # https://github.com/wting/autojump
 source /usr/share/autojump/autojump.zsh
 # https://github.com/urbainvaes/fzf-marks
