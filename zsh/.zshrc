@@ -40,11 +40,10 @@ source /usr/share/doc/pkgfile/command-not-found.zsh
 export ZSH_PLUGINS_ALIAS_TIPS_TEXT="You know you have an alias for that, right? "
 export ZSH_PLUGINS_ALIAS_TIPS_EXCLUDES="vi"
 source ~/.zsh/alias-tips/alias-tips.plugin.zsh
-# https://github.com/zsh-users/zsh-history-substring-search
-# pacaur -S zsh-history-substring-search-git
-source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
+
 # https://github.com/zsh-users/zsh-completions
 source /home/orestis/dotfiles/zsh/.zsh/zsh-completions.zsh
+
 # https://github.com/tarruda/zsh-autosuggestions
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=10'
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
@@ -59,6 +58,10 @@ source /usr/share/zsh/plugins/zsh-k/k.sh
 # https://github.com/zsh-users/zsh-syntax-highlighting
 # sudo pacman -S zsh-syntax-highlighting
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# https://github.com/zsh-users/zsh-history-substring-search
+# pacaur -S zsh-history-substring-search-git
+source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
 
 # Custom bindkeys have higher priority.
 source ~/.zsh/bindkeys.zsh

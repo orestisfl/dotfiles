@@ -12,8 +12,8 @@ setopt extended_glob  # treat  #, ~, and ^ as part of patterns for filename gene
 
 # ===== History
 # also from https://github.com/sorin-ionescu/prezto/blob/master/modules/history/init.zsh
-setopt BANG_HIST  # Treat the '!' character specially during expansion.
 setopt append_history  # Allow multiple terminal sessions to all append to one zsh command history
+setopt BANG_HIST  # Treat the '!' character specially during expansion.
 setopt extended_history  # save timestamp of command and duration
 setopt inc_append_history  # Add comamnds as they are typed, don't wait until shell exit
 setopt hist_expire_dups_first  # when trimming history, lose oldest duplicates first
@@ -22,6 +22,7 @@ setopt hist_ignore_space  # remove command line from history list when first cha
 setopt hist_find_no_dups  # When searching history don't display results already cycled through twice
 setopt HIST_IGNORE_ALL_DUPS  # Delete an old recorded event if a new event is a duplicate.
 setopt hist_reduce_blanks  # Remove extra blanks from each command line being added to history
+setopt HIST_SAVE_NO_DUPS  # When writing out the history file, older commands that duplicate newer ones are omitted.
 setopt hist_verify  # don't execute, just expand history
 setopt share_history  # Share history between all sessions.
 
