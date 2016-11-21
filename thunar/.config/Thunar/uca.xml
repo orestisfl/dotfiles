@@ -73,4 +73,13 @@
 	<other-files/>
 	<text-files/>
 </action>
+<action>
+	<icon>gitg</icon>
+	<name>Open gitg</name>
+	<unique-id>1479729913615308-2</unique-id>
+	<command>gitg %d</command>
+	<description></description>
+	<patterns>.git</patterns>
+	<directories/>
+</action>
 </actions>
