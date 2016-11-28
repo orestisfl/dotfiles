@@ -29,8 +29,9 @@ URxvt.scrollBar: false
 !URxvt*font: xft:Source\ Code\ Pro\ Medium:pixelsize=13:antialias=true:hinting=true,xft:Source\ Code\ Pro\ Medium:pixelsize=15:antialias=true:hinting=true
 !URxvt*boldFont: xft:Source\ Code\ Pro\ Medium:pixelsize=13:antialias=true:hinting=true,xft:Source\ Code\ Pro\ Medium:pixelsize=15:antialias=true:hinting=true
 
-URxvt*font: xft:Droid Sans Mono for Powerline:size=11:antialias=true:hinting=true
-URxvt*boldfont: xft:Droid Sans Mono for Powerline:bold:size=11:antialias=true:hinting=true
+!URxvt*font: xft:Droid Sans Mono for Powerline:size=11:antialias=true:hinting=true
+!URxvt*boldfont: xft:Droid Sans Mono for Powerline:bold:size=11:antialias=true:hinting=true
+URxvt*font: -*-ttyp0-medium-r-normal-*-18-*-*-*-*-*-*-*
 
 ! lines in the scrollback buffer
 URxvt*saveLines: 10000
