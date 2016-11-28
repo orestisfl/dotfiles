@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 import i3
 
+
 def main(args):
     # Assume only one window is focused.
     focused_window = i3.filter(focused=True)[0]
