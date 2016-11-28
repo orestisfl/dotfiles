@@ -17,7 +17,7 @@ rofi.hlfg-urgent: #222
 rofi.bgalt: #292929
 rofi.bc: #f95346
 rofi.bw: 0
-rofi.font: Liberation Sans 11
+rofi.font: TamzenForPowerline 11
 
 ! hold after finishing command
 URxvt.hold: true
