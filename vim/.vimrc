@@ -33,8 +33,7 @@ Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'Yggdroot/indentLine'
 
 Plugin 'flazz/vim-colorschemes'
-Plugin 'bling/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
+Plugin 'itchyny/lightline.vim'
 
 Plugin 'ntpeters/vim-better-whitespace'
 Plugin 'Raimondi/delimitMate'
@@ -79,21 +78,6 @@ let &t_SI = "\033[5 q"
 set timeoutlen=1000 ttimeoutlen=0
 
 highlight Pmenu ctermfg=15 ctermbg=0 guifg=#ffffff guibg=#000000
-
-" Set the airline plugin theme
-let g:airline_theme = 'simple'
-let g:airline_powerline_fonts = 1
-"let g:airline#extensions#tagbar#enabled = 1
-let g:airline#extensions#syntastic#enabled = 1
-
-let g:airline_detect_modified=1
-let g:airline_detect_paste=1
-
-" Enable the list of buffers
-let g:airline#extensions#tabline#enabled = 1
-
-" Show just the filename
-let g:airline#extensions#tabline#fnamemod = ':t'
 
 " set fillchars+=stl:\ ,stlnc:\
 set laststatus=2
