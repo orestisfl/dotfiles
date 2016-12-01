@@ -5,12 +5,14 @@
 # 2016 Oliver Kraitschy - http://okraits.de
 
 LAUNCHER='rofi -width 30 -dmenu -i -p rofi-power:'
-OPTIONS="Lock\nExit\nReboot system\nPower-off system\nSuspend system"
+OPTIONS="Cancel\nLock\nExit\nReboot system\nPower-off system\nSuspend system"
 
 option=`echo -e $OPTIONS | $LAUNCHER | awk '{print $1}' | tr -d '\r\n'`
 if [ ${#option} -gt 0 ]
 then
     case $option in
+      Cancel)
+        ;;
       Exit)
         i3-msg exit
         ;;
