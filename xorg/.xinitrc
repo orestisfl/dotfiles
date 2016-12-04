@@ -71,7 +71,6 @@ eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
 export SSH_AUTH_SOCK
 # Start guake terminal.
 guake&
-xset m 0 0&
 # Auto-lock after some time.
 xautolock -locker '~/bin/lock.sh' -time ${AUTOLOCK_TIME}&
 # Auto-lock after suspend. https://wiki.archlinux.org/index.php/Power_management#xss-lock
