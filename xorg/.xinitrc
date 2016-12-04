@@ -2,8 +2,7 @@
 export EDITOR=vim
 export VISUAL=vim
 export TERMINAL=urxvtc
-# Tell Qt to use GTK style
-export QT_STYLE_OVERRIDE=GTK+
+export QT_STYLE_OVERRIDE=GTK+  # Tell Qt to use GTK style
 
 # NPM packages in homedir
 export NPM_PACKAGES="$HOME/.npm-packages"
@@ -23,7 +22,6 @@ sysresources=/etc/X11/xinit/.Xresources
 sysmodmap=/etc/X11/xinit/.Xmodmap
 
 # merge in defaults and keymaps
-
 if [ -f $sysresources ]; then
     xrdb -merge $sysresources
 fi
@@ -41,7 +39,6 @@ if [ -f "$usermodmap" ]; then
 fi
 
 # start some nice programs
-
 if [ -d /etc/X11/xinit/xinitrc.d ] ; then
  for f in /etc/X11/xinit/xinitrc.d/?*.sh ; do
   [ -x "$f" ] && . "$f"
@@ -52,34 +49,25 @@ fi
 source ~/.xinit-local.sh
 $HOME/bin/generate-i3-config.sh
 
-# random wallpaper
-~/bin/rand_wall.sh &
-# start urxvtd terminal daemon
-urxvtd -q -f -o&
-# Keyboard layout.
-setxkbmap -model pc105 -layout us,gr -option grp:alt_shift_toggle &
-# Numlock on start.
-numlockx &
-# Conky.
+~/bin/rand_wall.sh&
+urxvtd -q -f -o&  # start urxvtd terminal daemon
+setxkbmap -model pc105 -layout us,gr -option grp:alt_shift_toggle&
+numlockx&  # Enable numlock on start.
 conky&
-# Thunar file manager as daemon.
-thunar --daemon&
-# Compton.
+thunar --daemon&  # Thunar file manager as daemon.
 compton --config ~/.config/compton.conf&
 # Gnome Keyring Daemon.
 eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
 export SSH_AUTH_SOCK
-# Start guake terminal.
 guake&
 # Auto-lock after some time.
 xautolock -locker '~/bin/lock.sh' -time ${AUTOLOCK_TIME}&
-# Auto-lock after suspend. https://wiki.archlinux.org/index.php/Power_management#xss-lock
+# Auto-lock after suspend.
+# https://wiki.archlinux.org/index.php/Power_management#xss-lock
 xss-lock -- "$HOME/bin/lock.sh"&
-# Hide mouse pointer on inactivity.
-unclutter&
-# Bind extra mouse buttons.
-xbindkeys&
+unclutter&  # Hide mouse pointer on inactivity.
+xbindkeys&  # Bind extra mouse buttons.
 keepassxc&  # Start password manager.
-~/bin/watch-tumbler.sh&
+~/bin/watch-tumbler.sh&  # Script to watch tumbler misbehaviour.
 
 exec i3
