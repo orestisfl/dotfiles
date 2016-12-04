@@ -80,6 +80,7 @@ xss-lock -- "$HOME/bin/lock.sh"&
 unclutter&
 # Bind extra mouse buttons.
 xbindkeys&
+keepassxc&  # Start password manager.
 ~/bin/watch-tumbler.sh&
 
 exec i3
