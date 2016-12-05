@@ -24,13 +24,16 @@ map g/ <Plug>(incsearch-stay)
 let g:ycm_path_to_python_interpreter = '/usr/bin/python3'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'rdnetto/YCM-Generator'
+Plugin 'vim-scripts/a.vim'
 
 Plugin 'scrooloose/syntastic'
 Plugin 'mhinz/vim-startify'
 Plugin 'The-NERD-Commenter'
 Plugin 'scrooloose/nerdtree'
+Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'Yggdroot/indentLine'
+Plugin 'airblade/vim-gitgutter'
 
 Plugin 'flazz/vim-colorschemes'
 Plugin 'itchyny/lightline.vim'
@@ -51,6 +54,13 @@ autocmd BufWinEnter *.py setlocal foldexpr=SimpylFold(v:lnum) foldmethod=expr
 autocmd BufWinLeave *.py setlocal foldexpr< foldmethod<
 
 Plugin 'suan/vim-instant-markdown'
+
+Plugin 'xolox/vim-misc'
+Plugin 'xolox/vim-easytags'
+Plugin 'majutsushi/tagbar'
+
+" https://github.com/jez/vim-as-an-ide/commit/7b698e2
+Plugin 'christoomey/vim-tmux-navigator'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -119,6 +129,27 @@ nnoremap <Leader>w :w<CR>
 
 " Toggle comment
 nnoremap <Leader>e :call NERDComment(0, "toggle")<C-m>
+
+" ----- jistr/vim-nerdtree-tabs -----
+" Open/close NERDTree Tabs with \t
+nmap <silent> <Leader>bs :NERDTreeTabsToggle<CR>
+" To have NERDTree always open on startup
+let g:nerdtree_tabs_open_on_console_startup = 1
+
+" ----- xolox/vim-easytags settings -----
+" Where to look for tags files
+set tags=./tags;,~/.vimtags
+" Sensible defaults
+let g:easytags_events = ['BufReadPost', 'BufWritePost']
+let g:easytags_async = 1
+let g:easytags_dynamic_files = 2
+let g:easytags_resolve_links = 1
+let g:easytags_suppress_ctags_warning = 1
+
+" ----- majutsushi/tagbar settings -----
+nmap <silent> <leader>bt :TagbarToggle<CR>
+" Uncomment to open tagbar automatically whenever possible
+autocmd BufEnter * nested :call tagbar#autoopen(0)
 
 " Disable auto-comment o newlines
 " http://superuser.com/a/271024/253307
