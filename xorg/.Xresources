@@ -57,73 +57,29 @@ URxvt.clipboard.copycmd:  xsel -ib
 URxvt.clipboard.pastecmd: xsel -ob
 URxvt.cursorBlink: 1
 
-! Base16 Solarized
-! Scheme: Ethan Schoonover (http://ethanschoonover.com/solarized)
+*.foreground:   #ffffff
+*.background:   [85]#1b1918
+*.cursorColor:  #ffffff
 
-#define base00 #002b36
-#define base01 #073642
-#define base02 #586e75
-#define base03 #657b83
-#define base04 #839496
-#define base05 #93a1a1
-#define base06 #eee8d5
-#define base07 #fdf6e3
-#define base08 #dc322f
-#define base09 #cb4b16
-#define base0A #b58900
-#define base0B #859900
-#define base0C #2aa198
-#define base0D #268bd2
-#define base0E #6c71c4
-#define base0F #d33682
-
-*.foreground:   base05
-*.background:   base00
-*.cursorColor:  base05
-
-*.color0:       base00
-*.color1:       base08
-*.color2:       base0B
-*.color3:       base0A
-*.color4:       base0D
-*.color5:       base0E
-*.color6:       base0C
-*.color7:       base05
-
-*.color8:       base03
-*.color9:       base08
-*.color10:      base0B
-*.color11:      base0A
-*.color12:      base0D
-*.color13:      base0E
-*.color14:      base0C
-*.color15:      base07
-
-! Note: colors beyond 15 might not be loaded (e.g., xterm, urxvt),
-! use 'shell' template to set these if necessary
-*.color16:      base09
-*.color17:      base0F
-*.color18:      base01
-*.color19:      base02
-*.color20:      base04
-*.color21:      base06
-
-URxvt*background: #300A24
-URxvt*foreground: #CCCCCC
-
-URxvt*color0: #000000
-URxvt*color1: #CC0000
-URxvt*color2: #4E9A06
-URxvt*color3: #C4A000
-URxvt*color4: #3465A4
-URxvt*color5: #75507B
-URxvt*color6: #06989A
-URxvt*color7: #D3D7CF
-URxvt*color8: #555753
-URxvt*color9: #EF2929
-URxvt*color10: #8AE234
-URxvt*color11: #FCE94F
-URxvt*color12: #729FCF
-URxvt*color13: #AD7FA8
-URxvt*color14: #34E2E2
-URxvt*color15: #EEEEEC
+*.color0:       #1b1918
+*.color1:       #f22c40
+*.color2:       #5ab738
+*.color3:       #d5911a
+*.color4:       #407ee7
+*.color5:       #6666ea
+*.color6:       #00ad9c
+*.color7:       #a8a19f
+*.color8:       #766e6b
+*.color9:       #f22c40
+*.color10:      #5ab738
+*.color11:      #d5911a
+*.color12:      #407ee7
+*.color13:      #6666ea
+*.color14:      #00ad9c
+*.color15:      #f1efee
+*.color16:      #df5320
+*.color17:      #c33ff3
+*.color18:      #2c2421
+*.color19:      #68615e
+*.color20:      #9c9491
+*.color21:      #e6e2e0
