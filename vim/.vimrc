@@ -112,18 +112,11 @@ set autoread
 let g:mapleader = "\<Space>"
 let mapleader = "\<Space>"
 
+" Open buffer
+nnoremap <leader>b :ls<cr>:b<space>
+
 " To open a new empty buffer
 nmap <leader>t :enew<cr>
-
-" Move to the next buffer
-nmap <leader>l :bnext<CR>
-
-" Move to the previous buffer
-nmap <leader>h :bprevious<CR>
-
-" Close the current buffer and move to the previous one
-" This replicates the idea of closing a tab
-nmap <leader>bq :bp <BAR> bd #<CR>
 
 " Save file
 nnoremap <Leader>w :w<CR>
