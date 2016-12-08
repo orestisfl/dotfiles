@@ -125,10 +125,9 @@ nnoremap <Leader>w :w<CR>
 nnoremap <Leader>e :call NERDComment(0, "toggle")<C-m>
 
 " ----- jistr/vim-nerdtree-tabs -----
-" Open/close NERDTree Tabs with \t
-nmap <silent> <Leader>bs :NERDTreeTabsToggle<CR>
+nmap <silent> <Leader>ss :NERDTreeTabsToggle<CR>
 " To have NERDTree always open on startup
-let g:nerdtree_tabs_open_on_console_startup = 1
+"let g:nerdtree_tabs_open_on_console_startup = 1
 
 " ----- xolox/vim-easytags settings -----
 " Where to look for tags files
@@ -141,9 +140,9 @@ let g:easytags_resolve_links = 1
 let g:easytags_suppress_ctags_warning = 1
 
 " ----- majutsushi/tagbar settings -----
-nmap <silent> <leader>bt :TagbarToggle<CR>
+nmap <silent> <leader>st :TagbarToggle<CR>
 " Uncomment to open tagbar automatically whenever possible
-autocmd BufEnter * nested :call tagbar#autoopen(0)
+"autocmd BufEnter * nested :call tagbar#autoopen(0)
 
 " Disable auto-comment o newlines
 " http://superuser.com/a/271024/253307
@@ -219,7 +218,7 @@ syntax enable
 " http://stackoverflow.com/a/21434697/3430986
 " Disabled Syntastic by default and activate/disable error checking with the following:
 let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [],'passive_filetypes': [] }
-nnoremap <C-w>E :SyntasticCheck<CR> :SyntasticToggleMode<CR>
+nnoremap <leader>sc :SyntasticCheck<CR> :SyntasticToggleMode<CR>
 
 " Set utf8 as standard encoding and en_US as the standard language
 set encoding=utf8
