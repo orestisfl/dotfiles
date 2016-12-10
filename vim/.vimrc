@@ -25,6 +25,8 @@ let g:ycm_path_to_python_interpreter = '/usr/bin/python3'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'rdnetto/YCM-Generator'
 "Plugin 'vim-scripts/a.vim' imaps stuff to <leader>
+Plugin 'junegunn/fzf'
+Plugin 'junegunn/fzf.vim'
 
 Plugin 'scrooloose/syntastic'
 Plugin 'mhinz/vim-startify'
@@ -34,6 +36,7 @@ Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'Yggdroot/indentLine'
 Plugin 'airblade/vim-gitgutter'
+Plugin 'tpope/vim-fugitive'
 let g:gitgutter_map_keys = 0  " Disable all mappings for gitgutter.
 
 Plugin 'flazz/vim-colorschemes'
