@@ -13,9 +13,10 @@ def main(args):
     links = [div.a['href'] for div in soup.find_all("div") if div.a][3:]  # 3 first are irrelevant
     if len(links) != ntabs:
         print("Onetab mention {ntabs} links but I found {actual}.".format(
-            ntabs=ntabs, actual=len(links), file=sys.stderr))
+            ntabs=ntabs, actual=len(links)), file=sys.stderr)
     print("\n".join(links))
     return 0
+
 
 if __name__ == '__main__':
     import sys
