@@ -29,9 +29,9 @@
 	<text-files/>
 </action>
 <action>
-	<icon></icon>
+	<icon>insert-link-symbolic</icon>
 	<name>Create symlink</name>
-	<unique-id>1449158752132321-2</unique-id>
+	<unique-id>1481425324037951-3</unique-id>
 	<command>ln -s %f %n.symlink</command>
 	<description>Creates a symbolic link to the selected object</description>
 	<patterns>*</patterns>
@@ -43,9 +43,9 @@
 	<video-files/>
 </action>
 <action>
-	<icon></icon>
+	<icon>object-merge</icon>
 	<name>Join</name>
-	<unique-id>1449158968025442-2</unique-id>
+	<unique-id>1481425367027813-4</unique-id>
 	<command>cat %F &gt; joined.txt</command>
 	<description>Join selected text files</description>
 	<patterns>*</patterns>
