@@ -110,6 +110,11 @@ set history=500
 " Set to auto read when a file is changed from the outside
 set autoread
 
+" Persistent undo
+set undodir='$HOME/.cache/vim-undodir'
+set undofile
+call system('mkdir -p ' . &undodir)
+
 " With a map leader it's possible to do extra key combinations
 " like <leader>w saves the current file
 "let mapleader = ","
