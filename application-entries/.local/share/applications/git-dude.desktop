@@ -1,9 +1,0 @@
-[Desktop Entry]
-Type=Application
-Version=1.0
-Name=git-dude
-Comment=Git commit notifier
-Exec=~/bin/git-dude ~/.git-dude
-Icon=git-dude
-Terminal=false
-Categories=Development;Utility
