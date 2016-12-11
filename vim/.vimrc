@@ -52,10 +52,9 @@ Plugin 'PotatoesMaster/i3-vim-syntax'
 Plugin 'vim-scripts/indentpython.vim'
 " Better folding for python code
 Plugin 'tmhedberg/SimpylFold'
-let g:SimpylFold_docstring_preview = 1
-let g:SimpylFold_fold_docstring = 0
-autocmd BufWinEnter *.py setlocal foldexpr=SimpylFold(v:lnum) foldmethod=expr
-autocmd BufWinLeave *.py setlocal foldexpr< foldmethod<
+Plugin 'klen/python-mode'
+"Plugin 'SirVer/ultisnips'
+"Plugin 'honza/vim-snippets'
 
 Plugin 'suan/vim-instant-markdown'
 
@@ -274,6 +273,15 @@ nnoremap <C-H> <C-W><C-H>
 
 set splitbelow
 set splitright
+
+let g:SimpylFold_docstring_preview = 1
+let g:SimpylFold_fold_docstring = 0
+autocmd BufWinEnter *.py setlocal foldexpr=SimpylFold(v:lnum) foldmethod=expr
+autocmd BufWinLeave *.py setlocal foldexpr< foldmethod<
+
+autocmd FileType python set colorcolumn=120
+let g:pymode_options_max_line_length=120
+let g:pymode_python = 'python3'
 
 "python with virtualenv support
 py << EOF
