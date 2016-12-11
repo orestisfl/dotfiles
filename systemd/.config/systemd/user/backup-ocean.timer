@@ -2,10 +2,10 @@
 Description=Execute backup twice per day
 
 [Timer]
-OnBootSec=10min
+OnBootSec=5min
 Persistent=true
-OnCalendar=2/14:00:00
-Unit=backup.service
+OnCalendar=0/12:00:00
+Unit=backup-ocean.service
 
 [Install]
 WantedBy=timers.target
