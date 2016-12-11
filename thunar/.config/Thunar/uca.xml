@@ -55,9 +55,9 @@
 <action>
 	<icon>baobab</icon>
 	<name>Disk Usage</name>
-	<unique-id>1449159189592598-3</unique-id>
-	<command>baobab %d</command>
-	<description>baobab %d</description>
+	<unique-id>1481425048545091-2</unique-id>
+	<command>baobab %F</command>
+	<description>Disk Usage with baobab. Multiple directories can be selected, multiple windows will pop.</description>
 	<patterns>*</patterns>
 	<startup-notify/>
 	<directories/>
