@@ -75,6 +75,8 @@ set confirm
 
 " Terminal colors for theme etc.
 set t_Co=256
+colorscheme Tomorrow-Night-Eighties
+let g:lightline = {'colorscheme': 'Tomorrow_Night_Eighties'}
 " display numbers
 set nu
 set background=dark
