@@ -13,6 +13,6 @@
 [submodule "matlab/.local/share/matlab2tikz"]
 	path = matlab/.local/share/matlab2tikz
 	url = https://github.com/matlab2tikz/matlab2tikz
-[submodule "matlab/.local/share/MBeautifier"]
-	path = matlab/.local/share/MBeautifier
+[submodule "matlab/Documents/MATLAB/MBeautifier"]
+	path = matlab/Documents/MATLAB/MBeautifier
 	url = https://github.com/davidvarga/MBeautifier
