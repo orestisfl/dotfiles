@@ -54,8 +54,6 @@ Plugin 'PotatoesMaster/i3-vim-syntax'
 Plugin 'vim-scripts/indentpython.vim'
 " Better folding for python code
 Plugin 'tmhedberg/SimpylFold'
-" Vim python-mode. PyLint, Rope, Pydoc, breakpoints from box.
-Plugin 'klen/python-mode'
 " Instant Markdown previews.
 Plugin 'suan/vim-instant-markdown'
 " Miscellaneous auto-load Vim scripts.
