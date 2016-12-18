@@ -1,3 +1,5 @@
 # screens
 set $my_main_screen DVI-0
 set $my_alt_screen "DVI-1"
+
+mouse_warping none
