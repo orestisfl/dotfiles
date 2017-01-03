@@ -3,6 +3,7 @@ export EDITOR=vim
 export VISUAL=vim
 export TERMINAL=urxvtc
 export QT_STYLE_OVERRIDE=GTK+  # Tell Qt to use GTK style
+export STEAM_RUNTIME=0
 
 # NPM packages in homedir
 export NPM_PACKAGES="$HOME/.npm-packages"
