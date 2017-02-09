@@ -1,3 +1,4 @@
 #include ".config/colors.xres"
+#include ".config/xft.xres"
 #include ".config/rofi.xres"
 #include ".config/urxvt.xres"
