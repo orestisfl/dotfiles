@@ -1,0 +1,37 @@
+! hold after finishing command
+URxvt.hold: true
+
+! no scrollbar
+URxvt.scrollBar: false
+
+! Source Sans
+URxvt*font: xft:Roboto Mono for Powerline:size=12
+URxvt*boldFont: xft:Roboto Mono for Powerline:bold:size=12
+URxvt*italicFont: xft:Roboto Mono for Powerline:italic:size=12
+URxvt*boldItalicFont: xft:Roboto Mono for Powerline:bolditalic:size=12
+! lines in the scrollback buffer
+URxvt*saveLines: 10000
+
+! scroll to bottom on output
+URxvt*scrollTtyOutput: false
+URxvt*scrollWithBuffer: true
+URxvt*scrollTtyKeypress: true
+
+! font spacing
+!URxvt.letterSpace: -1
+
+! Scrollback buffer in secondary screen
+URxvt.secondaryScreen: 1
+URxvt.secondaryScroll: 0
+
+! copy/paste
+URxvt.perl-ext-common: default,clipboard,resize-font
+URxvt.resize-font.smaller: C-Down
+URxvt.resize-font.bigger: C-Up
+URxvt.iso14755: False
+URxvt.iso14755_52: false
+URxvt.keysym.Shift-Control-C: perl:clipboard:copy
+URxvt.keysym.Shift-Control-V: perl:clipboard:paste
+URxvt.clipboard.copycmd:  xsel -ib
+URxvt.clipboard.pastecmd: xsel -ob
+URxvt.cursorBlink: 1
