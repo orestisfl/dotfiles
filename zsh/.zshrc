@@ -27,12 +27,6 @@ source /usr/share/zsh/plugins/zsh-notify/notify.plugin.zsh
 zstyle ':notify:*' error-icon "$HOME/.zsh/icons/error-icon"
 zstyle ':notify:*' success-icon "$HOME/.zsh/icons/success-icon"
 
-# deer: ranger-like file navigation for zsh
-# https://github.com/Vifon/deer
-fpath+=/usr/share/zsh/plugins/deer
-autoload -U deer
-zle -N deer
-
 # command not found from pkgfile
 source /usr/share/doc/pkgfile/command-not-found.zsh
 
