@@ -1,5 +1,5 @@
 ! hold after finishing command
-URxvt.hold: true
+URxvt.hold: false
 
 ! no scrollbar
 URxvt.scrollBar: false

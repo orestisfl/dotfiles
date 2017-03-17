@@ -1,5 +1,5 @@
 /* commands */
-rofi.terminal: i3-sensible-terminal
+rofi.terminal: i3-sensible-terminal -hold
 rofi.ssh-client: ssh
 rofi.shell-command: {terminal} -e {cmd}
 rofi.ssh-command: {terminal} -e {ssh-client} {host}
