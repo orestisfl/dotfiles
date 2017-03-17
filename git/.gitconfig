@@ -24,3 +24,5 @@
 [grep]
 	extendRegexp = true
 	lineNumber = true
+[url "https://aur.archlinux.org/"]
+    insteadOf = aur://
