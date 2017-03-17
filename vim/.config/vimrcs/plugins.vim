@@ -65,6 +65,8 @@ Plugin 'majutsushi/tagbar'
 " Seamless navigation between tmux panes and vim splits.
 " https://github.com/jez/vim-as-an-ide/commit/7b698e2
 Plugin 'christoomey/vim-tmux-navigator'
+" automatic keyboard layout switching in insert mode
+Plugin 'lyokha/vim-xkbswitch'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
