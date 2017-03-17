@@ -46,14 +46,14 @@ function PR_DIR {
 export SPROMPT="Correct $fg[red]%R$reset_color to $fg[green]%r$reset_color [(y)es (n)o (a)bort (e)dit]? "
 
 # User customizable options
-PR_ARROW_CHAR='➜'
+PR_ARROW_CHAR='↪'
 RPR_SHOW_USER="false"
 RPR_SHOW_HOST="false"
 RPR_SHOW_GIT="true"
 
 # An exclamation point if the previous command did not complete successfully
 function PR_ERROR() {
-    echo "%(?..%(!.%{$fg[violet]%}.%{$fg[red]%})%B(╯°□°）╯︵ ┻━┻%b%{$reset_color%} )"
+    echo "%(?..%(!.%{$fg[violet]%}.%{$fg[red]%})%B(╯°□°）╯︵┻━┻%b%{$reset_color%} )"
 }
 
 # The arrow in red (for root) or violet (for regular user)
