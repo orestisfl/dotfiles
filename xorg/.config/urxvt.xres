@@ -5,10 +5,10 @@ URxvt.hold: false
 URxvt.scrollBar: false
 
 ! Source Sans
-URxvt*font: xft:Roboto Mono for Powerline:size=12
-URxvt*boldFont: xft:Roboto Mono for Powerline:bold:size=12
-URxvt*italicFont: xft:Roboto Mono for Powerline:italic:size=12
-URxvt*boldItalicFont: xft:Roboto Mono for Powerline:bolditalic:size=12
+URxvt*font: xft:Roboto Mono for Powerline:size=10
+URxvt*boldFont: xft:Roboto Mono for Powerline:bold:size=10
+URxvt*italicFont: xft:Roboto Mono for Powerline:italic:size=10
+URxvt*boldItalicFont: xft:Roboto Mono for Powerline:bolditalic:size=10
 ! lines in the scrollback buffer
 URxvt*saveLines: 10000
 
