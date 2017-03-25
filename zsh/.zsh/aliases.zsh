@@ -21,6 +21,7 @@ alias k=' k'
 # Subtitute old software with modern.
 alias vi='vim'
 alias rename='perl-rename'
+alias grep='grep --color=auto'
 
 # c: Copy to clipboard, v:Paste from clipboard
 alias c="xclip -in -selection clipboard"
