@@ -36,7 +36,7 @@ export ZSH_PLUGINS_ALIAS_TIPS_EXCLUDES="vi"
 source ~/.zsh/alias-tips/alias-tips.plugin.zsh
 
 # https://github.com/zsh-users/zsh-completions
-source /home/orestis/dotfiles/zsh/.zsh/zsh-completions.zsh
+source ~/.zsh/zsh-completions.zsh
 
 # https://github.com/tarruda/zsh-autosuggestions
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=10'
