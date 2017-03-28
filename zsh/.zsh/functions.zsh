@@ -95,7 +95,7 @@ function pdfa4(){
         2=$(basename $1 .pdf)
         2+="-a4.pdf"
     fi
-    gs -sDEVICE=pdfwrite -sPAPERSIZE=a4 -dFIXEDMEDIA -dPDFFitPage -dCompatibilityLevel=1.4 -o $2 $1
+    gs -sDEVICE=pdfwrite -sPAPERSIZE=a4 -dAutoRotatePages=/All -dFIXEDMEDIA -dPDFFitPage -dCompatibilityLevel=1.4 -o $2 $1
 }
 
 slash-backward-kill-word() {
