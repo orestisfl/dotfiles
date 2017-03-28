@@ -35,6 +35,9 @@ alias weather="curl wttr.in/Thessaloniki"
 # git aliases
 alias git-is="git show \$(git log --pretty=oneline| fzf | awk '{print \$1}')"
 
+# Shortcuts
+alias ydl="youtube-dl -f best"
+
 # fasd
 #alias a='fasd -a'        # any
 alias s='fasd -si'       # show / search / select
