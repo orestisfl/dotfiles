@@ -1,0 +1,7 @@
+[Core General]
+ExternalEditor=Custom
+ExternalEditorCommand=geany --line %l --column %c
+
+[Core Performance]
+MemoryLevel=Aggressive
+TextHinting=Enabled
