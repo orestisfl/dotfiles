@@ -4,29 +4,35 @@
 # Taken from https://github.com/okraits/rofi-tools/blob/822d21d99104fba14f1eaee61f4258905ab91250/rofi-power
 # 2016 Oliver Kraitschy - http://okraits.de
 
-LAUNCHER='rofi -matching fuzzy -width 10 -hide-scrollbar -l 5 -dmenu -i -p rofi-power:'
-OPTIONS="Lock\nExit\nSuspend system\nReboot system\nPower-off system"
+LAUNCHER='rofi -matching fuzzy -width 10 -hide-scrollbar -l 8 -dmenu -i -p rofi-power:'
+OPTIONS="Lock\nToggle screens\nSleep monitor\nExit\nSuspend system\nReboot system\nPower-off system"
 
-option=`echo -e $OPTIONS | $LAUNCHER | awk '{print $1}' | tr -d '\r\n'`
+option=`echo -e $OPTIONS | $LAUNCHER | tr -d '\r\n'`
 if [ ${#option} -gt 0 ]
 then
-    case $option in
-      Exit)
+    case "$option" in
+      "Exit")
         i3-msg exit
         ;;
-      Lock)
+      "Lock")
         ~/bin/lock.sh
         ;;
-      Reboot)
+      "Reboot system")
         systemctl reboot
         ;;
-      Power-off)
+      "Power-off system")
         systemctl poweroff
         ;;
-      Suspend)
+      "Suspend system")
         systemctl suspend
         ;;
-      Hibernate)
+      "Toggle screens")
+        ~/.screenlayout/toggle-radeon.sh
+        ;;
+      "Sleep monitor")
+        xset dpms force suspend
+        ;;
+      "Hibernate")
         systemctl hibernate
         ;;
       *)
