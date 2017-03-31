@@ -3,39 +3,28 @@
 # Use rofi to call systemctl for shutdown, reboot, etc
 # Taken from https://github.com/okraits/rofi-tools/blob/822d21d99104fba14f1eaee61f4258905ab91250/rofi-power
 # 2016 Oliver Kraitschy - http://okraits.de
+set -e
 
-LAUNCHER='rofi -matching fuzzy -width 10 -hide-scrollbar -l 8 -dmenu -i -p rofi-power:'
-OPTIONS="Lock\nToggle screens\nSleep monitor\nExit\nSuspend system\nReboot system\nPower-off system"
-
-option=`echo -e $OPTIONS | $LAUNCHER | tr -d '\r\n'`
-if [ ${#option} -gt 0 ]
+declare -A options
+options=()
+# Fill options.
+options["Lock"]="$HOME/bin/lock.sh"
+options["Exit"]="i3-msg exit"
+options["Reboot system"]="systemctl reboot"
+options["Power-off system"]="systemctl poweroff"
+options["Suspend system"]="systemctl suspend"
+if [ -f "$HOME/.screenlayout/toggle-radeon.sh" ]
 then
-    case "$option" in
-      "Exit")
-        i3-msg exit
-        ;;
-      "Lock")
-        ~/bin/lock.sh
-        ;;
-      "Reboot system")
-        systemctl reboot
-        ;;
-      "Power-off system")
-        systemctl poweroff
-        ;;
-      "Suspend system")
-        systemctl suspend
-        ;;
-      "Toggle screens")
-        ~/.screenlayout/toggle-radeon.sh
-        ;;
-      "Sleep monitor")
-        xset dpms force suspend
-        ;;
-      "Hibernate")
-        systemctl hibernate
-        ;;
-      *)
-        ;;
-    esac
+    options["Toggle screens"]="$HOME/.screenlayout/toggle-radeon.sh"
 fi
+options["Sleep monitor"]="xset dpms force suspend"
+# options["Hibernate"]="systemctl hibernate"
+options_keys=$(printf '%s\n' "${!options[@]}")  # Get keys as a string, seperated by newlines.
+options_len=$(echo -e "$options_keys"|wc -l)
+echo -e "$options_keys"
+
+launcher="rofi -matching fuzzy -width 10 -hide-scrollbar -l $options_len -dmenu -i -p rofi-power:"
+selection=$(echo -e "$options_keys" | $launcher | tr -d '\r\n')
+echo "$selection : ${options[$selection]}"
+
+eval "${options[$selection]}"
