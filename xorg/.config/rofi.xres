@@ -7,3 +7,4 @@ rofi.ssh-command: {terminal} -e {ssh-client} {host}
 /* appearance */
 rofi.width: -150
 rofi.padding: 0
+rofi.font: fira mono 10
