@@ -37,6 +37,8 @@ alias git-is="git show \$(git log --pretty=oneline| fzf | awk '{print \$1}')"
 
 # Shortcuts
 alias ydl="youtube-dl -f best"
+alias aurupg='pacaur -Syu --ignore=$IGNOREPKGS'
+alias pacupg='sudo pacman -Syu'
 
 # fasd
 #alias a='fasd -a'        # any

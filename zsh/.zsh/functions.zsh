@@ -4,17 +4,6 @@ function launch {
     $@ &>/dev/null &|
 }
 
-function aurupg {
-    if [ ! $AURHELPER ] ; then
-        AURHELPER="pacaur"
-    fi
-    $AURHELPER -Syu "$@" --ignore=$IGNOREPKGS
-}
-
-function pacupg {
-    sudo pacman -Syu "$@"
-}
-
 # Pretty print specified PATH.
 # If no argument is supplied use $PATH.
 function print_path() {
