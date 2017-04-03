@@ -6,20 +6,26 @@
 set -e
 
 declare -A options
-options=()
+declare -a options_order
+
+function add_option() {
+    options["$1"]="$2"
+    options_order+=("$1")
+}
+
 # Fill options.
-options["Lock"]="$HOME/bin/lock.sh"
-options["Exit"]="i3-msg exit"
-options["Reboot system"]="systemctl reboot"
-options["Power-off system"]="systemctl poweroff"
-options["Suspend system"]="systemctl suspend"
 if [ -f "$HOME/.screenlayout/toggle-radeon.sh" ]
 then
-    options["Toggle screens"]="$HOME/.screenlayout/toggle-radeon.sh"
+    add_option "Toggle screens" "$HOME/.screenlayout/toggle-radeon.sh"
 fi
-options["Sleep monitor"]="xset dpms force suspend"
-# options["Hibernate"]="systemctl hibernate"
-options_keys=$(printf '%s\n' "${!options[@]}")  # Get keys as a string, seperated by newlines.
+add_option "Sleep monitor" "xset dpms force suspend"
+add_option "Lock" "$HOME/bin/lock.sh"
+add_option "Exit" "i3-msg exit"
+add_option "Suspend system" "systemctl suspend"
+add_option "Reboot system" "systemctl reboot"
+add_option "Power-off system" "systemctl poweroff"
+# add_option "Hibernate" "systemctl hibernate"
+options_keys=$(printf '%s\n' "${options_order[@]}")  # Get keys as a string, seperated by newlines.
 options_len=$(echo -e "$options_keys"|wc -l)
 echo -e "$options_keys"
 
