@@ -1,8 +1,7 @@
 #!/bin/bash
-# rofi-power
+# i3-rofi-actions
 # Use rofi to call systemctl for shutdown, reboot, etc
 # Taken from https://github.com/okraits/rofi-tools/blob/822d21d99104fba14f1eaee61f4258905ab91250/rofi-power
-# 2016 Oliver Kraitschy - http://okraits.de
 set -e
 
 declare -A options
