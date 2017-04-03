@@ -8,18 +8,22 @@ set -e
 declare -A options
 declare -a options_order
 
+function add_option_if_file(){
+    if [ -f "$2" ]
+    then
+        add_option "$1" "$2"
+    fi
+}
+
 function add_option() {
     options["$1"]="$2"
     options_order+=("$1")
 }
 
 # Fill options.
-if [ -f "$HOME/.screenlayout/toggle-radeon.sh" ]
-then
-    add_option "Toggle screens" "$HOME/.screenlayout/toggle-radeon.sh"
-fi
+add_option_if_file "Toggle screens" "$HOME/.screenlayout/toggle-radeon.sh"
 add_option "Sleep monitor" "xset dpms force suspend"
-add_option "Lock" "$HOME/bin/lock.sh"
+add_option_if_file "Lock" "$HOME/bin/lock.sh"
 add_option "Exit" "i3-msg exit"
 add_option "Suspend system" "systemctl suspend"
 add_option "Reboot system" "systemctl reboot"
