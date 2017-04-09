@@ -1,0 +1,133 @@
+// vim:ts=4:sw=4:et
+{
+    // tabbed split container with 3 children
+    "border": "normal",
+    "floating": "auto_off",
+    "layout": "tabbed",
+    "percent": 0.6,
+    "type": "con",
+    "nodes": [
+        {
+            "border": "pixel",
+            "current_border_width": 3,
+            "floating": "auto_off",
+            "geometry": {
+               "height": 482,
+               "width": 1090,
+               "x": 5,
+               "y": 35
+            },
+            "name": "Current Folder",
+            "percent": 0.333333333333333,
+            "swallows": [
+               {
+               // "class": "^MATLAB\\ R2016a$",
+               // "instance": "^sun\\-awt\\-X11\\-XFramePeer$",
+               "title": "^Current\\ Folder$"
+               // "transient_for": "^$"
+               }
+            ],
+            "type": "con"
+        },
+        {
+            "border": "normal",
+            "current_border_width": 2,
+            "floating": "auto_off",
+            "geometry": {
+               "height": 335,
+               "width": 661,
+               "x": 687,
+               "y": 8
+            },
+            "name": "MATLAB R2016a",
+            "percent": 0.333333333333333,
+            "swallows": [
+               {
+               "class": "^MATLAB\\ R2016a$",
+               "instance": "^sun\\-awt\\-X11\\-XFramePeer$",
+               "title": "^MATLAB\\ R2016a$"
+               // "transient_for": "^$"
+               }
+            ],
+            "type": "con"
+        },
+        {
+            "border": "pixel",
+            "current_border_width": 3,
+            "floating": "auto_off",
+            "geometry": {
+               "height": 334,
+               "width": 1340,
+               "x": 8,
+               "y": 381
+            },
+            "name": "Editor",
+            "percent": 0.333333333333333,
+            "swallows": [
+               {
+               "class": "^MATLAB\\ R2016a$",
+               // "instance": "^sun\\-awt\\-X11\\-XFramePeer$",
+               "title": "^Editor*"
+               // "transient_for": "^$"
+               }
+            ],
+            "type": "con"
+        }
+    ]
+}
+
+{
+    // splitv split container with 2 children
+    "border": "normal",
+    "floating": "auto_off",
+    "layout": "splitv",
+    "percent": 0.4,
+    "type": "con",
+    "nodes": [
+        {
+            "border": "pixel",
+            "current_border_width": 3,
+            "floating": "auto_off",
+            "geometry": {
+               "height": 482,
+               "width": 1090,
+               "x": 25,
+               "y": 55
+            },
+            "name": "Command Window",
+            "percent": 0.6,
+            "swallows": [
+               {
+               // "class": "^MATLAB\\ R2016a$",
+               // "instance": "^sun\\-awt\\-X11\\-XFramePeer$",
+               "title": "^Command\\ Window$"
+               // "transient_for": "^$"
+               }
+            ],
+            "type": "con"
+        },
+        {
+            "border": "pixel",
+            "current_border_width": 3,
+            "floating": "auto_off",
+            "geometry": {
+               "height": 213,
+               "width": 1340,
+               "x": 8,
+               "y": 255
+            },
+            "name": "Workspace",
+            "percent": 0.4,
+            "swallows": [
+               {
+               // "class": "^MATLAB\\ R2016a$",
+               // "instance": "^sun\\-awt\\-X11\\-XFramePeer$",
+               "title": "^Workspace$"
+               // "transient_for": "^$"
+               }
+            ],
+            "type": "con"
+        }
+    ]
+}
+
