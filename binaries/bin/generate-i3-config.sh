@@ -1,14 +1,14 @@
 #!/bin/bash
 set -e
-I3_INCLUDE_PATH="${I3_INCLUDE_PATH:-$HOME/.i3/include/}"
-I3_CONFIG="$HOME/.i3/config"
+include_path="${include_path:-$HOME/.i3/include/}"
+i3_config="$HOME/.i3/config"
+i3_themes="$HOME/.i3/themes"
 
-rm -f $I3_CONFIG
-for f in "${I3_INCLUDE_PATH}"*.config
+rm -f "$i3_config"
+for f in "${include_path}"*.config
 do
-    cat "${f}" >> "${I3_CONFIG}"
+    cat "${f}" >> "${i3_config}"
 done
 
-#random_style=$(ls $NPM_PACKAGES/lib/node_modules/i3-style/themes | shuf -n 1)
-random_style=$(ls /usr/lib/node_modules/i3-style/themes/ | shuf -n 1)
-i3-style "${random_style}" -o "${I3_CONFIG}"
+random_style=$(find "$i3_themes" -type f | shuf -n 1)
+i3-style "${random_style}" -o "${i3_config}"
