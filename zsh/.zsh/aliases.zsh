@@ -18,7 +18,7 @@ alias lu=' lt -u'         # Lists sorted by date, most recent last, shows access
 alias ls=' ls --color=auto'
 alias k=' k'
 
-# Subtitute old software with modern.
+# Subtitute old software with modern and improve some commands.
 alias vi='vim'
 alias rename='perl-rename'
 alias grep='grep --color=auto'
@@ -39,23 +39,3 @@ alias git-is="git show \$(git log --pretty=oneline| fzf | awk '{print \$1}')"
 alias ydl="youtube-dl -f best"
 alias aurupg='pacaur -Syu --ignore=$IGNOREPKGS'
 alias pacupg='sudo pacman -Syu'
-
-# fasd
-#alias a='fasd -a'        # any
-alias s='fasd -si'       # show / search / select
-alias d='fasd -d'        # directory
-alias f='fasd -f'        # file
-alias sd='fasd -sid'     # interactive directory selection
-alias sf='fasd -sif'     # interactive file selection
-# function to execute built-in cd
-fasd_cd() {
-  if [ $# -le 1 ]; then
-    fasd "$@"
-  else
-    local _fasd_ret="$(fasd -e echo "$@")"
-    [ -z "$_fasd_ret" ] && return
-    [ -d "$_fasd_ret" ] && cd "$_fasd_ret" || echo "$_fasd_ret"
-  fi
-}
-alias z='fasd_cd -d'     # cd, same functionality as j in autojump
-alias zz='fasd_cd -d -i' # cd with interactive selection
