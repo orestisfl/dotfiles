@@ -4,12 +4,12 @@
     "border": "normal",
     "floating": "auto_off",
     "layout": "tabbed",
-    "percent": 0.6,
+    "percent": 0.7,
     "type": "con",
     "nodes": [
         {
-            "border": "pixel",
-            "current_border_width": 3,
+            "border": "normal",
+            "current_border_width": 2,
             "floating": "auto_off",
             "geometry": {
                "height": 482,
@@ -52,8 +52,8 @@
             "type": "con"
         },
         {
-            "border": "pixel",
-            "current_border_width": 3,
+            "border": "normal",
+            "current_border_width": 2,
             "floating": "auto_off",
             "geometry": {
                "height": 334,
@@ -81,12 +81,12 @@
     "border": "normal",
     "floating": "auto_off",
     "layout": "splitv",
-    "percent": 0.4,
+    "percent": 0.3,
     "type": "con",
     "nodes": [
         {
-            "border": "pixel",
-            "current_border_width": 3,
+            "border": "normal",
+            "current_border_width": 2,
             "floating": "auto_off",
             "geometry": {
                "height": 482,
@@ -107,8 +107,8 @@
             "type": "con"
         },
         {
-            "border": "pixel",
-            "current_border_width": 3,
+            "border": "normal",
+            "current_border_width": 2,
             "floating": "auto_off",
             "geometry": {
                "height": 213,
