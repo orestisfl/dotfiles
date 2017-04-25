@@ -2,7 +2,9 @@
 export EDITOR=vim
 export VISUAL=vim
 export TERMINAL=urxvtc
-export QT_STYLE_OVERRIDE=GTK+  # Tell Qt to use GTK style
+export DESKTOP_SESSION=gnome
+# export QT_STYLE_OVERRIDE=GTK+  # Tell Qt to use GTK style
+export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
 export STEAM_RUNTIME=0
 
 # NPM packages in homedir
