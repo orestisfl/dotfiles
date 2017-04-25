@@ -21,7 +21,7 @@
             "percent": 0.333333333333333,
             "swallows": [
                {
-               // "class": "^MATLAB\\ R2016a$",
+               // "class": "^MATLAB\\ R2016b$",
                // "instance": "^sun\\-awt\\-X11\\-XFramePeer$",
                "title": "^Current\\ Folder$"
                // "transient_for": "^$"
@@ -39,13 +39,13 @@
                "x": 687,
                "y": 8
             },
-            "name": "MATLAB R2016a",
+            "name": "MATLAB R2016b",
             "percent": 0.333333333333333,
             "swallows": [
                {
-               "class": "^MATLAB\\ R2016a$",
+               "class": "^MATLAB\\ R2016b$",
                "instance": "^sun\\-awt\\-X11\\-XFramePeer$",
-               "title": "^MATLAB\\ R2016a$"
+               "title": "^MATLAB\\ R2016b$"
                // "transient_for": "^$"
                }
             ],
@@ -65,7 +65,7 @@
             "percent": 0.333333333333333,
             "swallows": [
                {
-               "class": "^MATLAB\\ R2016a$",
+               "class": "^MATLAB\\ R2016b$",
                // "instance": "^sun\\-awt\\-X11\\-XFramePeer$",
                "title": "^Editor*"
                // "transient_for": "^$"
@@ -98,7 +98,7 @@
             "percent": 0.6,
             "swallows": [
                {
-               // "class": "^MATLAB\\ R2016a$",
+               // "class": "^MATLAB\\ R2016b$",
                // "instance": "^sun\\-awt\\-X11\\-XFramePeer$",
                "title": "^Command\\ Window$"
                // "transient_for": "^$"
@@ -120,7 +120,7 @@
             "percent": 0.4,
             "swallows": [
                {
-               // "class": "^MATLAB\\ R2016a$",
+               // "class": "^MATLAB\\ R2016b$",
                // "instance": "^sun\\-awt\\-X11\\-XFramePeer$",
                "title": "^Workspace$"
                // "transient_for": "^$"
