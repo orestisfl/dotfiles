@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 set -x
-browser_class="firefox"
+browser_class="Chromium"
 
 xclip < /dev/null
 # Find, focus and type in browser window.
