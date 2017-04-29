@@ -19,7 +19,7 @@ borg create --verbose --stats --show-rc   \
     --exclude /home/*/.local/share/Steam/ \
     --exclude /home/*/.AMD/               \
     --exclude /home/*/.wine/              \
-    --exclude /home/swapfile              \
+    --exclude /home/*/swapfile            \
     --compression lzma                    \
     --chunker-params 19,23,21,4095        \
     $BORG_REPO::"$NAME" "$HOME"
