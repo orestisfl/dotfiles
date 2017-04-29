@@ -28,13 +28,12 @@ echo "Executing borg prune:"
 # Use the `prune` subcommand to maintain 3 daily, 4 weekly, 6 monthly and 1 yearly
 # archives of THIS machine. --prefix `hostname`- is very important to limit prune's
 # operation to this machine's archives and not apply to other machine's archives also.
-borg prune --verbose --stats --show-rc \
-    --prefix "$PREFIX"                 \
-    --keep-within=2d                   \
-    --keep-daily=3                     \
-    --keep-weekly=10                   \
-    --keep-monthly=20                  \
-    --keep-yearly=1                    \
+borg prune --list --verbose --stats --show-rc \
+    --prefix "$PREFIX"                        \
+    --keep-within=14d                         \
+    --keep-weekly=3                           \
+    --keep-monthly=12                         \
+    --keep-yearly=50                          \
     $BORG_REPO
 
 source "$HOME/bin/backup-ocean.sh"
