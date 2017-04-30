@@ -5,6 +5,7 @@ export TERMINAL=urxvtc
 export DESKTOP_SESSION=gnome
 # export QT_STYLE_OVERRIDE=GTK+  # Tell Qt to use GTK style
 export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
+export GTK_OVERLAY_SCROLLING=0
 export STEAM_RUNTIME=0
 
 # NPM packages in homedir
