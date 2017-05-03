@@ -26,3 +26,5 @@
 	lineNumber = true
 [url "https://aur.archlinux.org/"]
     insteadOf = aur://
+[log]
+	decorate = auto
