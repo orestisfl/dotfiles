@@ -24,13 +24,3 @@
 *.color19:      #68615e
 *.color20:      #9c9491
 *.color21:      #e6e2e0
-
-/* rofi */
-rofi.bg: #222
-rofi.fg: #eee8d5
-rofi.hlbg: #f95346
-rofi.hlbg-urgent: #eee8d5
-rofi.hlfg-urgent: #222
-rofi.bgalt: #292929
-rofi.bc: #f95346
-rofi.bw: 0

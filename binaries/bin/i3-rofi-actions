@@ -32,7 +32,7 @@ options_keys=$(printf '%s\n' "${options_order[@]}")  # Get keys as a string, sep
 options_len=$(echo -e "$options_keys"|wc -l)
 echo -e "$options_keys"
 
-launcher="rofi -matching fuzzy -width 10 -hide-scrollbar -l $options_len -dmenu -i -p rofi-power:"
+launcher="rofi -matching fuzzy -l $options_len -dmenu -i -p rofi-power:"
 selection=$(echo -e "$options_keys" | $launcher | tr -d '\r\n')
 echo "$selection : ${options[$selection]}"
 
