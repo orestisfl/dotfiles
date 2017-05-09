@@ -7,6 +7,7 @@ export DESKTOP_SESSION=gnome
 export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
 export GTK_OVERLAY_SCROLLING=0
 export STEAM_RUNTIME=0
+export CHROMIUM_FLAGS="$CHROMIUM_FLAGS --password-store=gnome"
 
 # NPM packages in homedir
 export NPM_PACKAGES="$HOME/.npm-packages"
