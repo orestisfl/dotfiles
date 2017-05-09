@@ -5,16 +5,19 @@ rofi.shell-command: {terminal} -e {cmd}
 rofi.ssh-command: {terminal} -e {ssh-client} {host}
 
 /* appearance */
-rofi.color-enabled: true
-rofi.color-window: #141021, #c16772, #9568a1
-rofi.color-normal: #141021, #ffeefc, #312842, #c16772, #ffeefc
-rofi.color-active: #141021, #c05c47, #312842, #c05c47, #ffeefc
-rofi.color-urgent: #141021, #e4b226, #312842, #e4b226, #ffeefc
-rofi.width: 800
-rofi.padding: 20
-/* rofi.font: PragmataPro Nerd Font 18 */
 rofi.font: fira mono 10
-rofi.bw: 3
-rofi.columns: 1
+
+rofi.color-enabled: true
+rofi.color-window: #1f1f1f, #c6c6c6, #c6c6c6
+rofi.color-normal: #1f1f1f, #828282, #1f1f1f, #1f1f1f, #c6c6c6
+rofi.color-active: #1f1f1f, #828282, #1f1f1f, #1f1f1f, #c6c6c6
+rofi.color-urgent: #1f1f1f, #828282, #1f1f1f, #1f1f1f, #c6c6c6
+
 rofi.separator-style: solid
+rofi.sidebar-mode: true
+rofi.lines: 5
+rofi.bw: 1
+rofi.columns: 2
+rofi.padding: 5
+rofi.fixed-num-lines: true
 rofi.hide-scrollbar: true
