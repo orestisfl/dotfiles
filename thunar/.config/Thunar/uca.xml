@@ -93,4 +93,14 @@
 	<other-files/>
 	<text-files/>
 </action>
+<action>
+	<icon>imgur</icon>
+	<name>Upload to imgur</name>
+	<unique-id>1494408575983007-2</unique-id>
+	<command>~/bin/thunar-upload-to-imgur.sh -f %f</command>
+	<description></description>
+	<patterns>*</patterns>
+	<startup-notify/>
+	<image-files/>
+</action>
 </actions>
