@@ -46,6 +46,7 @@
 #  https://github.com/cytopia/thunar-custom-actions
 #
 
+set -e
 
 usage() {
 	echo "$0 -f <filename> [-w width(int)] [-h height(int)] [-t window-title]"
@@ -123,8 +124,6 @@ TMPFILE=$(mktemp)
 [ -n "${t}" ]				&& TITLE="${t}"	|| TITLE="Uploading to imgur: $(basename "${f}")"
 
 curl -# -F "image"=@"$f" -o "${TMPFILE}" -F title="${TITLE}" -H "Authorization: Client-ID ${IMGUR_CLIENT_ID}" https://api.imgur.com/3/upload.xml 2>&1 | gawk -v RS='\r' '{print $2; fflush("") }' | zenity --width="${WIDTH}" --height="${HEIGHT}" --progress --title="${TITLE}" --text="${TITLE}" --auto-close --time-remaining
-#curl -# -F "image"=@"$f" -F "key"="4907fcd89e761c6b07eeb8292d5a9b2a" http://imgur.com/api/upload.xml | grep -Eo "[0-9]{1,3}" | zenity --width=${WIDTH} --height=${HEIGHT} --progress --title="${TITLE}" --text="${TITLE}" --auto-close --time-remaining
-#stdbuf -oL tr $'\r' $'\n' | stdbuf -oL grep --line-buffered -Eo '([0-9]+)\.[0-9]%$' | zenity --width=${WIDTH} --height=${HEIGHT} --progress --title="${TITLE}" --text="${TITLE}" --auto-close --time-remaining
 
 ########################## gui output ###############################
 [ -n "${t}" ]				&& TITLE=$t		|| TITLE="Uploaded to imgur: $(basename "${f}")"
@@ -133,19 +132,5 @@ curl -# -F "image"=@"$f" -o "${TMPFILE}" -F title="${TITLE}" -H "Authorization: 
 TEXT=$(cat "${TMPFILE}")
 rm "${TMPFILE}"
 
-#TAG="$(echo "${TEXT}" | grep -Eo '<[a-z_]+>http' | sed -e "s/http//" | sed -e "s/<//" | sed -e "s/>//")"
-#URL="$(echo "${TEXT}" | grep -Eo 'http[^<]+')"
-#ZTEXT=""
-#urls=($URL)
-#tags=($TAG)
-
 URL="$(echo "${TEXT}" | grep -E -m 1 -o "<link>(.*)</link>" | sed -e 's,.*<link>\([^<]*\)</link>.*,\1,g')"
-ZTEXT="Direct URL: <a href=\"$URL\">$URL</a>"
-
-#for ((i = 0; i < ${#urls[@]}; i++))
-#do
-#	ZTEXT="$ZTEXT${tags[$i]}' <a href=\"${urls[$i]}\">${urls[$i]}</a>\n"
-#done
-zenity --width=${WIDTH} --height=${HEIGHT} --info --title "${TITLE}" --text="${ZTEXT}"
-exit $?
-
+xdg-open "$URL"
