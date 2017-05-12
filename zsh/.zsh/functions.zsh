@@ -87,6 +87,15 @@ function pdfa4(){
     gs -sDEVICE=pdfwrite -sPAPERSIZE=a4 -dAutoRotatePages=/All -dFIXEDMEDIA -dPDFFitPage -dCompatibilityLevel=1.4 -o $2 $1
 }
 
+function latexi(){
+    if [ ! $1 ] ;then
+        return 1
+    fi
+    local local_yaml="${2:-myyaml.yaml}"
+    latexindent -w -s --local="$local_yaml" "$1"
+    rec_fix_trailing_whitespace "$1"
+}
+
 slash-backward-kill-word() {
     local WORDCHARS="*?_-.[]~=&;!#$%^(){}<>"
     zle backward-kill-word
