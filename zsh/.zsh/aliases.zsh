@@ -30,8 +30,6 @@ alias v="xclip -o"
 # always run ipython inside current virtualenv
 alias ipy="python -c 'import IPython; IPython.terminal.ipapp.launch_new_instance()'"
 
-alias weather="curl wttr.in/Thessaloniki"
-
 # git aliases
 alias git-is="git show \$(git log --pretty=oneline| fzf | awk '{print \$1}')"
 
@@ -39,3 +37,8 @@ alias git-is="git show \$(git log --pretty=oneline| fzf | awk '{print \$1}')"
 alias ydl="youtube-dl -f best"
 alias aurupg='pacaur -Syu --ignore=$IGNOREPKGS'
 alias pacupg='sudo pacman -Syu'
+alias weather="curl wttr.in/Thessaloniki"
+alias sysstart="sudo systemctl start"
+alias sysstop="sudo systemctl stop"
+alias sysenable="sudo systemctl enable"
+alias sysdisable="sudo systemctl disable"
