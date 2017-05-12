@@ -22,6 +22,7 @@ source /usr/share/fzf-marks/fzf-marks.zsh
 source /usr/share/zsh/plugins/zsh-notify/notify.plugin.zsh
 zstyle ':notify:*' error-icon "$HOME/.zsh/icons/error-icon"
 zstyle ':notify:*' success-icon "$HOME/.zsh/icons/success-icon"
+zstyle ':notify:*' disable-urgent yes
 
 # command not found from pkgfile
 source /usr/share/doc/pkgfile/command-not-found.zsh
