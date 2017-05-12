@@ -19,8 +19,9 @@
     find = "!git ls-files | grep -i"
 	grep = grep --break --heading --line-number
     s = status -sb
-    diff = diff --word-diff --minimal
     addp = add --patch
+	c = commit --verbose
+	last = log -1 HEAD
 [grep]
 	extendRegexp = true
 	lineNumber = true
