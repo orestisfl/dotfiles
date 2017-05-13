@@ -21,7 +21,7 @@
     s = status -sb
     addp = add --patch
     c = commit --verbose
-    last = log -1 HEAD
+    last = log -1 HEAD --pretty=fuller
 [grep]
     extendRegexp = true
     lineNumber = true
