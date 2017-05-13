@@ -8,24 +8,24 @@
 [format]
     pretty = oneline
 [credential]
-	helper = /usr/lib/git-core/git-credential-gnome-keyring
+    helper = /usr/lib/git-core/git-credential-gnome-keyring
 [merge]
-	conflictstyle = diff3
+    conflictstyle = diff3
 [rerere]
-	enabled = true
+    enabled = true
 [alias]
     ls = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate
     ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
     find = "!git ls-files | grep -i"
-	grep = grep --break --heading --line-number
+    grep = grep --break --heading --line-number
     s = status -sb
     addp = add --patch
-	c = commit --verbose
-	last = log -1 HEAD
+    c = commit --verbose
+    last = log -1 HEAD
 [grep]
-	extendRegexp = true
-	lineNumber = true
+    extendRegexp = true
+    lineNumber = true
 [url "https://aur.archlinux.org/"]
     insteadOf = aur://
 [log]
-	decorate = auto
+    decorate = auto
