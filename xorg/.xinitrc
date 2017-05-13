@@ -12,6 +12,8 @@ export CHROMIUM_FLAGS="$CHROMIUM_FLAGS --password-store=gnome"
 # NPM packages in homedir
 export NPM_PACKAGES="$HOME/.npm-packages"
 
+# https://wiki.archlinux.org/index.php/Ccache#Enable_for_command_line
+export PATH="/usr/lib/ccache/bin/:$PATH"
 # Tell our environment about user-installed node tools
 export PATH="$NPM_PACKAGES/bin:$PATH"
 # Unset manpath so we can inherit from /etc/manpath via the `manpath` command
