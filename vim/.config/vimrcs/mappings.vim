@@ -2,10 +2,18 @@ let g:mapleader = "\<Space>"
 let mapleader = "\<Space>"
 
 " Open buffer
-nnoremap <leader>b :ls<cr>:b<space>
+nnoremap <leader>b :Buffers<cr>
+" Open file
+nnoremap <leader>o :Files<cr>
+" Tags
+" nnoremap <leader>t :Tags<cr>
+" History
+nnoremap <leader>h :History<cr>
+" Ycm
+nnoremap <leader>y :YcmCompleter<space>
 
 " To open a new empty buffer
-nmap <leader>t :enew<cr>
+" nmap <leader>t :enew<cr>
 
 " Save file
 nnoremap <Leader>w :w<CR>
