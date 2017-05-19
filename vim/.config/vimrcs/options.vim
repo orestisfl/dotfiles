@@ -136,6 +136,8 @@ set shiftwidth=4
 set tabstop=4
 set softtabstop=4
 set expandtab
+" Correct tab for Makefiles.
+autocmd FileType make set noexpandtab shiftwidth=4 softtabstop=0
 
 set ai  " Auto indent.
 set si  " Smart indent.
