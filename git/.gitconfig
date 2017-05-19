@@ -16,12 +16,14 @@
 [alias]
     ls = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate
     ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
+    lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
     find = "!git ls-files | grep -i"
     grep = grep --break --heading --line-number
     s = status -sb
     addp = add --patch
     c = commit --verbose
     last = log -1 HEAD --pretty=fuller
+    home = rev-parse --show-toplevel
 [grep]
     extendRegexp = true
     lineNumber = true
