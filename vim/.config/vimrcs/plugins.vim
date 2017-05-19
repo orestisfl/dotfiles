@@ -15,6 +15,10 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'terryma/vim-expand-region'
 " Improved incremental searching.
 Plugin 'haya14busa/incsearch.vim'
+" quoting/parenthesizing made simple
+Plugin 'tpope/vim-surround'
+" Repeat plugin maps with "."
+Plugin 'tpope/vim-repeat'
 " A code-completion engine.
 Plugin 'Valloric/YouCompleteMe'
 " fzf + vim.
