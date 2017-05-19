@@ -17,8 +17,6 @@ Plugin 'terryma/vim-expand-region'
 Plugin 'haya14busa/incsearch.vim'
 " A code-completion engine.
 Plugin 'Valloric/YouCompleteMe'
-" Generates config files for YouCompleteMe
-Plugin 'rdnetto/YCM-Generator'
 " fzf + vim.
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
@@ -46,8 +44,6 @@ Plugin 'itchyny/lightline.vim'
 Plugin 'ntpeters/vim-better-whitespace'
 " Provides insert mode auto-completion for quotes, parens, brackets, etc.
 Plugin 'Raimondi/delimitMate'
-" Fuzzy file, buffer, mru, tag, etc finder.
-Plugin 'ctrlpvim/ctrlp.vim'
 " Syntax for i3 window manager config.
 Plugin 'PotatoesMaster/i3-vim-syntax'
 " An alternative indentation script for python.
