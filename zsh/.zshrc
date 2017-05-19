@@ -17,12 +17,8 @@ source /usr/share/autojump/autojump.zsh
 # https://github.com/urbainvaes/fzf-marks
 source /usr/share/fzf-marks/fzf-marks.zsh
 
-# Desktop notifications for long-running commands in zsh.
-# https://github.com/marzocchi/zsh-notify
-source /usr/share/zsh/plugins/zsh-notify/notify.plugin.zsh
-zstyle ':notify:*' error-icon "$HOME/.zsh/icons/error-icon"
-zstyle ':notify:*' success-icon "$HOME/.zsh/icons/success-icon"
-zstyle ':notify:*' disable-urgent yes
+# https://github.com/t413/zsh-background-notify.git
+source /usr/share/zsh/plugins/zsh-background-notify/bgnotify.plugin.zsh
 
 # command not found from pkgfile
 source /usr/share/doc/pkgfile/command-not-found.zsh
