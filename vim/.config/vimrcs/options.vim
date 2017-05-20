@@ -141,4 +141,4 @@ autocmd FileType make set noexpandtab shiftwidth=4 softtabstop=0
 
 set ai  " Auto indent.
 set si  " Smart indent.
-set wrap  " Wrap lines.
+set nowrap " Don't wrap long lines.
