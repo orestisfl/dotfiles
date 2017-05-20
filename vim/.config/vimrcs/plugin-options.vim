@@ -73,6 +73,7 @@ map g/ <Plug>(incsearch-stay)
 let g:ycm_path_to_python_interpreter = '/usr/bin/python3'
 let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
 
+let g:ycm_collect_identifiers_from_tags_files = 1
 
 " --------------------------------------------------
 " -------------- The-NERD-Commenter ----------------
