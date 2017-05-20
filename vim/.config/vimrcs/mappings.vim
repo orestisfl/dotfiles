@@ -41,3 +41,7 @@ nnoremap <leader>gdec :YcmCompleter GoToDeclaration<CR>
 nnoremap <leader>gdef :YcmCompleter GoToDefinition<CR>
 nnoremap <leader>g :YcmCompleter GoTo<CR>
 nnoremap <leader>gf :YcmCompleter GoToImprecise<CR>
+
+" Regex magix
+nnoremap / /\v
+cnoremap %s/ %s/\v
