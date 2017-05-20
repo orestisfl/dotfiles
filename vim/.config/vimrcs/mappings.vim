@@ -25,6 +25,9 @@ map k gk
 " Remap VIM 0 to first non-blank character
 map 0 ^
 
+" Remap Y to yank the rest of the line.
+map Y y$
+
 " Split navigations. Replaced by tmux navigator.
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-Down> <C-W><C-J>
