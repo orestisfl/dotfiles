@@ -58,8 +58,6 @@ Plugin 'tmhedberg/SimpylFold'
 Plugin 'suan/vim-instant-markdown'
 " Miscellaneous auto-load Vim scripts.
 Plugin 'xolox/vim-misc'
-" Automated tag file generation and syntax highlighting of tags.
-Plugin 'xolox/vim-easytags'
 " Displays tags in a window, ordered by scope.
 Plugin 'majutsushi/tagbar'
 " Seamless navigation between tmux panes and vim splits.
