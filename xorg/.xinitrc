@@ -58,7 +58,6 @@ $HOME/bin/generate-i3-config.sh
 
 ~/bin/rand_wall.sh&
 urxvtd -q -f -o&  # start urxvtd terminal daemon
-setxkbmap -model pc105 -layout us,gr -option grp:alt_shift_toggle&
 numlockx&  # Enable numlock on start.
 # conky&
 thunar --daemon&  # Thunar file manager as daemon.
