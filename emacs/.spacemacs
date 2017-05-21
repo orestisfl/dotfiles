@@ -211,7 +211,7 @@ values."
    dotspacemacs-enable-paste-transient-state nil
    ;; Which-key delay in seconds. The which-key buffer is the popup listing
    ;; the commands bound to the current keystroke sequence. (default 0.4)
-   dotspacemacs-which-key-delay 0.4
+   dotspacemacs-which-key-delay 0.2
    ;; Which-key frame position. Possible values are `right', `bottom' and
    ;; `right-then-bottom'. right-then-bottom tries to display the frame to the
    ;; right; if there is insufficient space it displays it at the bottom.
@@ -262,7 +262,10 @@ values."
    ;;                       text-mode
    ;;   :size-limit-kb 1000)
    ;; (default nil)
-   dotspacemacs-line-numbers nil
+   dotspacemacs-line-numbers '(:relative t
+                                         :disabled-for-modes org-mode
+                                         org-present-mode
+                                         :size-limit-kb 1000)
    ;; Code folding method. Possible values are `evil' and `origami'.
    ;; (default 'evil)
    dotspacemacs-folding-method 'evil
@@ -321,8 +324,11 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
+  (setq helm-buffer-max-length nil)  ; Max size for helm mini buffer list. (SPC b b)
+  (define-key evil-normal-state-map "0" 'evil-first-non-blank)  ; Map 0 to ^
   ;; (global-company-mode)
   (define-key evil-normal-state-map (kbd "C-]") 'my-jump-to-tag)  ; C-] uses tag jump.
+  (centered-cursor-mode)  ; Enable centered mode by default.
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
