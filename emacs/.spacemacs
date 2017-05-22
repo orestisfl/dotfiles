@@ -31,6 +31,7 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     ;; octave
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
@@ -299,6 +300,9 @@ values."
    dotspacemacs-whitespace-cleanup nil
    ;; https://github.com/syl20bnr/spacemacs/tree/master/layers/%2Bcompletion/auto-completion
    dotspacemacs-configuration-layers '((auto-completion :variables auto-completion-enable-help-tooltip t))
+   ;; Don't use tabs for indentation.
+   indent-tabs-mode nil
+   tab-width 4
    ))
 
 (defun dotspacemacs/user-init ()
@@ -329,6 +333,7 @@ you should place your code here."
   ;; (global-company-mode)
   (define-key evil-normal-state-map (kbd "C-]") 'my-jump-to-tag)  ; C-] uses tag jump.
   (centered-cursor-mode)  ; Enable centered mode by default.
+  (setq-default tab-width 4)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
