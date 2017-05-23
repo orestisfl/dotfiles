@@ -165,7 +165,8 @@ values."
    ;; and TAB or <C-m> and RET.
    ;; In the terminal, these pairs are generally indistinguishable, so this only
    ;; works in the GUI. (default nil)
-   dotspacemacs-distinguish-gui-tab nil
+   ;; http://www.tutysara.net/posts/2017/03/24/spacemacs-ctrl-i-fix/
+   dotspacemacs-distinguish-gui-tab t
    ;; If non nil `Y' is remapped to `y$' in Evil states. (default nil)
    dotspacemacs-remap-Y-to-y$ t
    ;; If non-nil, the shift mappings `<' and `>' retain visual state if used
@@ -335,6 +336,7 @@ you should place your code here."
   (setq helm-buffer-max-length nil)  ; Max size for helm mini buffer list. (SPC b b)
   (define-key evil-normal-state-map "0" 'evil-first-non-blank)  ; Map 0 to ^
   (define-key evil-normal-state-map (kbd "C-]") 'my-jump-to-tag)  ; C-] uses tag jump.
+  ;; (define-key evil-motion-state-map [C-i] 'evil-jump-forward)  ; https://github.com/syl20bnr/spacemacs/issues/5050
   (centered-cursor-mode)  ; Enable centered mode by default.
   (setq-default tab-width 4)
   (global-company-mode t)
