@@ -39,10 +39,12 @@ values."
      ;; ----------------------------------------------------------------
      helm
      auto-completion
-     ;; better-defaults
      (c-c++ :variables c-c++-enable-clang-support t)
+     ycmd
+     gtags
      semantic
      emacs-lisp
+     ;; better-defaults
      ;; git
      ;; markdown
      ;; org
@@ -52,7 +54,6 @@ values."
      (spell-checking :variables spell-checking-enable-by-default nil)
      syntax-checking
      ;; version-control
-     ;; gtags
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -312,7 +313,9 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
+  (setq ycmd-force-semantic-completion t)
   )
+(set-variable 'ycmd-server-command '("python3" (file-truename "/home/orestis/Documents/packages/ymcd-git/src/ycmd/ycmd")))
 
 (defun my-jump-to-tag ()
   (interactive)
@@ -330,10 +333,10 @@ explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
   (setq helm-buffer-max-length nil)  ; Max size for helm mini buffer list. (SPC b b)
   (define-key evil-normal-state-map "0" 'evil-first-non-blank)  ; Map 0 to ^
-  ;; (global-company-mode)
   (define-key evil-normal-state-map (kbd "C-]") 'my-jump-to-tag)  ; C-] uses tag jump.
   (centered-cursor-mode)  ; Enable centered mode by default.
   (setq-default tab-width 4)
+  (global-company-mode t)
   ;; Dictionary.
   (setq ispell-really-hunspell t)
   )
