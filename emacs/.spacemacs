@@ -49,8 +49,8 @@ values."
      ;; (shell :variables
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
-     ;; spell-checking
-     ;; syntax-checking
+     (spell-checking :variables spell-checking-enable-by-default nil)
+     syntax-checking
      ;; version-control
      ;; gtags
      )
@@ -334,6 +334,8 @@ you should place your code here."
   (define-key evil-normal-state-map (kbd "C-]") 'my-jump-to-tag)  ; C-] uses tag jump.
   (centered-cursor-mode)  ; Enable centered mode by default.
   (setq-default tab-width 4)
+  ;; Dictionary.
+  (setq ispell-really-hunspell t)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -343,6 +345,13 @@ you should place your code here."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(ispell-local-dictionary "en_us_gb_large_el_gr")
+ '(ispell-local-dictionary-alist
+   (quote
+    (("en_us_gb_large_el_gr" "[[:alpha:]]" "[^[:alpha:]]" "[']" t
+      ("-d" "en_us_gb_large_el_gr")
+      nil utf-8))))
+ '(ispell-program-name "/usr/bin/hunspell")
  '(package-selected-packages
    (quote
     (stickyfunc-enhance srefactor helm-company helm-c-yasnippet fuzzy disaster company-statistics company-c-headers company cmake-mode clang-format auto-yasnippet yasnippet ac-ispell auto-complete helm-gtags ggtags ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed dash aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async))))
