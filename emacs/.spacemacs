@@ -355,6 +355,12 @@ you should place your code here."
   (setq ispell-really-hunspell t)
   )
 
+(defun switch-to-us ()
+  "Switch language to us"
+  (shell-command-to-string "xkb-switch -s us"))
+
+(add-hook  'evil-insert-state-exit-hook #'switch-to-us)
+
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
 (custom-set-variables
