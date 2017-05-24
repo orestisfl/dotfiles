@@ -16,3 +16,6 @@
 [submodule "matlab/Documents/MATLAB/MBeautifier"]
 	path = matlab/Documents/MATLAB/MBeautifier
 	url = https://github.com/davidvarga/MBeautifier
+[submodule "modules/gdb-dashboard"]
+	path = modules/gdb-dashboard
+	url = https://github.com/cyrus-and/gdb-dashboard
