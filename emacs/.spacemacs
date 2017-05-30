@@ -317,7 +317,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
   (setq ycmd-force-semantic-completion t)
   )
-(set-variable 'ycmd-server-command '("python3" (file-truename "/home/orestis/Documents/packages/ymcd-git/src/ycmd/ycmd")))
+(set-variable 'ycmd-server-command (list "python3" (file-truename "~/bin/ycmd/ycmd")))
 
 (defun my-jump-to-tag ()
   (interactive)
