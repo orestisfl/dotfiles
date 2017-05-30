@@ -1,2 +1,4 @@
 map <A-h> toggle_statusbar
 set adjust_open bestfit
+set selection-clipboard clipboard
+set guioptions ''
