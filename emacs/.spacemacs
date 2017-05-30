@@ -337,7 +337,7 @@ you should place your code here."
   (define-key evil-normal-state-map "0" 'evil-first-non-blank)  ; Map 0 to ^
   (define-key evil-normal-state-map (kbd "C-]") 'my-jump-to-tag)  ; C-] uses tag jump.
   ;; (define-key evil-motion-state-map [C-i] 'evil-jump-forward)  ; https://github.com/syl20bnr/spacemacs/issues/5050
-  (centered-cursor-mode)  ; Enable centered mode by default.
+  (global-centered-cursor-mode t) ; Enable centered mode by default.
   (setq-default tab-width 4)
   (global-company-mode t)
   ;; Tex settings
