@@ -1,5 +1,4 @@
 #!/bin/sh
-export EDITOR=vim
 export VISUAL=vim
 export TERMINAL=urxvtc
 export DESKTOP_SESSION=gnome
@@ -8,20 +7,6 @@ export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswi
 export GTK_OVERLAY_SCROLLING=0
 export STEAM_RUNTIME=0
 export CHROMIUM_FLAGS="$CHROMIUM_FLAGS --password-store=gnome"
-
-# NPM packages in homedir
-export NPM_PACKAGES="$HOME/.npm-packages"
-
-# https://wiki.archlinux.org/index.php/Ccache#Enable_for_command_line
-export PATH="/usr/lib/ccache/bin/:$PATH"
-# Tell our environment about user-installed node tools
-export PATH="$NPM_PACKAGES/bin:$PATH"
-# Unset manpath so we can inherit from /etc/manpath via the `manpath` command
-unset MANPATH  # delete if you already modified MANPATH elsewhere in your configuration
-export MANPATH="$NPM_PACKAGES/share/man:$(manpath)"
-
-# Tell Node about these packages
-export NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
 
 userresources=$HOME/.Xresources
 usermodmap=$HOME/.Xmodmap
