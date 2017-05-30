@@ -5,3 +5,6 @@ ExternalEditorCommand=geany --line %l --column %c
 [Core Performance]
 MemoryLevel=Aggressive
 TextHinting=Enabled
+
+[PageView]
+MouseMode=TextSelect
