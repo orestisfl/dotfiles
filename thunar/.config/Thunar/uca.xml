@@ -45,11 +45,10 @@
 <action>
 	<icon>object-merge</icon>
 	<name>Join</name>
-	<unique-id>1481425367027813-4</unique-id>
+	<unique-id>1496661459302216-1</unique-id>
 	<command>cat %F &gt; joined.txt</command>
 	<description>Join selected text files</description>
 	<patterns>*</patterns>
-	<other-files/>
 	<text-files/>
 </action>
 <action>
