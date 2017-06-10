@@ -6,22 +6,21 @@ alias pacman_show_packs_by_file="pacman -Qo"       # Show package(s) owning the 
 alias autoremove='sudo pacman -Rns $(pacman -Qdtq)'
 alias pipupg="pip3 freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip3 install -U"
 
-# all command start with space so they are not written in history
-alias l=' k -h'
-alias lr=' ls -lh -R'         # Lists human readable sizes, recursively.
-alias lm=' k -h| "$PAGER"' # Lists human readable sizes, hidden files through pager.
-alias lx=' ls -lh -XB'        # Lists sorted by extension (GNU only).
-alias lk=' ls -lh -Sr'        # Lists sorted by size, largest last.
-alias lt=' ls -lh -tr'        # Lists sorted by date, most recent last.
-alias lc=' lt -c'         # Lists sorted by date, most recent last, shows change time.
-alias lu=' lt -u'         # Lists sorted by date, most recent last, shows access time.
-alias ls=' ls --color=auto'
-alias k=' k'
-
 # Subtitute old software with modern and improve some commands.
 alias vi='vim'
 alias rename='perl-rename'
 alias grep='grep --color=auto'
+alias exa=' exa --git'
+
+# ls related
+# all command start with space so they are not written in history
+alias ls=' ls --color=auto'
+alias l=' exa -lh'
+alias lr=' exa -lh -R'         # Lists human readable sizes, recursively.
+alias lk=' exa -lh -Sr'        # Lists sorted by size, largest last.
+alias lt=' ls -lh -tr'        # Lists sorted by date, most recent last.
+alias lc=' lt -c'         # Lists sorted by date, most recent last, shows change time.
+alias k=' k'
 
 # c: Copy to clipboard, v:Paste from clipboard
 alias c="xclip -in -selection clipboard"
