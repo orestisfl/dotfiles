@@ -28,6 +28,7 @@ export ZSH_PLUGINS_ALIAS_TIPS_TEXT="You know you have an alias for that, right? 
 export ZSH_PLUGINS_ALIAS_TIPS_EXCLUDES="vi"
 source ~/.zsh/alias-tips/alias-tips.plugin.zsh
 
+# https://github.com/sorin-ionescu/prezto/blob/master/modules/completion/init.zsh
 source ~/.zsh/zsh-completions.zsh
 
 # https://github.com/tarruda/zsh-autosuggestions
