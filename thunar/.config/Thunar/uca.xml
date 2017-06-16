@@ -111,4 +111,14 @@
 	<startup-notify/>
 	<image-files/>
 </action>
+<action>
+	<icon>gtk-convert</icon>
+	<name>To UTF-8</name>
+	<unique-id>1497454094821451-10</unique-id>
+	<command>~/bin/greek-to-utf.sh %F</command>
+	<description></description>
+	<patterns>*.srt</patterns>
+	<other-files/>
+	<text-files/>
+</action>
 </actions>
