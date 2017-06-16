@@ -11,9 +11,10 @@ let g:lightline = {'colorscheme': 'Tomorrow_Night_Eighties'}
 " Terminal colors for theme etc.
 set t_Co=256
 set background=dark
-set nu  " Display numbers.
 set ruler  " Always show current position.
 set scrolloff=7  " Set 7 lines to the cursor - when moving vertically using j/k.
+set number  " Both number & relativenumber => hybrid mode
+set relativenumber
 
 set noshowmode
 set showcmd
