@@ -53,7 +53,5 @@ source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring
 # Custom bindkeys have higher priority.
 source ~/.zsh/bindkeys.zsh
 
-# generated completions should be the last choice
-fpath+=~/.zsh/generated-completions
 # automatically remove duplicates from these arrays
 typeset -U path cdpath fpath manpath
