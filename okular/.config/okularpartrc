@@ -6,5 +6,8 @@ ExternalEditorCommand=geany --line %l --column %c
 MemoryLevel=Aggressive
 TextHinting=Enabled
 
+[General]
+ShellOpenFileInTabs=true
+
 [PageView]
 MouseMode=TextSelect
