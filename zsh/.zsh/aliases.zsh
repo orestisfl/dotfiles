@@ -9,8 +9,11 @@ alias pipupg="pip3 freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 
 # Subtitute old software with modern and improve some commands.
 alias vi='vim'
 alias rename='perl-rename'
-alias grep='grep --color=auto'
 alias exa=' exa --git'
+alias diff='colordiff'
+alias grep='grep --color=auto'
+alias egrep='egrep --color=auto'
+alias fgrep='fgrep --color=auto'
 
 # ls related
 # all command start with space so they are not written in history
