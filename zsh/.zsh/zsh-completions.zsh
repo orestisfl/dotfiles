@@ -1,7 +1,6 @@
 # https://github.com/sorin-ionescu/prezto/blob/master/modules/completion/init.zsh
 # Load and initialize the completion system ignoring insecure directories.
 
-fpath=(~/.zsh/zsh-completions/src $fpath)
 autoload -Uz compinit && compinit -i
 
 # Use caching to make completion for commands such as dpkg and apt usable.
