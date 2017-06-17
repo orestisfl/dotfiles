@@ -381,6 +381,7 @@ you should place your code here."
  ;; If there is more than one, they won't work right.
  '(TeX-auto-local "./auto/")
  '(TeX-command-extra-options "--shell-escape")
+ '(helm-default-external-file-browser "thunar")
  '(ispell-local-dictionary "en_us_gb_large_el_gr")
  '(ispell-local-dictionary-alist
    (quote
