@@ -31,6 +31,7 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     html
      ;; octave
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
@@ -48,7 +49,7 @@ values."
      (latex :variables latex-enable-auto-fill t latex-enable-folding t)
      better-defaults
      git
-     markdown
+     (markdown :variables markdown-live-preview-engine 'vmd)
      ;; org
      ;; (shell :variables
      ;;        shell-default-height 30
@@ -361,6 +362,8 @@ you should place your code here."
   (setenv "GST_DEBUG_NO_COLOR" "1")
   (setenv "GST_DEBUG" "*:WARNING,vaapi:DEBUG,h264parse:DEBUG")
   (setq rtags-display-result-backend 'helm)
+  ;; Set default browser to chromium.
+  (setq browse-url-browser-function 'browse-url-chromium)
   )
 
 (defun switch-to-us ()
