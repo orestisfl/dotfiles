@@ -40,8 +40,9 @@ values."
      helm
      auto-completion
      (c-c++ :variables c-c++-enable-clang-support t)
-     ycmd
-     gtags
+     mineo-rtags
+     ;; ycmd
+     ;; gtags
      semantic
      emacs-lisp
      (latex :variables latex-enable-auto-fill t latex-enable-folding t)
@@ -315,9 +316,9 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
-  (setq ycmd-force-semantic-completion t)
+  ;; (setq ycmd-force-semantic-completion t)
   )
-(set-variable 'ycmd-server-command (list "python3" (file-truename "~/bin/ycmd/ycmd")))
+;; (set-variable 'ycmd-server-command (list "python3" (file-truename "~/bin/ycmd/ycmd")))
 
 (defun my-jump-to-tag ()
   (interactive)
@@ -355,6 +356,7 @@ you should place your code here."
   (setq ispell-really-hunspell t)
   ;; Magit
   (setq magit-repository-directories '("~/gst/master/"))
+  (setq rtags-display-result-backend 'helm)
   )
 
 (defun switch-to-us ()
