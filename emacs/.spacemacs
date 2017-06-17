@@ -56,6 +56,7 @@ values."
      (spell-checking :variables spell-checking-enable-by-default nil)
      syntax-checking
      ;; version-control
+     (evil-snipe :variables evil-snipe-enable-alternate-f-and-t-behaviors t)
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
