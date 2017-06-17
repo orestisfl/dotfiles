@@ -196,7 +196,7 @@ values."
    ;; auto-save the file in-place, `cache' to auto-save the file to another
    ;; file stored in the cache directory and `nil' to disable auto-saving.
    ;; (default 'cache)
-   dotspacemacs-auto-save-file-location 'cache
+   dotspacemacs-auto-save-file-location 'original
    ;; Maximum number of rollback slots to keep in the cache. (default 5)
    dotspacemacs-max-rollback-slots 5
    ;; If non nil, `helm' will try to minimize the space it uses. (default nil)
@@ -307,7 +307,7 @@ values."
    dotspacemacs-configuration-layers '((auto-completion :variables auto-completion-enable-help-tooltip t))
    ;; Don't use tabs for indentation.
    indent-tabs-mode nil
-   tab-width 4
+   dotspacemacs-autosave-file-directly t
    ))
 
 (defun dotspacemacs/user-init ()
