@@ -46,7 +46,7 @@ values."
      semantic
      emacs-lisp
      (latex :variables latex-enable-auto-fill t latex-enable-folding t)
-     ;; better-defaults
+     better-defaults
      git
      markdown
      ;; org
