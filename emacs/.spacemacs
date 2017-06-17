@@ -357,6 +357,9 @@ you should place your code here."
   (setq ispell-really-hunspell t)
   ;; Magit
   (setq magit-repository-directories '("~/gst/master/"))
+  ;; GST_DEBUG variables
+  (setenv "GST_DEBUG_NO_COLOR" "1")
+  (setenv "GST_DEBUG" "*:WARNING,vaapi:DEBUG,h264parse:DEBUG")
   (setq rtags-display-result-backend 'helm)
   )
 
