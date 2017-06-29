@@ -51,11 +51,6 @@ compton --config ~/.config/compton.conf&
 eval "$(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)"
 export SSH_AUTH_SOCK
 guake&
-# Auto-lock after some time.
-xautolock -locker "$HOME/bin/lock.sh" -time "${AUTOLOCK_TIME}"&
-# Auto-lock after suspend.
-# https://wiki.archlinux.org/index.php/Power_management#xss-lock
-xss-lock -- "$HOME/bin/lock.sh"&
 unclutter&  # Hide mouse pointer on inactivity.
 keepassxc&  # Start password manager.
 /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1&  # Polkit authentication agent.
