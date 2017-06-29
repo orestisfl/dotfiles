@@ -19,7 +19,7 @@ NOTIFY=yes
 # libnotify. No setting or commented out will show a simply percentage but
 # a setting will convert the percentage to a progress-bar in libnotify.
 #
-BARCHART=yes
+# BARCHART=yes
 
 # Use KDE OSD notification. Set to any value to enable this feature.
 #KDE_OSD=yes
