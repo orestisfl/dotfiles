@@ -1,3 +1,4 @@
+#!/bin/sh
 export AUTOLOCK_TIME=7
 export LOCK_RESOLUTION="1366*768"
 

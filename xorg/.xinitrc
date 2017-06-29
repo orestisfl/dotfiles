@@ -38,8 +38,8 @@ if [ -d /etc/X11/xinit/xinitrc.d ] ; then
  unset f
 fi
 
-source ~/.xinit-local.sh
-$HOME/bin/generate-i3-config.sh
+source "$HOME/.xinit-local.sh"
+"$HOME/bin/generate-i3-config.sh"
 
 ~/bin/rand_wall.sh&
 urxvtd -q -f -o&  # start urxvtd terminal daemon
@@ -48,11 +48,11 @@ numlockx&  # Enable numlock on start.
 thunar --daemon&  # Thunar file manager as daemon.
 compton --config ~/.config/compton.conf&
 # Gnome Keyring Daemon.
-eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
+eval "$(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)"
 export SSH_AUTH_SOCK
 guake&
 # Auto-lock after some time.
-xautolock -locker '~/bin/lock.sh' -time ${AUTOLOCK_TIME}&
+xautolock -locker "$HOME/bin/lock.sh" -time "${AUTOLOCK_TIME}"&
 # Auto-lock after suspend.
 # https://wiki.archlinux.org/index.php/Power_management#xss-lock
 xss-lock -- "$HOME/bin/lock.sh"&
