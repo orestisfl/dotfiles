@@ -46,3 +46,5 @@ alias sysstop="sudo systemctl stop"
 alias sysenable="sudo systemctl enable"
 alias sysdisable="sudo systemctl disable"
 alias cgrep="grep --exclude=tags --exclude-dir=.git --exclude-dir=.idea --binary-files=without-match --recursive --line-number --initial-tab"
+
+alias myconfig="./autogen.sh --enable-gcov --nocheck --noconfigure && ./configure --disable-examples --enable-gobject-cast-checks=yes --enable-glib-asserts=yes --disable-wayland --disable-gtk-doc{-html,-pdf,} --enable-gcov --enable-glib-asserts=yes --disable-mxf"
