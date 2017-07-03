@@ -101,3 +101,32 @@ slash-backward-kill-word() {
     zle backward-kill-word
 }
 zle -N slash-backward-kill-word
+
+# C-e: open file with mimeopen
+# C-c: cd to dirname of file
+# Enter: open with xdg-open
+fo(){
+    local out ret key file
+
+    IFS=$'\n' out=($(fzf-tmux --query="$LBUFFER" --exit-0 --expect=ctrl-e,ctrl-c,ctrl-o))
+    ret=$?
+    key=$(head -1 <<< "$out")
+    file=$(head -2 <<< "$out" | tail -1)
+    if [ -n "$file" ]; then
+        # zle redisplay
+        # typeset -f zle-line-init >/dev/null && zle zle-line-init
+        if [ "$key" = ctrl-e ]; then
+            BUFFER="mimeopen -a $file"
+            zle accept-line
+        elif [ "$key" = ctrl-c ]; then
+            cd "$(dirname "$file")"
+        elif [ "$key" = ctrl-o ]; then
+            true
+        else
+            launch xdg-open "$file"
+        fi
+        zle reset-prompt
+    fi
+    return $ret
+}
+zle -N fo
