@@ -10,7 +10,7 @@
 [credential]
     helper = /usr/lib/git-core/git-credential-gnome-keyring
 [merge]
-    conflictstyle = diff3
+	conflictStyle = diff3
 [rerere]
     enabled = true
 [alias]
