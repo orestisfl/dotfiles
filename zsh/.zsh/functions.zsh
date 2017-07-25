@@ -130,3 +130,7 @@ fo(){
     return $ret
 }
 zle -N fo
+
+function gstfilter(){
+    awk '{for(i=4; i<NF; i++) printf "%s",$i OFS; if(NF) printf "%s",$NF; printf ORS}' | sed 's/\b0x.\+\b//g'
+}
