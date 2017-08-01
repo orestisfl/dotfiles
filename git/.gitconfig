@@ -31,3 +31,5 @@
     insteadOf = aur://
 [log]
     decorate = auto
+[bz]
+	browser = firefox3
