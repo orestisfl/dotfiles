@@ -42,6 +42,7 @@ values."
      auto-completion
      (c-c++ :variables c-c++-enable-clang-support t)
      mineo-rtags
+     irony-mode
      ;; ycmd
      ;; gtags
      semantic
@@ -343,6 +344,9 @@ you should place your code here."
   (global-centered-cursor-mode t) ; Enable centered mode by default.
   (setq-default tab-width 4)
   (global-company-mode t)
+  (setq company-idle-delay 0)
+  (define-key c-mode-map [(tab)] 'company-complete)
+  (define-key c++-mode-map [(tab)] 'company-complete)
   ;; Tex settings
   (setq TeX-engine 'xetex) ; Use xetex.
   (setq TeX-PDF-mode t) ; Generate pdf output instead of dvi.
