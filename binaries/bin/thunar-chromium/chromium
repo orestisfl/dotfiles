@@ -1,0 +1,3 @@
+#!/bin/bash
+export PATH="$HOME/bin/thunar-chromium:$PATH"
+/usr/bin/chromium $@
