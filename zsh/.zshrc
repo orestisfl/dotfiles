@@ -39,9 +39,6 @@ export FZF_COMPLETION_TRIGGER='~~'
 source /usr/share/fzf/completion.zsh
 source /usr/share/fzf/key-bindings.zsh
 
-# https://github.com/rimraf/k
-source /usr/share/zsh/plugins/zsh-k/k.sh
-
 # https://github.com/zsh-users/zsh-syntax-highlighting
 # sudo pacman -S zsh-syntax-highlighting
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
