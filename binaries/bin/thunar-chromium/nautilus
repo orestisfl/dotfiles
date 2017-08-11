@@ -1,5 +1,5 @@
 # !/usr/bin/bash
 if [ "$1" = "--version" ]; then
         echo "GNOME nautilus 3.14.3"; else
-        ~/bin/thunar-open-file.py $1
+        ~/bin/thunar-open-file.py "$@"
 fi
