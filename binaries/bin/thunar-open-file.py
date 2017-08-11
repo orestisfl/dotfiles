@@ -1,10 +1,9 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # https://unix.stackexchange.com/a/341829/63367
 import dbus
 import os
 import sys
-import urlparse
-import urllib
+import urllib.parse
 
 
 bus = dbus.SessionBus()
@@ -24,11 +23,11 @@ def display_folder_and_select(uri, filename, display='', startup_id=''):
 
 
 def path_to_url(path):
-    return urlparse.urljoin('file:', urllib.pathname2url(path))
+    return urllib.parse.urljoin('file:', urllib.parse.quote(path))
 
 
 def url_to_path(url):
-    return urlparse.urlparse(url).path
+    return urllib.parse.urlparse(url).path
 
 
 def main(args):
