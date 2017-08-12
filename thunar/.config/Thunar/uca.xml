@@ -121,4 +121,13 @@
 	<other-files/>
 	<text-files/>
 </action>
+<action>
+	<icon>mkvmergeGUI</icon>
+	<name>4gb split</name>
+	<unique-id>1502548059689813-3</unique-id>
+	<command>~/bin/mkvmerge-4gb-split.sh %f</command>
+	<description>Use mkvmerge to split video file in 4GB chunks</description>
+	<patterns>*</patterns>
+	<video-files/>
+</action>
 </actions>
