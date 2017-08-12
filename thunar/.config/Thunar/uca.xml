@@ -130,4 +130,14 @@
 	<patterns>*</patterns>
 	<video-files/>
 </action>
+<action>
+	<icon>mkvmergeGUI</icon>
+	<name>extract subtitles</name>
+	<unique-id>1502571079623929-9</unique-id>
+	<command>~/bin/mkv-extract-subs.py --progress --notify %F</command>
+	<description></description>
+	<patterns>*</patterns>
+	<startup-notify/>
+	<video-files/>
+</action>
 </actions>
