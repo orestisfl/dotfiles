@@ -1,0 +1,2 @@
+[filter "removeSpacemacsPackages"]
+	clean = "perl -0777 -pe 's/\\(package-selected-packages\\n\\s*\\(quote\\n\\s*\\(.*?\\)\\)\\)/\\(package-selected-packages\\n  \\ (quote\\n    \\(\\)\\)\\)/igs'"
