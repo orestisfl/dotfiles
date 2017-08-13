@@ -1,2 +1,4 @@
 [filter "removeSpacemacsPackages"]
 	clean = "perl -0777 -pe 's/\\(package-selected-packages\\n\\s*\\(quote\\n\\s*\\(.*?\\)\\)\\)/\\(package-selected-packages\\n  \\ (quote\\n    \\(\\)\\)\\)/igs'"
+[filter "removeSmplayerHistory"]
+    clean = "sed -E 's/recents=.*?/recents=/; s/toolbars_state=.*?/toolbars_state=/; s/count=.*?/count=/'"
