@@ -30,7 +30,7 @@ echo "Executing borg prune:"
 # operation to this machine's archives and not apply to other machine's archives also.
 borg prune --list --verbose --stats --show-rc \
     --prefix "$PREFIX"                        \
-    --keep-within=14d                         \
+    --keep-within=10d                         \
     --keep-weekly=3                           \
     --keep-monthly=12                         \
     --keep-yearly=50                          \
