@@ -66,13 +66,15 @@ def subtitle_track_by_number(subtitle_tracks, numbers):
 def construct_mkvextract_cmd(filename, tracks):
     basename, _ = os.path.splitext(os.path.basename(filename))
     tracks_str = " ".join(track_argument(basename, track) for track in tracks)
-    return f"mkvextract tracks '{filename}' {tracks_str}"
+    filename = shellquote(filename)
+    return f"mkvextract tracks {filename} {tracks_str}"
 
 
 def track_argument(basename, track):
     number = track.number - 1
     filename = subtitle_filename(basename, track)
-    return f"'{number}:{filename}'"
+    return shellquote(str(number) + ":" + filename)
+    # return f"{number}:{filename}"
 
 
 def subtitle_filename(basename, track):
@@ -82,6 +84,12 @@ def subtitle_filename(basename, track):
     if track.language:
         extra_text += "-" + track.language
     return basename + extra_text + ".srt"
+
+
+# https://stackoverflow.com/a/35857/3430986
+# TODO: shlex.quote
+def shellquote(s):
+    return "'" + s.replace("'", "'\\''") + "'"
 
 
 if __name__ == "__main__":
