@@ -24,7 +24,8 @@ URxvt*scrollTtyKeypress: true
 URxvt.secondaryScreen: 1
 URxvt.secondaryScroll: 0
 
-URxvt.perl-ext-common: default,clipboard,resize-font,fork-here
+URxvt.perl-ext-common: default,clipboard,resize-font,fork-here,keyboard-select
+URxvt.keysym.Control-Escape: perl:keyboard-select:activate
 URxvt.keysym.Control-Return: perl:fork-here:fork-at-cwd
 URxvt.resize-font.smaller: C-Down
 URxvt.resize-font.bigger: C-Up
