@@ -1,0 +1,16 @@
+#! perl
+
+sub on_child_start {
+	my $shell = $_[1];
+	$_[0]->{fork_here_shell} = $shell;
+	()
+}
+
+sub on_user_command {
+	if ($_[1] eq "fork-here:fork-at-cwd") {
+		my $shell = $_[0]->{fork_here_shell};
+		my $pwd = readlink("/proc/$shell/cwd");
+		$_[0]->exec_async("urxvtc", "-cd", $pwd);
+	}
+	()
+}
