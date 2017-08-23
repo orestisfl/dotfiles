@@ -16,6 +16,13 @@ set scrolloff=7  " Set 7 lines to the cursor - when moving vertically using j/k.
 set number  " Both number & relativenumber => hybrid mode
 set relativenumber
 
+" vimdiff colors
+" https://stackoverflow.com/a/17183382/3430986
+highlight DiffAdd    cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
+highlight DiffDelete cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
+highlight DiffChange cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
+highlight DiffText   cterm=bold ctermfg=10 ctermbg=88 gui=none guifg=bg guibg=Red
+
 set noshowmode
 set showcmd
 
