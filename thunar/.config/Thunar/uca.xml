@@ -93,10 +93,10 @@
 <action>
 	<icon>libreoffice-main</icon>
 	<name>Convert to pdf</name>
-	<unique-id>1480936390268107-4</unique-id>
+	<unique-id>1503412915302878-1</unique-id>
 	<command>libreoffice --convert-to pdf %F</command>
 	<description>Convert file to pdf using libreoffice</description>
-	<patterns>*.ppt;*.pptx;*.doc;*.docx;*.txt</patterns>
+	<patterns>*.ppt;*.pptx;*.doc;*.docx;*.txt;*.xls</patterns>
 	<startup-notify/>
 	<other-files/>
 	<text-files/>
