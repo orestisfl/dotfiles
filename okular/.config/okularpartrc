@@ -9,5 +9,8 @@ TextHinting=Enabled
 [General]
 ShellOpenFileInTabs=true
 
+[Main View]
+ShowLeftPanel=false
+
 [PageView]
 MouseMode=TextSelect
