@@ -1,9 +1,7 @@
 #!/bin/bash -e
 source ~/bin/shared/lock.sh
 
-$HOME/.screenlayout/1920-1080-radeon-single.sh&
 eval "$SCREENSHOT_CMD"
 xset dpms force suspend
 eval "$I3LOCK_CMD"
-$HOME/.screenlayout/1920-1080-radeon-dual.sh&
 rm "$SCREEN"
