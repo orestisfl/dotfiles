@@ -3,3 +3,18 @@ set $my_main_screen DVI-D-0
 set $my_alt_screen "DVI-I-1"
 
 mouse_warping none
+
+workspace 1 output $my_main_screen
+workspace 3 output $my_main_screen
+workspace 5 output $my_main_screen
+workspace 7 output $my_main_screen
+workspace 9 output $my_main_screen
+workspace 11 output $my_main_screen
+workspace 13 output $my_main_screen
+workspace 2 output $my_alt_screen
+workspace 4 output $my_alt_screen
+workspace 6 output $my_alt_screen
+workspace 8 output $my_alt_screen
+workspace 10 output $my_alt_screen
+workspace 12 output $my_alt_screen
+workspace 14 output $my_alt_screen
