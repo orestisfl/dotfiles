@@ -2,6 +2,7 @@
 source ~/bin/shared/lock.sh
 
 eval "$SCREENSHOT_CMD"
+xkb-switch -s us
 xset dpms force suspend
 eval "$I3LOCK_CMD"
 rm "$SCREEN"
