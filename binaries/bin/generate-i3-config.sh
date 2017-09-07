@@ -10,5 +10,5 @@ do
     cat "${f}" >> "${i3_config}"
 done
 
-random_style=$(find "$i3_themes" -type f | shuf -n 1)
+random_style=$(find "$i3_themes/" -type f | shuf -n 1)
 i3-style "${random_style}" -o "${i3_config}"
