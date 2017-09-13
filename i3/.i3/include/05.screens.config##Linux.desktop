@@ -18,3 +18,4 @@ workspace 8 output $my_alt_screen
 workspace 10 output $my_alt_screen
 workspace 12 output $my_alt_screen
 workspace 14 output $my_alt_screen
+workspace testing output $my_alt_screen
