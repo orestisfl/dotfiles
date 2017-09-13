@@ -6,7 +6,7 @@ export DESKTOP_SESSION=gnome
 export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
 export GTK_OVERLAY_SCROLLING=0
 export STEAM_RUNTIME=0
-D=100
+D="${D:-100}"
 export RXVT_SOCKET=/tmp/urxvtd-$D.socket
 
 xephyr_name(){
@@ -25,8 +25,8 @@ finish() {
     echo "Trapped CTRL-C: killing i3, xephyr"
     i3-msg exit
     xephyr_kill
-    kill $wall_pid
-    kill $urxvtd_pid # Just in case
+    kill "$wall_pid"
+    kill "$urxvtd_pid" # Just in case
     exit 0
 }
 
@@ -34,6 +34,7 @@ set -m
 
 Xephyr -name "$(xephyr_name)" -terminate -br -ac -noreset -screen 1680x995 :$D &
 export DISPLAY=:$D
+echo "Ran Xephyr with :display $DISPLAY"
 sleep 0.7 # Wait for Xephyr.
 
 userresources=$HOME/.Xresources
@@ -57,11 +58,15 @@ wall_pid=$!
 
 cp ~/.i3/config /tmp/i3.config
 trap finish INT
-echo "Passing args '$@' to i3"
-# "$HOME/Documents/programming/i3/build/i3" -c /tmp/i3.config -V "$@"&
-gdb --args "$HOME/Documents/programming/i3/build/i3" -c /tmp/i3.config -V "$@"
-# while xephyr_pid > /dev/null
-# do
-wait $!
-# done
+echo "Passing args '$*' to i3"
+if [[ -n "$ISSUE_I3" ]]; then
+    i3 --moreversion 2>&- || i3 --version
+    "$HOME/Documents/programming/i3/build/i3" -c ~/Desktop/default.config --shmlog-size=26214400 "$@"
+    i3-dump-log | vipe | bzip2 -c | curl --data-binary @- http://logs.i3wm.org
+elif [[ -n "$GDB_I3" ]]; then
+    gdb --args "$HOME/Documents/programming/i3/build/i3" -c /tmp/i3.config -V -d all "$@"
+else
+    "$HOME/Documents/programming/i3/build/i3" -c /tmp/i3.config -V "$@" 2>&1 &
+    wait $!
+fi
 finish
