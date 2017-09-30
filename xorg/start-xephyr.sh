@@ -62,7 +62,7 @@ cp ~/.i3/config /tmp/i3.config
 trap finish INT
 echo "Passing args '$*' to i3"
 if [[ -n "$ISSUE_I3" ]]; then
-    i3 --moreversion 2>&- || i3 --version
+    (i3 --moreversion 2>&- || i3 --version) > /tmp/version
     i3 -c ~/Desktop/default.config --shmlog-size=26214400 "$@"
     i3-dump-log | vipe | bzip2 -c | curl --data-binary @- http://logs.i3wm.org
 elif [[ -n "$GDB_I3" ]]; then
