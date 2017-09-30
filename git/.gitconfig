@@ -33,3 +33,5 @@
     decorate = auto
 [bz]
 	browser = firefox3
+[commit]
+	verbose = true
