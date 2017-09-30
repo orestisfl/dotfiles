@@ -19,3 +19,5 @@ workspace 10 output $my_alt_screen
 workspace 12 output $my_alt_screen
 workspace 14 output $my_alt_screen
 workspace testing output $my_alt_screen
+
+# fake-outputs 800x500+0+0,800x500+800+0,800x500+800+500,800x500+0+500
