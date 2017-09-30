@@ -12,7 +12,7 @@ cd "${working_dir}"
 
 last_linked=''
 for tracked_file in $(git ls-files | sort); do
-    #; process both the path, and it's parent directory
+    #; process both the path, and its parent directory
     for alt_path in "$tracked_file" "${tracked_file%/*}"; do
         if [ -e "$alt_path" ] ; then
             if [[ $alt_path =~ $match ]] ; then
