@@ -4,5 +4,5 @@ then
     xdotool keyup Return
     xdotool key --clearmodifiers Control_L+Return
 else
-    i3-sensible-terminal
+    exec i3-sensible-terminal
 fi
