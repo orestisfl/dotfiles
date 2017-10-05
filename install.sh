@@ -7,4 +7,4 @@ cd "${dotfiles}"
 
 ./stow.sh
 ./create-alt-links.sh
-zenbu "${host}"
+~/.pythonuserbase/bin/zenbu "${host}"
