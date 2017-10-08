@@ -55,7 +55,7 @@ guake&
 unclutter&  # Hide mouse pointer on inactivity.
 ( sleep 5; keepassxc& )& # Start password manager.
 /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1&  # Polkit authentication agent.
-udiskie -2 --automount --notify --smart-tray&  # Automatic mount.
 ~/bin/watch-tumbler.sh&  # Script to watch tumbler misbehaviour.
 
+export PATH="$HOME/Documents/programming/i3/build:$PATH"
 exec i3
