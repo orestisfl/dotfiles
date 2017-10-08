@@ -37,7 +37,7 @@ set -m
 Xephyr -name "$(xephyr_name)" -terminate -br -ac -noreset -screen 1680x995 :$D &
 export DISPLAY=:$D
 echo "Ran Xephyr with :display $DISPLAY"
-sleep 0.7 # Wait for Xephyr.
+inotifywait --timeout 1 /tmp/.X11-unix/
 
 userresources=$HOME/.Xresources
 sysresources=/etc/X11/xinit/.Xresources
