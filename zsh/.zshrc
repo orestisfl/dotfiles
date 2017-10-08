@@ -1,4 +1,3 @@
-export TERM=xterm-256color
 # Sane opts from https://github.com/willghatch/zsh-saneopt/
 # Load in the start so that they can get overriden later.
 bindkey -e # default keymap, first command so that it doesn't override anything.

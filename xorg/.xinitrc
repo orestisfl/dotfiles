@@ -1,4 +1,5 @@
 #!/bin/sh
+export TERM=xterm-256color
 export VISUAL=vim
 export TERMINAL=urxvtc
 export DESKTOP_SESSION=gnome
