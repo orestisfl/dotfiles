@@ -7,7 +7,7 @@ disable-msg=W0142,E1101
 [REPORTS]
 # set the output format. Available formats are text, parseable, colorized and
 # html
-output-format=html
+output-format=colorized
 
 [MISCELLANEOUS]
 # List of note tags to take in consideration, separated by a comma.
