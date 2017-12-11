@@ -24,6 +24,7 @@
     c = commit --verbose
     last = log -1 HEAD --pretty=fuller
     home = rev-parse --show-toplevel
+    rpr = "!f() { git rebase --autosquash -i $(git merge-base $(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@') $(git rev-parse --abbrev-ref HEAD)); }; f"
 [grep]
     extendRegexp = true
     lineNumber = true
