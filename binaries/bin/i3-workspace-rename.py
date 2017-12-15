@@ -10,5 +10,5 @@ for workspace in workspaces:
         num = workspace['num']
         print(f"Renaming workspace number {num}")
         assert(num > 0)
-        new_name = subprocess.check_output("zenity --entry", shell=True).decode()
-        i3.command(f"rename workspace to {num}:{new_name}")
+        new_name = subprocess.check_output('zenity --entry', shell=True).decode().strip()
+        i3.command(f'rename workspace to "{num}:{new_name}"')
