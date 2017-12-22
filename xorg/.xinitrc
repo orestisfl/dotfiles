@@ -57,5 +57,4 @@ unclutter&  # Hide mouse pointer on inactivity.
 /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1&  # Polkit authentication agent.
 ~/bin/watch-tumbler.sh&  # Script to watch tumbler misbehaviour.
 
-export PATH="$HOME/Documents/programming/i3/build:$PATH"
 exec i3
