@@ -22,7 +22,7 @@ function add_option() {
 # Fill options.
 add_option_if_file "Toggle screens" "$HOME/.screenlayout/toggle-radeon.sh"
 add_option_if_file "Rename workspace" "$HOME/bin/i3-workspace-rename.py"
-add_option "Sleep monitor" "xset dpms force suspend"
+add_option "Sleep monitor" "xset dpms force suspend; sleep 0.1; xset dpms force suspend"
 add_option_if_file "Lock" "$HOME/bin/lock.sh"
 add_option "Exit" "i3-msg exit"
 add_option "Suspend system" "systemctl suspend"
