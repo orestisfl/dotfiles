@@ -19,8 +19,6 @@ Plugin 'haya14busa/incsearch.vim'
 Plugin 'tpope/vim-surround'
 " Repeat plugin maps with "."
 Plugin 'tpope/vim-repeat'
-" A code-completion engine.
-Plugin 'Valloric/YouCompleteMe'
 " fzf + vim.
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
