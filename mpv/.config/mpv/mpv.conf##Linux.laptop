@@ -3,3 +3,7 @@ force-window=yes
 ytdl-format=bestvideo[height<=?720]+bestaudio/best
 sub-font-size=30  # default 55
 script-opts=osc-deadzonesize=0.8
+
+[big-cache]
+cache=200000
+demuxer-readahead-secs=20
