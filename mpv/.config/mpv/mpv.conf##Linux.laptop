@@ -1,3 +1,4 @@
 profile=opengl-hq
 force-window=yes
 ytdl-format=bestvideo[height<=?720]+bestaudio/best
+sub-font-size=30  # default 55
