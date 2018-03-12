@@ -3,3 +3,4 @@ profile=opengl-hq
 ytdl-format=bestvideo[height<=?1080][vcodec!=vp9]+bestaudio/best
 sub-ass-force-margins=yes
 sub-font-size=30  # default 55
+script-opts=osc-deadzonesize=0.8
