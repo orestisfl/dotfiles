@@ -2,7 +2,7 @@
 	name = Orestis Floros
     email = orestisf1993@gmail.com
 [color]
-    ui = true
+	ui = true
 [diff]
     tool = meld
 [format]
@@ -36,3 +36,10 @@
 	browser = firefox3
 [commit]
 	verbose = true
+[color "diff"]
+	meta = yellow
+	frag = magenta bold
+	commit = yellow bold
+	old = red bold
+	new = green bold
+	whitespace = red reverse
