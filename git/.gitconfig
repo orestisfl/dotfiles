@@ -25,6 +25,10 @@
     home = rev-parse --show-toplevel
     rpr = "!f() { git rebase --autosquash -i $(git merge-base $(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@') $(git rev-parse --abbrev-ref HEAD)); }; f"
     fetchpr = "!f() { git fetch ${2-origin} pull/$1/head:pr-$1; }; f"
+    d = diff \
+      --minimal \
+      --word-diff=color \
+      --word-diff-regex='([0-9@A-Za-z]+|[^0-9@A-Za-z()]+|[()])'
 [grep]
     extendRegexp = true
     lineNumber = true
