@@ -409,8 +409,8 @@ you should place your code here."
   (setenv "GST_DEBUG_NO_COLOR" "1")
   (setenv "GST_DEBUG" "*:WARNING,vaapi:DEBUG,h264parse:DEBUG")
   (setq rtags-display-result-backend 'helm)
-  ;; Set default browser to chromium.
-  (setq browse-url-browser-function 'browse-url-chromium)
+  ;; Set default browser to firefox.
+  (setq browse-url-browser-function 'browse-url-firefox)
   )
 
 (defun switch-to-us ()
