@@ -26,7 +26,7 @@ function swap_2_files(){
 }
 
 function rec_fix_trailing_whitespace(){
-    find . -type f -name "$1" -exec sed --in-place 's/[[:space:]]\+$//' {} \+
+    find . -name '.git' -prune -o -type f -name "$1" -exec sed --in-place 's/[[:space:]]\+$//' {} \+
 }
 
 function git_fix_whitespace_diff(){
