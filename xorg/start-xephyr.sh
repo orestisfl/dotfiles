@@ -1,11 +1,6 @@
 #!/bin/bash -x
 export VISUAL=vim
 export TERMINAL=urxvt
-export DESKTOP_SESSION=gnome
-# export QT_STYLE_OVERRIDE=GTK+  # Tell Qt to use GTK style
-export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
-export GTK_OVERLAY_SCROLLING=0
-export STEAM_RUNTIME=0
 D="${D:-100}"
 export RXVT_SOCKET=/tmp/urxvtd-$D.socket
 i3_path="$HOME/Documents/programming/i3"
@@ -52,7 +47,6 @@ if [ -f "$userresources" ]; then
     xrdb -merge "$userresources"
 fi
 
-# "$HOME/bin/generate-i3-config.sh"
 rm -f "$RXVT_SOCKET"
 urxvtd --quiet --fork --opendisplay&
 urxvtd_pid=$!
