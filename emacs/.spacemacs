@@ -29,7 +29,8 @@ This function should only modify configuration layer settings."
    dotspacemacs-configuration-layer-path '()
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(perl5
+   '(rust
+     perl5
      python
      html
      ;; octave
@@ -40,8 +41,7 @@ This function should only modify configuration layer settings."
      ;; ----------------------------------------------------------------
      helm
      auto-completion
-     (c-c++ :variables c-c++-enable-clang-support t)
-     mineo-rtags
+     (c-c++ :variables c-c++-enable-clang-support t c-c++-enable-rtags-support t)
      irony-mode
      ;; ycmd
      ;; gtags
@@ -386,10 +386,6 @@ you should place your code here."
   ;; (define-key evil-motion-state-map [C-i] 'evil-jump-forward)  ; https://github.com/syl20bnr/spacemacs/issues/5050
   (global-centered-cursor-mode t) ; Enable centered mode by default.
   (setq-default tab-width 4)
-  (global-company-mode t)
-  (setq company-idle-delay 0)
-  (define-key c-mode-map [(tab)] 'company-complete)
-  (define-key c++-mode-map [(tab)] 'company-complete)
   ;; Tex settings
   (setq TeX-engine 'xetex) ; Use xetex.
   (setq TeX-PDF-mode t) ; Generate pdf output instead of dvi.
@@ -403,11 +399,6 @@ you should place your code here."
   ;; (setq reftex-plug-into-AUCTeX t)
   ;; Dictionary.
   (setq ispell-really-hunspell t)
-  ;; Magit
-  (setq magit-repository-directories '("~/gst/master/"))
-  ;; GST_DEBUG variables
-  (setenv "GST_DEBUG_NO_COLOR" "1")
-  (setenv "GST_DEBUG" "*:WARNING,vaapi:DEBUG,h264parse:DEBUG")
   (setq rtags-display-result-backend 'helm)
   ;; Set default browser to firefox.
   (setq browse-url-browser-function 'browse-url-firefox)
