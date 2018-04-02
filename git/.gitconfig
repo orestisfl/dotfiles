@@ -1,6 +1,7 @@
 [user]
 	name = Orestis Floros
     email = orestisf1993@gmail.com
+	signingkey = E9AD9F32E401E38F
 [color]
 	ui = true
 [diff]
@@ -40,6 +41,7 @@
 	browser = firefox3
 [commit]
 	verbose = true
+	gpgsign = true
 [color "diff"]
 	meta = yellow
 	frag = magenta bold
