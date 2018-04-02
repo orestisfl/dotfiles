@@ -8,6 +8,7 @@ alias pipupg="pip3 freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 
 
 # Subtitute old software with modern and improve some commands.
 alias vi='vim'
+alias vim='nvim'
 alias rename='perl-rename'
 alias exa=' exa --git'
 alias diff='colordiff'

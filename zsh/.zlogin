@@ -22,7 +22,7 @@
 #  fi
 #fi
 
-export EDITOR=vim
+export EDITOR=nvim
 # NPM packages in homedir
 export NPM_PACKAGES="$HOME/.npm-packages"
 

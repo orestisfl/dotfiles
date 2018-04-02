@@ -24,7 +24,7 @@ source /usr/share/doc/pkgfile/command-not-found.zsh
 
 # https://github.com/djui/alias-tips
 export ZSH_PLUGINS_ALIAS_TIPS_TEXT="You know you have an alias for that, right? "
-export ZSH_PLUGINS_ALIAS_TIPS_EXCLUDES="vi"
+export ZSH_PLUGINS_ALIAS_TIPS_EXCLUDES="vi vim"
 source ~/.zsh/alias-tips/alias-tips.plugin.zsh
 
 # https://github.com/sorin-ionescu/prezto/blob/master/modules/completion/init.zsh
