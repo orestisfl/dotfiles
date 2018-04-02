@@ -36,8 +36,5 @@ export PATH="$PATH:$NPM_PACKAGES/bin"
 unset MANPATH  # delete if you already modified MANPATH elsewhere in your configuration
 export MANPATH="$NPM_PACKAGES/share/man:$(manpath)"
 
-export PIP_USER=yes
-export PYTHONUSERBASE="$HOME/.pythonuserbase"
-
 [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx
 export TERM=linux
