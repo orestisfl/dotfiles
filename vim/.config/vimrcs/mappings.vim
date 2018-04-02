@@ -9,8 +9,6 @@ nnoremap <leader>o :Files<cr>
 " nnoremap <leader>t :Tags<cr>
 " History
 nnoremap <leader>h :History<cr>
-" Ycm
-nnoremap <leader>y :YcmCompleter<space>
 
 " To open a new empty buffer
 " nmap <leader>t :enew<cr>
@@ -37,13 +35,6 @@ nnoremap <C-Right> <C-W><C-L>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-Left> <C-W><C-H>
 nnoremap <C-H> <C-W><C-H>
-
-" YCM mappings
-nnoremap <leader>gh :YcmCompleter GoToInclude<CR>
-nnoremap <leader>gdec :YcmCompleter GoToDeclaration<CR>
-nnoremap <leader>gdef :YcmCompleter GoToDefinition<CR>
-nnoremap <leader>g :YcmCompleter GoTo<CR>
-nnoremap <leader>gf :YcmCompleter GoToImprecise<CR>
 
 " Regex magix
 nnoremap / /\v

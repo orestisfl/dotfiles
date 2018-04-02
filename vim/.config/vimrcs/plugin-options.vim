@@ -20,8 +20,6 @@ nnoremap <leader>sc :SyntasticCheck<CR> :SyntasticToggleMode<CR>
 " ------------------- tagbar -----------------------
 " --------------------------------------------------
 nmap <silent> <leader>st :TagbarToggle<CR>
-" Uncomment to open tagbar automatically whenever possible
-"autocmd BufEnter * nested :call tagbar#autoopen(0)
 
 
 " --------------------------------------------------
@@ -52,14 +50,6 @@ map /  <Plug>(incsearch-forward)
 map ?  <Plug>(incsearch-backward)
 map g/ <Plug>(incsearch-stay)
 
-
-" --------------------------------------------------
-" ----------------- YouCompleteMe ------------------
-" --------------------------------------------------
-let g:ycm_path_to_python_interpreter = '/usr/bin/python3'
-let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
-
-let g:ycm_collect_identifiers_from_tags_files = 1
 
 " --------------------------------------------------
 " -------------- The-NERD-Commenter ----------------
