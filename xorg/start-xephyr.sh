@@ -1,7 +1,7 @@
 #!/bin/bash -x
 export VISUAL=vim
 export TERMINAL=urxvt
-D="${D:-100}"
+D="${D:-50}"
 export RXVT_SOCKET=/tmp/urxvtd-$D.socket
 i3_path="$HOME/Documents/programming/i3"
 i3_build="$i3_path/build"
