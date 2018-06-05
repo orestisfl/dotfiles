@@ -37,3 +37,5 @@ URxvt.clipboard.copycmd:  xsel -ib
 URxvt.clipboard.pastecmd: xsel -ob
 URxvt.cursorBlink: 1
 urxvt*urgentOnBell: false
+URxvt.fadeColor: #006370
+URxvt.fading: 10
