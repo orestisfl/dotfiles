@@ -38,7 +38,6 @@ alias git-is="git show \$(git log --pretty=oneline| fzf | awk '{print \$1}')"
 # Shortcuts
 alias ydl="youtube-dl -f best"
 alias ydl-music="youtube-dl -f bestaudio -x"
-alias aurupg='pacaur -Syu --ignore=$IGNOREPKGS'
 alias pacupg='sudo pacman -Syu'
 alias weather="curl wttr.in/Thessaloniki"
 alias sysstart="sudo systemctl start"
