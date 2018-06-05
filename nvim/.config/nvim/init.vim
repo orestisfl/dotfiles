@@ -2,8 +2,6 @@ set smartcase
 set number relativenumber
 set foldlevelstart=6
 
-noremap Y y$
-
 " Use the system clipboard
 set clipboard+=unnamedplus
 
@@ -24,17 +22,6 @@ source ~/.config/nvim/maps.vim
 "set termguicolors
 set background=dark
 colorscheme gruvbox
-
-" Emacs-like bindings in the command line from `:h emacs-keys`
-cnoremap <C-a>  <Home>
-cnoremap <C-b>  <Left>
-cnoremap <C-f>  <Right>
-cnoremap <C-d>  <Del>
-cnoremap <C-e>  <End>
-cnoremap <M-b>  <S-Left>
-cnoremap <M-f>  <S-Right>
-cnoremap <M-d>  <S-right><Delete>
-cnoremap <C-g> <C-c>
 
 " Turn backup off
 set nobackup

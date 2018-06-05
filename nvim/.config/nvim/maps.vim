@@ -12,3 +12,18 @@ nnoremap <Leader>pf :Files<CR>
 nnoremap <Leader><Leader> :Commands<CR>
 
 nnoremap <Leader>tt :TagbarToggle<CR>
+
+" Emacs-like bindings in the command line from `:h emacs-keys`
+cnoremap <C-a>  <Home>
+cnoremap <C-b>  <Left>
+cnoremap <C-f>  <Right>
+cnoremap <C-d>  <Del>
+cnoremap <C-e>  <End>
+cnoremap <M-b>  <S-Left>
+cnoremap <M-f>  <S-Right>
+cnoremap <M-d>  <S-right><Delete>
+cnoremap <C-g> <C-c>
+
+noremap Y y$
+
+set notimeout
