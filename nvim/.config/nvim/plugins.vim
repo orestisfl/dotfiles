@@ -37,6 +37,9 @@ Plug 'https://github.com/majutsushi/tagbar', { 'on': 'TagbarToggle' }
 " Vim syntax for i3 window manager config
 Plug 'https://github.com/PotatoesMaster/i3-vim-syntax'
 
+" Instant Markdown previews
+Plug 'https://github.com/suan/vim-instant-markdown', { 'for': 'markdown' }
+
 " Asynchronous linting and make framework for Neovim/Vim
 " Plug 'https://github.com/neomake/neomake'
 
