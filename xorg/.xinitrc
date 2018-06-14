@@ -1,6 +1,6 @@
 #!/bin/sh
 export TERM=xterm-256color
-export VISUAL=vim
+export VISUAL=nvim
 export TERMINAL=urxvtc
 export DESKTOP_SESSION=gnome
 # export QT_STYLE_OVERRIDE=GTK+  # Tell Qt to use GTK style
