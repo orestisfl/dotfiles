@@ -27,7 +27,7 @@ alias lc='lt -c'                                 # Lists sorted by date, most re
 
 # c: Copy to clipboard, v:Paste from clipboard
 alias c="xclip -in -selection clipboard"
-alias v="xclip -o"
+alias v="xclip -o | sed -e '\$a\'"
 
 # always run ipython inside current virtualenv
 alias ipy="python -c 'import IPython; IPython.terminal.ipapp.launch_new_instance()'"
