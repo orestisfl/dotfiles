@@ -47,7 +47,7 @@ urxvtd -q -f -o&  # start urxvtd terminal daemon
 numlockx&  # Enable numlock on start.
 # conky&
 thunar --daemon&  # Thunar file manager as daemon.
-compton --config ~/.config/compton.conf&
+allow_rgb10_configs=false compton --config ~/.config/compton.conf&
 # Gnome Keyring Daemon.
 eval "$(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)"
 export SSH_AUTH_SOCK
