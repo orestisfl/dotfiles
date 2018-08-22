@@ -15,6 +15,7 @@ alias diff='colordiff'
 alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
+alias ag='ag --pager=less'
 
 # ls related
 # all command start with space so they are not written in history
