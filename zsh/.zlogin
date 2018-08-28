@@ -2,6 +2,7 @@
 
 export EDITOR=nvim
 export VISUAL=nvim
+export SYSTEMD_EDITOR=nvim
 
 export PATH=$HOME/bin/exes:$PATH
 export PATH=$PATH:/usr/bin/core_perl
