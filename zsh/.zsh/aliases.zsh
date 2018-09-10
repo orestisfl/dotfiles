@@ -39,13 +39,7 @@ alias git-is="git show \$(git log --pretty=oneline| fzf | awk '{print \$1}')"
 # Shortcuts
 alias ydl="youtube-dl -f best"
 alias ydl-music="youtube-dl -f bestaudio -x"
-alias pacupg='sudo pacman -Syu'
 alias weather="curl wttr.in/Thessaloniki"
-alias sysstart="sudo systemctl start"
-alias sysstop="sudo systemctl stop"
-alias sysenable="sudo systemctl enable"
-alias sysdisable="sudo systemctl disable"
 alias cgrep="grep --exclude=tags --exclude-dir=.git --exclude-dir=.idea --binary-files=without-match --recursive --line-number --initial-tab"
 alias mksrcinfo='makepkg --printsrcinfo > .SRCINFO'
 
-alias myconfig="./autogen.sh --enable-gcov --nocheck --noconfigure && ./configure --disable-examples --enable-gobject-cast-checks=yes --enable-glib-asserts=yes --disable-wayland --disable-openjpeg --disable-gtk-doc{-html,-pdf,} --enable-gcov --enable-glib-asserts=yes --disable-mxf"
