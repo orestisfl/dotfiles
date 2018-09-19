@@ -1,1 +1,0 @@
-../modules/gdb-dashboard/.gdbinit
