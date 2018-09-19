@@ -16,7 +16,7 @@ for c in string.ascii_lowercase:
 if xprop -id $(xdotool getwindowfocus) WM_CLASS | grep -i urxvt
 then
     xdotool keyup Return
-    xdotool key --clearmodifiers Control_L+Return
+    xdotool key Control_L+apostrophe
 else
     exec i3-sensible-terminal
 fi
