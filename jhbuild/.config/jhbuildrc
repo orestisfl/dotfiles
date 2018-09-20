@@ -1,2 +1,0 @@
-use_local_modulesets = True
-moduleset = 'ore.module'
