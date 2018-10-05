@@ -1,19 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import i3
+import i3ipc
 
 
 def main(args):
-    # Assume only one window is focused.
-    focused_window = i3.filter(focused=True)[0]
-    if focused_window['sticky']:
-        i3.sticky('disable')
-        i3.border('normal')
-        i3.floating('disable')
+    i3 = i3ipc.Connection()
+    focused = i3.get_tree().find_focused()
+    if focused.sticky and focused.floating.endswith('on'):
+        focused.command('border normal, floating disable')
     else:
-        i3.floating('enable')
-        i3.sticky('enable')
-        i3.border('none')
+        focused.command('floating enable, sticky enable, border none')
     return 0
 
 
