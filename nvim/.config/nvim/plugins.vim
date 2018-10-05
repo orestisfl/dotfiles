@@ -19,6 +19,8 @@ Plug 'https://github.com/tpope/vim-fugitive'
 Plug 'https://github.com/Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 let g:deoplete#enable_at_startup = 1
 Plug 'https://github.com/zchee/deoplete-clang', { 'for': ['c', 'cpp'] }
+let g:deoplete#sources#clang#libclang_path = "/usr/lib/libclang.so"
+let g:deoplete#sources#clang#clang_header = "/usr/include/clang/"
 Plug 'https://github.com/lyuts/vim-rtags', { 'for': ['c', 'cpp'] }
 " manages tag files - automatically creates
 Plug 'https://github.com/ludovicchabant/vim-gutentags', { 'for': ['c', 'cpp'] }
