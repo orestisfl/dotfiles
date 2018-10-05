@@ -28,6 +28,7 @@ Plug 'https://github.com/w0rp/ale', { 'on': 'ALEEnable' }
 let g:ale_lint_on_enter = 0
 let g:ale_lint_on_text_changed = 'never'
 let g:ale_lint_on_save = 0
+let g:ale_fixers = {'c': ['clang-format']}
 Plug 'https://github.com/octol/vim-cpp-enhanced-highlight', { 'for': ['c', 'cpp'] }
 Plug 'https://github.com/majutsushi/tagbar', { 'on': 'TagbarToggle' }
 
