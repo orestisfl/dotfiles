@@ -1,6 +1,4 @@
 #!/bin/bash -x
-export VISUAL=nvim
-export TERMINAL=urxvt
 D="${D:-50}"
 export RXVT_SOCKET=/tmp/urxvtd-$D.socket
 i3_path="$HOME/Documents/programming/i3"
