@@ -1,6 +1,5 @@
 #!/bin/bash -x
 D="${D:-50}"
-export RXVT_SOCKET=/tmp/urxvtd-$D.socket
 i3_path="$HOME/Documents/programming/i3"
 i3_build="$i3_path/build"
 export PATH="$i3_path/:$i3_build/:$i3_build/i3-config-wizard:$i3_build/i3-dump-log:$i3_build/i3-input:$i3_build/i3-msg:$i3_build/i3-nagbar:$i3_build/i3bar:$PATH"
@@ -45,7 +44,7 @@ if [ -f "$userresources" ]; then
     xrdb -merge "$userresources"
 fi
 
-rm -f "$RXVT_SOCKET"
+export RXVT_SOCKET="$(mktemp --suffix=-rxvt.socket)"
 urxvtd --quiet --fork --opendisplay&
 urxvtd_pid=$!
 ~/bin/rand_wall.sh&
