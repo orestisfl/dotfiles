@@ -4,33 +4,24 @@ i3_path="$HOME/Documents/programming/i3"
 i3_build="$i3_path/build"
 export PATH="$i3_path/:$i3_build/:$i3_build/i3-config-wizard:$i3_build/i3-dump-log:$i3_build/i3-input:$i3_build/i3-msg:$i3_build/i3-nagbar:$i3_build/i3bar:$PATH"
 
-xephyr_name(){
-    echo "Xephyr_$D"
-}
-
-xephyr_pid(){
-    pgrep -f "$(xephyr_name)"
-}
-
-xephyr_kill(){
-    kill "$(xephyr_pid)"
-}
-
 finish() {
-    echo "Trapped CTRL-C: killing i3, xephyr"
     i3-msg exit
-    xephyr_kill
-    kill "$wall_pid"
+    kill "$xephyr_pid"
     kill "$urxvtd_pid" # Just in case
     exit 0
 }
 
+handle_SIGINT() {
+    finish &> /dev/null
+}
+
 set -m
 
-Xephyr -name "$(xephyr_name)" -terminate -br -ac -noreset -screen 1680x995 :$D &
+Xephyr -name "$(Xephyr_$D)" -terminate -br -ac -noreset -screen 1280x800 :$D &
+xephyr_pid=$!
 export DISPLAY=:$D
 echo "Ran Xephyr with :display $DISPLAY"
-inotifywait --timeout 1 /tmp/.X11-unix/
+inotifywait --timeout 1 /tmp/.X11-unix/ || { echo 'Xephyr failed' >&2; exit 1; }
 
 userresources=$HOME/.Xresources
 sysresources=/etc/X11/xinit/.Xresources
@@ -47,11 +38,9 @@ fi
 export RXVT_SOCKET="$(mktemp --suffix=-rxvt.socket)"
 urxvtd --quiet --fork --opendisplay&
 urxvtd_pid=$!
-~/bin/rand_wall.sh&
-wall_pid=$!
 
 cp ~/.i3/config /tmp/i3.config
-trap finish INT
+trap handle_SIGINT INT
 echo "Passing args '$*' to i3"
 if [[ -n "$ISSUE_I3" ]]; then
     (i3 --moreversion 2>&- || i3 --version) > /tmp/version
