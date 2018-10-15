@@ -26,6 +26,10 @@ set smartcase
 " https://vi.stackexchange.com/a/11222/
 set inccommand=nosplit
 
+" When off a buffer is unloaded when it is abandoned. When on a buffer becomes
+" hidden when it is abandoned.
+set hidden
+
 " Turn backup off
 set nobackup
 set nowb
