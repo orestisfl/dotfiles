@@ -25,9 +25,6 @@ alias v="xclip -o | sed -e '\$a\'"
 # always run ipython inside current virtualenv
 alias ipy="python -c 'import IPython; IPython.terminal.ipapp.launch_new_instance()'"
 
-# git aliases
-alias git-is="git show \$(git log --pretty=oneline| fzf | awk '{print \$1}')"
-
 # Shortcuts
 alias ydl="youtube-dl -f best"
 alias ydl-music="youtube-dl -f bestaudio -x"
