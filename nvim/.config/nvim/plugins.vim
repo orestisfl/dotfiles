@@ -24,11 +24,6 @@ let g:deoplete#sources#clang#clang_header = "/usr/include/clang/"
 Plug 'https://github.com/lyuts/vim-rtags', { 'for': ['c', 'cpp'] }
 " manages tag files - automatically creates
 Plug 'https://github.com/ludovicchabant/vim-gutentags', { 'for': ['c', 'cpp'] }
-Plug 'https://github.com/w0rp/ale', { 'on': 'ALEEnable' }
-let g:ale_lint_on_enter = 0
-let g:ale_lint_on_text_changed = 'never'
-let g:ale_lint_on_save = 0
-let g:ale_fixers = {'c': ['clang-format']}
 Plug 'https://github.com/octol/vim-cpp-enhanced-highlight', { 'for': ['c', 'cpp'] }
 Plug 'https://github.com/majutsushi/tagbar', { 'on': 'TagbarToggle' }
 
@@ -53,6 +48,15 @@ Plug 'https://github.com/moll/vim-bbye'
 Plug 'https://github.com/lyokha/vim-xkbswitch'
 let g:XkbSwitchEnabled = 1
 
+" Code formaters
+Plug 'https://github.com/w0rp/ale', { 'on': 'ALEEnable' }
+let g:ale_lint_on_enter = 0
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_lint_on_save = 0
+let g:ale_fixers = {'c': ['clang-format'], 'python': ['black']}
+" Python code formatter
+Plug 'https://github.com/ambv/black', { 'for': 'python' }
+
 " TODO:
 " Plug 'https://github.com/Shougo/denite.nvim'
 " Plug 'https://github.com/neomake/neomake'
@@ -63,21 +67,12 @@ let g:XkbSwitchEnabled = 1
 " Plug 'https://github.com/tpope/vim-markdown', { 'for': 'markdown' }
 
 " Other C stuff:
-" Plug 'https://github.com/rhysd/vim-clang-format'
-" libclang-based highlighting.
 " Plug 'https://github.com/arakashic/chromatica.nvim', { 'do': ':UpdateRemotePlugins' }
 " let g:chromatica#enable_at_startup=1
+" Clang based syntax highlighting for Neovim
 " Plug 'https://github.com/bbchung/Clamp'
 " let g:clamp_autostart = 1
 " let g:clamp_highlight_mode = 1
-" Plug 'https://github.com/vim-syntastic/syntastic'
-" use compile_database.json for c/c++ synstastic checkers.
-" let g:syntastic_cpp_clang_check_post_args = ""
-" let g:syntastic_cpp_clang_tidy_post_args = ""
-" let g:syntastic_c_clang_check_post_args = ""
-" let g:syntastic_c_clang_tidy_post_args = ""
-" let g:syntastic_c_checkers = ['clang_check', 'clang_tidy', 'cppcheck', 'gcc', 'make']
-" let g:syntastic_c_checkers = ['clang_check', 'clang_tidy']
 
 " Theme
 Plug 'https://github.com/morhetz/gruvbox'
