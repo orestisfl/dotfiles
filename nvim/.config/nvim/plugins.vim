@@ -49,24 +49,6 @@ Plug 'https://github.com/suan/vim-instant-markdown', { 'for': 'markdown' }
 " close buffer without closing windows
 Plug 'https://github.com/moll/vim-bbye'
 
-" improved incremental searching
-Plug 'https://github.com/haya14busa/incsearch.vim'
-" Map Vim search commands to incsearch plugin commands
-map /  <Plug>(incsearch-forward)
-map ?  <Plug>(incsearch-backward)
-map g/ <Plug>(incsearch-stay)
-set hlsearch
-let g:incsearch#auto_nohlsearch = 1
-map n  <Plug>(incsearch-nohl-n)
-map N  <Plug>(incsearch-nohl-N)
-map *  <Plug>(incsearch-nohl-*)
-map #  <Plug>(incsearch-nohl-#)
-map g* <Plug>(incsearch-nohl-g*)
-map g# <Plug>(incsearch-nohl-g#)
-" :substitute helper
-" https://vi.stackexchange.com/a/11222/
-set inccommand=nosplit
-
 " automatic keyboard layout switching in insert mode
 Plug 'https://github.com/lyokha/vim-xkbswitch'
 let g:XkbSwitchEnabled = 1

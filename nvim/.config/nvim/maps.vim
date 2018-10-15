@@ -13,6 +13,10 @@ nnoremap <Leader><Leader> :Commands<CR>
 
 nnoremap <Leader>tt :TagbarToggle<CR>
 
+" Stop the highlighting for the 'hlsearch' option. It is automatically turned back on when using a
+" search command
+nnoremap <CR> :nohlsearch<CR><CR>
+
 " Emacs-like bindings in the command line from `:h emacs-keys`
 cnoremap <C-a>  <Home>
 cnoremap <C-b>  <Left>

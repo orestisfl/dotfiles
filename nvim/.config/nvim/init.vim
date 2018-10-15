@@ -1,4 +1,3 @@
-set smartcase
 set number relativenumber
 set foldlevelstart=6
 
@@ -22,6 +21,10 @@ source ~/.config/nvim/maps.vim
 "set termguicolors
 set background=dark
 colorscheme gruvbox
+
+set smartcase
+" https://vi.stackexchange.com/a/11222/
+set inccommand=nosplit
 
 " Turn backup off
 set nobackup
