@@ -32,6 +32,8 @@ Plug 'https://github.com/majutsushi/tagbar', { 'on': 'TagbarToggle' }
 " Plug 'https://github.com/sebastianmarkow/deoplete-rust'
 " Plug 'https://github.com/SevereOverfl0w/deoplete-github'  " github issues # autocompletion
 
+" latex
+Plug 'https://github.com/lervag/vimtex'
 " Vim syntax for i3 window manager config
 Plug 'https://github.com/PotatoesMaster/i3-vim-syntax'
 
