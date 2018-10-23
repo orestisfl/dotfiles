@@ -23,7 +23,7 @@ let g:deoplete#sources#clang#libclang_path = "/usr/lib/libclang.so"
 let g:deoplete#sources#clang#clang_header = "/usr/include/clang/"
 Plug 'https://github.com/lyuts/vim-rtags', { 'for': ['c', 'cpp'] }
 " manages tag files - automatically creates
-Plug 'https://github.com/ludovicchabant/vim-gutentags', { 'for': ['c', 'cpp'] }
+Plug 'https://github.com/ludovicchabant/vim-gutentags'
 Plug 'https://github.com/octol/vim-cpp-enhanced-highlight', { 'for': ['c', 'cpp'] }
 Plug 'https://github.com/majutsushi/tagbar', { 'on': 'TagbarToggle' }
 
