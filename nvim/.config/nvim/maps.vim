@@ -1,5 +1,6 @@
 " from fzf - fuzzy search through buffers
 nnoremap <Leader>bB :Buffers<CR>
+nnoremap <Leader>B :Buffers<CR>
 " from fzf - fuzzy search through buffers + history
 nnoremap <Leader>bb :History<CR>
 " from vim-bbye - delete buffer without closing window
