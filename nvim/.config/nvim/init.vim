@@ -35,6 +35,11 @@ set nobackup
 set nowb
 set noswapfile
 
+" Use whole words when opening URLs.
+" This avoids cutting off parameters (after '?') and anchors (after '#').
+" http://vi.stackexchange.com/q/2801/1631
+let g:netrw_gx="<cWORD>"
+
 " Have Vim jump to the last position when reopening a file
 if has("autocmd")
   au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
