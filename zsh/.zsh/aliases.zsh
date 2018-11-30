@@ -31,4 +31,6 @@ alias ydl-music="youtube-dl -f bestaudio -x"
 alias weather="curl wttr.in/Thessaloniki"
 alias cgrep="grep --exclude=tags --exclude-dir=.git --exclude-dir=.idea --binary-files=without-match --recursive --line-number --initial-tab"
 alias mksrcinfo='makepkg --printsrcinfo > .SRCINFO'
+alias autoremove='sudo pacman -Rns $(pacman -Qdtq)'
+alias pipupg="pip3 freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip3 install -U"
 
