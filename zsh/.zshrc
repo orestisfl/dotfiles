@@ -31,6 +31,7 @@ source ~/.zsh/alias-tips/alias-tips.plugin.zsh
 source ~/.zsh/zsh-completions.zsh
 
 # https://github.com/tarruda/zsh-autosuggestions
+ZSH_AUTOSUGGEST_USE_ASYNC=1
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 export FZF_COMPLETION_TRIGGER='~~'
