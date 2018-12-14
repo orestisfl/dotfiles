@@ -14,7 +14,7 @@ let mapleader=" "
 filetype plugin indent on
 " Don't autocomment next line on 'o' or enter.
 autocmd FileType * setlocal formatoptions-=ro
-set textwidth=100
+set textwidth=0
 
 source ~/.config/nvim/plugins.vim
 source ~/.config/nvim/maps.vim
