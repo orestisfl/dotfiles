@@ -40,6 +40,7 @@ let g:echodoc#type = 'signature'
 
 " manages tag files - automatically creates
 Plug 'https://github.com/ludovicchabant/vim-gutentags', { 'for': ['c', 'python'] }
+let g:gutentags_file_list_command = 'rg --files'
 Plug 'https://github.com/octol/vim-cpp-enhanced-highlight', { 'for': ['c', 'cpp'] }
 Plug 'https://github.com/majutsushi/tagbar', { 'on': 'TagbarToggle' }
 
