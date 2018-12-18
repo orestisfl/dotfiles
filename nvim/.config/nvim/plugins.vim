@@ -51,6 +51,16 @@ Plug 'https://github.com/majutsushi/tagbar', { 'on': 'TagbarToggle' }
 
 " latex
 Plug 'https://github.com/lervag/vimtex'
+" I can access the quickfix window with :cw
+" Either automatically close vimtex's quickfix window after X keystrokes or
+" don't open it on warnings.
+" let g:vimtex_quickfix_autoclose_after_keystrokes = 4
+let g:vimtex_quickfix_open_on_warning = 0
+" Uses https://github.com/stefanhepp/pplatex to parse the LaTeX output file.
+" pplatex is a command line utility used to pretify the output of the LaTeX
+" compiler.
+let g:vimtex_quickfix_method = 'pplatex'
+
 " Vim syntax for i3 window manager config
 Plug 'https://github.com/PotatoesMaster/i3-vim-syntax'
 
