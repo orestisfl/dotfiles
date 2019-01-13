@@ -2,6 +2,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'https://github.com/scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 
+let $FZF_DEFAULT_COMMAND = 'fd --type f'
 source /usr/share/vim/vimfiles/plugin/fzf.vim
 Plug 'https://github.com/junegunn/fzf.vim'
 
