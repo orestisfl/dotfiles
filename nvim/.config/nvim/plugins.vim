@@ -5,6 +5,7 @@ Plug 'https://github.com/scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 let $FZF_DEFAULT_COMMAND = 'fd --type f'
 source /usr/share/vim/vimfiles/plugin/fzf.vim
 Plug 'https://github.com/junegunn/fzf.vim'
+Plug 'https://github.com/tweekmonster/fzf-filemru'
 
 Plug 'https://github.com/tpope/vim-surround'
 " 's' is not that useful: bind it to vim-surround

@@ -7,7 +7,8 @@ nnoremap <Leader>bb :History<CR>
 nnoremap <Leader>bd :Bdelete<CR>
 
 " from fzf - fuzzy search through project files
-nnoremap <Leader>pf :Files<CR>
+nnoremap <c-p> :ProjectMru --tiebreak=end<cr>
+nnoremap <Leader>pf :ProjectMru --tiebreak=end<cr>
 
 " from fzf - fuzzy search through commands
 nnoremap <Leader><Leader> :Commands<CR>
