@@ -45,6 +45,10 @@ let g:gutentags_file_list_command = 'rg --files'
 Plug 'https://github.com/octol/vim-cpp-enhanced-highlight', { 'for': ['c', 'cpp'] }
 Plug 'https://github.com/majutsushi/tagbar', { 'on': 'TagbarToggle' }
 
+" Snippet support
+Plug 'https://github.com/Shougo/neosnippet.vim'
+Plug 'https://github.com/Shougo/neosnippet-snippets'
+
 " Plug 'https://github.com/Shougo/neoinclude.vim'  " include/header files completion
 " Plug 'https://github.com/zchee/deoplete-jedi' " Python
 " Plug 'https://github.com/sebastianmarkow/deoplete-rust'
