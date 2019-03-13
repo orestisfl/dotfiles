@@ -33,7 +33,6 @@ let g:LanguageClient_serverCommands = {
     \ 'cpp': ['ccls'],
     \ 'python': ['pyls'],
     \ }
-nnoremap <F5> :call LanguageClient_contextMenu()<CR>
 " handle the function signatures displaying
 Plug 'Shougo/echodoc.vim'
 set cmdheight=2
