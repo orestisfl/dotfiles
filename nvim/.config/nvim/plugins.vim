@@ -88,6 +88,7 @@ let g:ale_lint_on_save = 0
 let g:ale_fixers = {'c': ['clang-format'], 'python': ['black']}
 " Python code formatter
 Plug 'https://github.com/ambv/black', { 'for': 'python' }
+let g:black_virtualenv = '~/.local/share/nvim/black'
 
 " TODO:
 " Plug 'https://github.com/Shougo/denite.nvim'
