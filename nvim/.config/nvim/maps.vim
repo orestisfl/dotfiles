@@ -48,7 +48,7 @@ endfunction()
 
 augroup LSP
   autocmd!
-  autocmd FileType cpp,c call SetLSPShortcuts()
+  autocmd FileType cpp,c,python call SetLSPShortcuts()
 augroup END
 
 nnoremap <F5> :call LanguageClient_contextMenu()<CR>
