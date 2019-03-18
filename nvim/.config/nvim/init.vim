@@ -6,6 +6,7 @@ set clipboard+=unnamedplus
 
 " Use , as the leader key
 let mapleader=" "
+let maplocalleader = ","
 
 " Enable mouse mode
 " set mouse=a
