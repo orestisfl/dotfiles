@@ -34,6 +34,7 @@ source ~/.zsh/zsh-completions.zsh
 ZSH_AUTOSUGGEST_USE_ASYNC=1
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
+export FZF_DEFAULT_OPTS='--bind alt-a:select-all,alt-d:deselect-all'
 export FZF_COMPLETION_TRIGGER='~~'
 source /usr/share/fzf/completion.zsh
 source /usr/share/fzf/key-bindings.zsh
