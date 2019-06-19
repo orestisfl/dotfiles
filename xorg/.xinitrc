@@ -45,7 +45,6 @@ cat ~/.i3/include/*.config > ~/.i3/config
 ~/bin/rand_wall.sh&
 urxvtd -q -f -o&  # start urxvtd terminal daemon
 numlockx&  # Enable numlock on start.
-# conky&
 thunar --daemon&  # Thunar file manager as daemon.
 allow_rgb10_configs=false compton --config ~/.config/compton.conf&
 # Gnome Keyring Daemon.
