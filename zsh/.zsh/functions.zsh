@@ -56,10 +56,6 @@ r (){
     ls -vAFq --color=yes -got --si --time-style=long-iso "$@" | sed "s/$(date +%Y-%m-%d)/\x1b[32m     TODAY\x1b[m/;s/$(date +'%Y-%m-%d' -d yesterday)/\x1b[33m YESTERDAY\x1b[m/" | tac
 }
 
-function cmd_repeat(){
-    until "$@"; do; done
-}
-
 function color_to_greyscale_pdf(){
     if [ ! $2 ] ;then
         2=$(basename $1 .pdf)
@@ -87,50 +83,8 @@ function pdfa4(){
     gs -sDEVICE=pdfwrite -sPAPERSIZE=a4 -dAutoRotatePages=/All -dFIXEDMEDIA -dPDFFitPage -dCompatibilityLevel=1.4 -o $2 $1
 }
 
-function latexi(){
-    if [ ! $1 ] ;then
-        return 1
-    fi
-    local local_yaml="${2:-myyaml.yaml}"
-    latexindent -w -s --local="$local_yaml" "$1"
-    rec_fix_trailing_whitespace "$1"
-}
-
 slash-backward-kill-word() {
     local WORDCHARS="*?_-.[]~=&;!#$%^(){}<>"
     zle backward-kill-word
 }
 zle -N slash-backward-kill-word
-
-# C-e: open file with mimeopen
-# C-c: cd to dirname of file
-# Enter: open with xdg-open
-fo(){
-    local out ret key file
-
-    IFS=$'\n' out=($(fzf-tmux --query="$LBUFFER" --exit-0 --expect=ctrl-e,ctrl-c,ctrl-o))
-    ret=$?
-    key=$(head -1 <<< "$out")
-    file=$(head -2 <<< "$out" | tail -1)
-    if [ -n "$file" ]; then
-        # zle redisplay
-        # typeset -f zle-line-init >/dev/null && zle zle-line-init
-        if [ "$key" = ctrl-e ]; then
-            BUFFER="mimeopen -a $file"
-            zle accept-line
-        elif [ "$key" = ctrl-c ]; then
-            cd "$(dirname "$file")"
-        elif [ "$key" = ctrl-o ]; then
-            true
-        else
-            launch xdg-open "$file"
-        fi
-        zle reset-prompt
-    fi
-    return $ret
-}
-zle -N fo
-
-function gstfilter(){
-    awk '{for(i=4; i<NF; i++) printf "%s",$i OFS; if(NF) printf "%s",$NF; printf ORS}' | sed 's/\b0x.\+\b//g'
-}
