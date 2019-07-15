@@ -1,0 +1,30 @@
+[flake8]
+# flake8 codes: http://flake8.pycqa.org/en/latest/user/error-codes.html
+# pycodestyle codes: http://pycodestyle.pycqa.org/en/latest/intro.html#configuration
+# f-codes are for flake, others are for pycodestyle, pyflakes, mccabe
+ignore = E1,E2,E3,E5,W503,W504
+#   E1, # Indentation
+#   E2, # Whitespace
+#   E3, # Blank line
+#   E5,  # Line length
+#   W503, W504 # line break before/after binary operator
+max-line-length = 120
+
+# Just use the same options from flake8.
+# pyls will do that if configurationSources are adjusted.
+# Else, just paste the flake8 section below.
+# Note: pyls does not use flake8 directly but will understand its options.
+# [pycodestyle]
+
+# pylint options:
+# https://pylint.readthedocs.io/en/latest/technical_reference/features.html
+[MESSAGES CONTROL]
+disable =
+    bad-whitespace,        # C0326
+    invalid-name,          # C0103
+    missing-docstring,     # C0111
+    line-too-long,         # C0301
+    import-error,          # E0401
+
+[MISCELLANEOUS]
+jobs = 0 # Auto
