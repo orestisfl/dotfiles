@@ -1,11 +1,7 @@
 #!/bin/bash
 
-first=true
+firefox -new-window
+sleep 0.1
 while read URL; do
-    if [ "$first" = true ]; then
-        first=false
-        firefox -new-window "$URL"
-    else
-        firefox "$URL"
-    fi
+    firefox "$URL"
 done < "$1"
