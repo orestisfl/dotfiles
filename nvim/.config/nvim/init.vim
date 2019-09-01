@@ -55,3 +55,8 @@ au BufNewFile,BufRead *.gv set filetype=dot
 " https://alok.github.io/2018/04/26/using-vim-s-conceal-to-make-languages-more-tolerable/
 " https://alok.github.io/2018/05/09/more-about-vim-conceal/<Paste>
 set conceallevel=0
+
+set wrap
+set linebreak
+set breakindent
+let &showbreak='⏎ '
