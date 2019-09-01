@@ -6,6 +6,8 @@ nnoremap <Leader>bb :History<CR>
 " from vim-bbye - delete buffer without closing window
 nnoremap <Leader>bd :Bdelete<CR>
 
+nnoremap <Leader>w :w<CR>
+
 " from fzf - fuzzy search through project files
 nnoremap <c-p> :ProjectMru --tiebreak=end<cr>
 nnoremap <Leader>pf :ProjectMru --tiebreak=end<cr>
