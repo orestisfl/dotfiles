@@ -75,6 +75,9 @@ let g:vimtex_quickfix_open_on_warning = 0
 " pplatex is a command line utility used to pretify the output of the LaTeX
 " compiler.
 let g:vimtex_quickfix_method = 'pplatex'
+" Default imaps mapping interferes with ``'' quotes.
+" https://github.com/lervag/vimtex/issues/325
+let g:vimtex_imaps_leader = ';'
 
 " Vim syntax for i3 window manager config
 Plug 'https://github.com/PotatoesMaster/i3-vim-syntax'
