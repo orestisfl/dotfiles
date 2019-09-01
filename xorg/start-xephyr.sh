@@ -2,6 +2,7 @@
 D="${D:-50}"
 i3_path="$HOME/Documents/programming/i3"
 i3_build="$i3_path/build"
+export I3SOCK=
 export PATH="$i3_path/:$i3_build/:$i3_build/i3-config-wizard:$i3_build/i3-dump-log:$i3_build/i3-input:$i3_build/i3-msg:$i3_build/i3-nagbar:$i3_build/i3bar:$PATH"
 
 finish() {
