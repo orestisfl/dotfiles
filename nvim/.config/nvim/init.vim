@@ -47,6 +47,9 @@ if has("autocmd")
     \| exe "normal! g'\"" | endif
 endif
 
+au BufNewFile,BufRead *.tikz set filetype=tex
+au BufNewFile,BufRead *.gv set filetype=dot
+
 " Used by neosnippet
 " See blog posts for introduction:
 " https://alok.github.io/2018/04/26/using-vim-s-conceal-to-make-languages-more-tolerable/
