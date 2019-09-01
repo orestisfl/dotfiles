@@ -5,7 +5,7 @@
 	<name>Open Terminal Here</name>
 	<unique-id>1479157868089252-1</unique-id>
 	<command>i3-sensible-terminal -cd %f</command>
-	<description>Example for a custom action</description>
+	<description></description>
 	<patterns>*</patterns>
 	<directories/>
 </action>
@@ -13,7 +13,7 @@
 	<icon>Thunar</icon>
 	<name>Open as root</name>
 	<unique-id>1449159239230371-5</unique-id>
-	<command>thunar 'admin://%f'</command>
+	<command>thunar &apos;admin://%f&apos;</command>
 	<description>opens current directory as root with thunar</description>
 	<patterns>*</patterns>
 	<directories/>
@@ -102,6 +102,25 @@
 	<text-files/>
 </action>
 <action>
+	<icon>graphui</icon>
+	<name>Convert to pdf</name>
+	<unique-id>1559158879071847-1</unique-id>
+	<command>dot -Tpdf -O %f</command>
+	<description>Convert file to pdf using graphviz</description>
+	<patterns>*.gv</patterns>
+	<other-files/>
+	<text-files/>
+</action>
+<action>
+	<icon>pdfeditor</icon>
+	<name>pdfcrop</name>
+	<unique-id>1559234625874832-2</unique-id>
+	<command>cp %f /tmp/to-crop.pdf &amp;&amp; pdfcrop /tmp/to-crop.pdf %f</command>
+	<description>pdfcrop</description>
+	<patterns>*.pdf</patterns>
+	<other-files/>
+</action>
+<action>
 	<icon>imgur</icon>
 	<name>Upload to imgur</name>
 	<unique-id>1494408575983007-2</unique-id>
@@ -123,21 +142,20 @@
 </action>
 <action>
 	<icon>mkvmergeGUI</icon>
-	<name>4gb split</name>
-	<unique-id>1502548059689813-3</unique-id>
-	<command>~/bin/mkvmerge-4gb-split.sh %f</command>
-	<description>Use mkvmerge to split video file in 4GB chunks</description>
-	<patterns>*</patterns>
-	<video-files/>
-</action>
-<action>
-	<icon>mkvmergeGUI</icon>
 	<name>extract subtitles</name>
 	<unique-id>1502571079623929-9</unique-id>
 	<command>~/bin/mkv-extract-subs.py --progress --notify %F</command>
 	<description></description>
 	<patterns>*</patterns>
-	<startup-notify/>
+	<video-files/>
+</action>
+<action>
+	<icon>sound-icon</icon>
+	<name>Extract Audio</name>
+	<unique-id>1555923884943015-1</unique-id>
+	<command>bash -c &apos;ffmpeg -i &quot;$0&quot; -map 0:1 -c:a copy &quot;${0%%.*}&quot;.m4a ; notify-send &quot;Extract audio: $?&quot;&apos; %f </command>
+	<description>https://unix.stackexchange.com/a/332907/</description>
+	<patterns>*</patterns>
 	<video-files/>
 </action>
 </actions>
