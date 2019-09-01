@@ -1,6 +1,7 @@
 [Core General]
 ExternalEditor=Custom
-ExternalEditorCommand=geany --line %l --column %c
+ExternalEditorCommand=nvr %f -c ':call cursor(%l,%c)'
+ObeyDRM=false
 
 [Core Performance]
 MemoryLevel=Aggressive
