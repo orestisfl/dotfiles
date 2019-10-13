@@ -53,6 +53,5 @@ guake&
 unclutter&  # Hide mouse pointer on inactivity.
 ( sleep 5; keepassxc& )& # Start password manager.
 /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1&  # Polkit authentication agent.
-~/bin/watch-tumbler.sh&  # Script to watch tumbler misbehaviour.
 
 exec i3
