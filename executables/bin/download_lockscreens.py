@@ -26,19 +26,23 @@ def main():
 
 
 def purge_old():
-    images = sorted(
-        (filename for filename in os.listdir(DIRNAME) if is_image(filename)),
-        key=os.path.getctime,
-    )
+    images = sorted(listimg(), key=os.path.getctime)
     for filename in images[:-20]:
         try:
             os.remove(filename)
-        except OSError:
-            pass
+        except OSError as e:
+            print(e)
+
+
+def listimg():
+    for filename in os.listdir(DIRNAME):
+        filename = os.path.join(DIRNAME, filename)
+        if is_image(filename):
+            yield filename
 
 
 def is_image(filename):
-    return os.path.isfile(filename) and os.path.splitext(filename)[1] == "png"
+    return os.path.isfile(filename) and os.path.splitext(filename)[1] == ".png"
 
 
 def convert_all():
