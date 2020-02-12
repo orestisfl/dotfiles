@@ -19,7 +19,7 @@ alias lc='lt -c'                                 # Lists sorted by date, most re
 
 # c: Copy to clipboard, v:Paste from clipboard
 alias c="xclip -in -selection clipboard"
-alias v="xclip -o | sed -e '\$a\'"
+alias v="(xclip -o -selection clipboard || xclip -o) | sed -e '\$a\'"
 
 # Shortcuts
 alias ydl="youtube-dl -f best"
