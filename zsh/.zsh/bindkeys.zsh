@@ -37,6 +37,8 @@ bindkey "^[3;5~" delete-char
 # ctrl+left/right
 bindkey '^[Oc' forward-word
 bindkey '^[Od' backward-word
+bindkey '^[[1;5D' backward-word
+bindkey '^[[1;5C' forward-word
 
 # http://unix.stackexchange.com/a/319854/63367
 # alt+backspace delete to next slash.
