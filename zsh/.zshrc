@@ -22,11 +22,6 @@ source /usr/share/zsh/plugins/zsh-background-notify/bgnotify.plugin.zsh
 # command not found from pkgfile
 source /usr/share/doc/pkgfile/command-not-found.zsh
 
-# https://github.com/djui/alias-tips
-export ZSH_PLUGINS_ALIAS_TIPS_TEXT="You know you have an alias for that, right? "
-export ZSH_PLUGINS_ALIAS_TIPS_EXCLUDES="vi vim"
-source ~/.zsh/alias-tips/alias-tips.plugin.zsh
-
 # https://github.com/sorin-ionescu/prezto/blob/master/modules/completion/init.zsh
 source ~/.zsh/zsh-completions.zsh
 
