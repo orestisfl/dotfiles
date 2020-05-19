@@ -7,6 +7,7 @@ alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias ag='rg -S'
+alias cat=bat
 
 # ls related
 alias exa=' exa --git'
