@@ -29,10 +29,6 @@ function rec_fix_trailing_whitespace(){
     find . -name '.git' -prune -o -type f -name "$1" -exec sed --in-place 's/[[:space:]]\+$//' {} \+
 }
 
-function git_fix_whitespace_diff(){
-    sh -c 'git diff --no-ext-diff -w --no-color "$@" | git apply --cached --ignore-whitespace' -
-}
-
 # colored man
 # https://github.com/robbyrussell/oh-my-zsh/blob/master/plugins/colored-man-pages/colored-man-pages.plugin.zsh
 man() {
