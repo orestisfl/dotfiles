@@ -83,6 +83,19 @@ function pdfa4(){
     gs -sDEVICE=pdfwrite -sPAPERSIZE=a4 -dAutoRotatePages=/All -dFIXEDMEDIA -dPDFFitPage -dCompatibilityLevel=1.4 -o $2 $1
 }
 
+function venv() {
+    [[ ! $1 ]] && echo 'This function needs an argument' && return 1
+    [[ $2 ]] && echo 'This function takes exactly one argument' && return 1
+
+    local dir="$HOME/.cache/myenvs/$1"
+    [[ -d "$dir" ]] && source "$dir/bin/activate" && return 0
+
+    python3 -m venv "$dir"
+    source "$dir/bin/activate"
+    pip install -U pip
+    pip install black ipdb ipython loguru pylint tqdm
+}
+
 slash-backward-kill-word() {
     local WORDCHARS="*?_-.[]~=&;!#$%^(){}<>"
     zle backward-kill-word
