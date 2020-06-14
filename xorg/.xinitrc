@@ -1,7 +1,6 @@
 #!/bin/sh
-export TERM=xterm-256color
 export VISUAL=nvim
-export TERMINAL=urxvtc
+export TERMINAL=gnome-terminal
 export DESKTOP_SESSION=gnome
 # export QT_STYLE_OVERRIDE=GTK+  # Tell Qt to use GTK style
 export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
@@ -42,7 +41,6 @@ source "$HOME/.xinit-local.sh"
 cat ~/.i3/include/*.config > ~/.i3/config
 
 ~/bin/rand_wall.sh&
-urxvtd -q -f -o&  # start urxvtd terminal daemon
 numlockx&  # Enable numlock on start.
 thunar --daemon&  # Thunar file manager as daemon.
 allow_rgb10_configs=false compton --config ~/.config/compton.conf&

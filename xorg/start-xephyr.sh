@@ -8,7 +8,6 @@ export PATH="$i3_path/:$i3_build/:$i3_build/i3-config-wizard:$i3_build/i3-dump-l
 finish() {
     i3-msg exit
     kill "$xephyr_pid"
-    kill "$urxvtd_pid" # Just in case
     exit 0
 }
 
@@ -35,10 +34,6 @@ fi
 if [ -f "$userresources" ]; then
     xrdb -merge "$userresources"
 fi
-
-export RXVT_SOCKET="$(mktemp --suffix=-rxvt.socket)"
-urxvtd --quiet --fork --opendisplay&
-urxvtd_pid=$!
 
 cp ~/.i3/config /tmp/i3.config
 trap handle_SIGINT INT

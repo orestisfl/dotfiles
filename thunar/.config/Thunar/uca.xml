@@ -4,7 +4,7 @@
 	<icon>terminator</icon>
 	<name>Open Terminal Here</name>
 	<unique-id>1479157868089252-1</unique-id>
-	<command>i3-sensible-terminal -cd %f</command>
+	<command>i3-sensible-terminal --working-directory=%f</command>
 	<description></description>
 	<patterns>*</patterns>
 	<directories/>
