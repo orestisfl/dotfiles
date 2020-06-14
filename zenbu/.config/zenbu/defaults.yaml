@@ -1,8 +1,0 @@
-i3blocks:
-    border_top: 0
-    border_left: 0
-    border_right: 0
-    border_bottom: 0
-    display_ping: False
-    display_xtitle: False
-network_interface: 'enp2s0'

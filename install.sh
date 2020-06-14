@@ -7,4 +7,3 @@ cd "${dotfiles}"
 
 ./stow.sh
 ./create-alt-links.sh
-zenbu "${host}"
