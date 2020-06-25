@@ -3,7 +3,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 Plug 'https://github.com/scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 
 let $FZF_DEFAULT_COMMAND = 'fd --type f'
-source ~/.fzf/plugin/fzf.vim
+source /usr/share/vim/vimfiles/plugin/fzf.vim
 Plug 'https://github.com/junegunn/fzf.vim'
 Plug 'https://github.com/tweekmonster/fzf-filemru'
 
@@ -61,6 +61,7 @@ let g:ale_lint_on_enter = 0
 let g:ale_lint_on_text_changed = 'never'
 let g:ale_lint_on_save = 0
 let g:ale_fixers = {'c': ['clang-format'], 'python': ['black']}
+let g:ale_linters = {'sh': ['shellcheck']}
 " Python code formatter
 Plug 'https://github.com/ambv/black', { 'for': 'python' }
 let g:black_virtualenv = '~/.local/share/nvim/black'

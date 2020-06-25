@@ -1,6 +1,8 @@
 set number relativenumber
 set foldlevelstart=6
 
+set ts=4 sw=4 expandtab
+
 " Use the system clipboard
 set clipboard+=unnamedplus
 
@@ -9,7 +11,7 @@ let mapleader=" "
 let maplocalleader = ","
 
 " Enable mouse mode
-" set mouse=a
+set mouse=a
 
 " #4684: skip nvim's auto-enable logic
 filetype plugin indent on
