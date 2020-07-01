@@ -158,4 +158,21 @@
 	<patterns>*</patterns>
 	<video-files/>
 </action>
+<action>
+	<name>llvm-dis</name>
+	<unique-id>1592834702942778-1</unique-id>
+	<command>for file in %F ; do llvm-dis &quot;$file&quot; ; done</command>
+	<description>Takes an LLVM bitcode file and converts it into human-readable LLVM assembly language</description>
+	<patterns>*.bc</patterns>
+	<other-files/>
+</action>
+<action>
+	<name>llvm-as</name>
+	<unique-id>1592835916644280-1</unique-id>
+	<command>for file in %F ; do llvm-as &quot;$file&quot; ; done</command>
+	<description>Reads a file containing human-readable LLVM assembly language, translates it to LLVM bitcode</description>
+	<patterns>*.ll</patterns>
+	<other-files/>
+	<text-files/>
+</action>
 </actions>
