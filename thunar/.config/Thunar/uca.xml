@@ -121,16 +121,6 @@
 	<other-files/>
 </action>
 <action>
-	<icon>imgur</icon>
-	<name>Upload to imgur</name>
-	<unique-id>1494408575983007-2</unique-id>
-	<command>~/bin/thunar-upload-to-imgur.sh -f %f</command>
-	<description></description>
-	<patterns>*</patterns>
-	<startup-notify/>
-	<image-files/>
-</action>
-<action>
 	<icon>gtk-convert</icon>
 	<name>To UTF-8</name>
 	<unique-id>1497454094821451-10</unique-id>
