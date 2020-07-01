@@ -22,7 +22,7 @@
 	<icon>geany</icon>
 	<name>Edit as root</name>
 	<unique-id>1449159267668261-6</unique-id>
-	<command>gksu geany %f</command>
+	<command>i3-sensible-terminal -- sudoedit %f</command>
 	<description>edit file as root with geany</description>
 	<patterns>*</patterns>
 	<other-files/>
