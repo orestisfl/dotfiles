@@ -45,10 +45,6 @@ let g:vimtex_quickfix_method = 'pplatex'
 " https://github.com/lervag/vimtex/issues/325
 let g:vimtex_imaps_leader = ';'
 
-" Instant Markdown previews
-Plug 'https://github.com/suan/vim-instant-markdown', { 'for': 'markdown' }
-let g:instant_markdown_autostart = 0
-
 " Asynchronous linting and make framework for Neovim/Vim
 " Plug 'https://github.com/neomake/neomake'
 
