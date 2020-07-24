@@ -92,6 +92,14 @@ function venv() {
     pip install black ipdb ipython loguru pylint tqdm
 }
 
+# Count lines from git repo
+function gloc(){
+    local dest=$(mktemp -d)
+    git clone --depth 1 "$1" "$dest" &> /dev/null &&
+      cloc "$dest" &&
+      rm -rf "$dest"
+}
+
 slash-backward-kill-word() {
     local WORDCHARS="*?_-.[]~=&;!#$%^(){}<>"
     zle backward-kill-word

@@ -31,3 +31,6 @@ alias ydl-playlist="youtube-dl -f best --write-srt -o '%(autonumber)s-%(title)s.
 alias pipupg="pip3 freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip3 install -U"
 alias drr='docker run -it --rm'
 alias lastssh="tac ~/.zhistory | grep -oP -m1 'orestis@([^\s]+)'"
+
+# Typos
+alias υαυ=yay

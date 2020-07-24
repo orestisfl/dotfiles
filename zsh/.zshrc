@@ -47,5 +47,3 @@ source ~/.zsh/bindkeys.zsh
 
 # automatically remove duplicates from these arrays
 typeset -U path cdpath fpath manpath
-
-[[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh

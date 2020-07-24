@@ -43,13 +43,12 @@ cat ~/.i3/include/*.config > ~/.i3/config
 ~/bin/rand_wall.sh&
 numlockx&  # Enable numlock on start.
 thunar --daemon&  # Thunar file manager as daemon.
-allow_rgb10_configs=false compton --config ~/.config/compton.conf&
 # Gnome Keyring Daemon.
 eval "$(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)"
 export SSH_AUTH_SOCK
 guake&
 unclutter&  # Hide mouse pointer on inactivity.
-( sleep 5; keepassxc& )& # Start password manager.
 /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1&  # Polkit authentication agent.
+# picom&
 
 exec i3

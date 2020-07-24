@@ -1,12 +1,13 @@
 #!/usr/bin/env python
 import re
+import sys
 from urllib.parse import urljoin
 
 import requests
 from bs4 import BeautifulSoup
 from tqdm import tqdm
 
-SUBS = ("english", "utan", "englesk")
+SUBS = ("english", "utan", "engelsk")
 BASE_URL = r"https://www.filminstitutet.se/"
 LIST_URL = r"https://www.filminstitutet.se/sv/se-och-samtala-om-film/cinemateket-stockholm/program/?listtype=text"
 
@@ -19,6 +20,7 @@ def main():
         r.raise_for_status()
 
         if (subs := get_subs(r.text)) is None:
+            print("No text:", link, file=sys.stderr)
             ret = 1
             continue
         for target in SUBS:
@@ -50,6 +52,4 @@ def get_subs(html):
 
 
 if __name__ == "__main__":
-    import sys
-
     sys.exit(main())
