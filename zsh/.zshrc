@@ -13,8 +13,6 @@ source ~/.zsh/functions.zsh
 
 # https://github.com/wting/autojump
 source /usr/share/autojump/autojump.zsh
-# https://github.com/urbainvaes/fzf-marks
-source /usr/share/fzf-marks/fzf-marks.zsh
 
 # https://github.com/t413/zsh-background-notify.git
 source /usr/share/zsh/plugins/zsh-background-notify/bgnotify.plugin.zsh
