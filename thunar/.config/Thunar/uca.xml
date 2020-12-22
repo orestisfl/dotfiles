@@ -165,4 +165,13 @@
 	<other-files/>
 	<text-files/>
 </action>
+<action>
+	<icon>python</icon>
+	<name>py format</name>
+	<unique-id>1595610531649434-1</unique-id>
+	<command>isort %f &amp;&amp; black %f</command>
+	<description>isort &amp;&amp; black</description>
+	<patterns>*.py</patterns>
+	<text-files/>
+</action>
 </actions>
