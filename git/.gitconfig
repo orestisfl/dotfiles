@@ -9,7 +9,7 @@
 [format]
 	pretty = oneline
 [credential]
-	helper = /usr/lib/git-core/git-credential-gnome-keyring
+	helper = cache --timeout=3600
 [merge]
 	conflictStyle = diff3
 [rerere]
