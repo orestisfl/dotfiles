@@ -26,5 +26,25 @@
                 }
             }
         }
+    },
+    "python.formatting.provider": "black",
+    "python.venvPath": "~/.cache/myenvs/nvim",
+    "diagnostic-languageserver.filetypes": {
+        "sh": "shellcheck"
+    },
+    "diagnostic-languageserver.formatFiletypes": {
+        "sh": "shfmt"
+    },
+    "diagnostic-languageserver.formatters": {
+        "shfmt": {
+            "command": "shfmt",
+            "args": [
+                "-i",
+                "4",
+                "-bn",
+                "-ci",
+                "-sr"
+            ]
+        }
     }
 }
