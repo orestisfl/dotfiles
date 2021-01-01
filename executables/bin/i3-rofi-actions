@@ -8,7 +8,7 @@ declare -A options
 declare -a options_order
 
 function add_option_if_file(){
-    if [ -f "$2" ]
+    if [[ -f "$2" ]]
     then
         add_option "$1" "$2"
     fi
@@ -24,6 +24,8 @@ add_option_if_file "Toggle screens" "$HOME/.screenlayout/toggle-radeon.sh"
 add_option_if_file "Rename workspace" "$HOME/bin/i3-workspace-rename.py"
 add_option "Sleep monitor" "xset dpms force suspend; sleep 0.1; xset dpms force suspend"
 add_option_if_file "Lock" "$HOME/bin/lock.sh"
+add_option "Bluetooth on" "bluetoothctl power on"
+add_option "Bluetooth off" "bluetoothctl power off"
 add_option "Exit" "i3-msg exit"
 add_option "Suspend system" "systemctl suspend"
 add_option "Reboot system" "systemctl reboot"
