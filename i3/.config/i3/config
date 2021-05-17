@@ -1,0 +1,8 @@
+# button for alternative actions. Mod4 == win key
+set $mod Mod4
+#main button $mod button. Mod1 == Alt key
+set $alt Mod1
+
+include include/*.config
+
+# fake-outputs 400x250+0+0,400x250+400+0,400x250+400+250,400x250+0+250

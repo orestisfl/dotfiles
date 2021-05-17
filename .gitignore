@@ -170,7 +170,4 @@ pentadactyl/.pentadactyl/info
 !binaries/bin
 !i3blocks/bin
 
-# i3 config is generated, ignore the result
-/i3/.i3/config
-
 tags
