@@ -45,3 +45,5 @@ source ~/.zsh/bindkeys.zsh
 
 # automatically remove duplicates from these arrays
 typeset -U path cdpath fpath manpath
+
+source /etc/profile.d/vte.sh

@@ -23,14 +23,16 @@ alias c="xclip -in -selection clipboard"
 alias v="(xclip -o -selection clipboard || xclip -o) | sed -e '\$a\'"
 
 # Shortcuts
-alias ydl="youtube-dl -f best"
-alias ydl-music="youtube-dl -f bestaudio -x"
+alias ydl="yt-dlp -f best"
+alias ydl-music="yt-dlp -f bestaudio -x"
+alias ydl-music-mp3="yt-dlp -f bestaudio -x --audio-format mp3"
 alias mksrcinfo='makepkg --printsrcinfo > .SRCINFO'
 alias autoremove='sudo pacman -Rns $(pacman -Qdtq)'
-alias ydl-playlist="youtube-dl -f best --write-srt -o '%(autonumber)s-%(title)s.%(ext)s'"
+alias ydl-playlist="yt-dlp -f best --write-srt -o '%(autonumber)s-%(title)s.%(ext)s'"
 alias pipupg="pip3 freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip3 install -U"
 alias drr='docker run -it --rm'
 alias lastssh="tac ~/.zhistory | grep -oP -m1 'orestis@([^\s]+)'"
+alias sdi='systemd-inhibit --what=handle-lid-switch'
 
 # Typos
 alias υαυ=yay

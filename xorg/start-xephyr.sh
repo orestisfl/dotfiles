@@ -1,9 +1,10 @@
 #!/bin/bash -x
 D="${D:-50}"
-i3_path="$HOME/Documents/programming/i3"
+i3_path="$HOME/i3"
 i3_build="$i3_path/build"
 unset I3SOCK
 export PATH="$i3_path:$i3_build:$PATH"
+export TERMINAL=urxvt
 
 finish() {
     i3-msg exit

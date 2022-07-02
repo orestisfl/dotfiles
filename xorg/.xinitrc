@@ -4,7 +4,6 @@ export TERMINAL=gnome-terminal
 export DESKTOP_SESSION=gnome
 # export QT_STYLE_OVERRIDE=GTK+  # Tell Qt to use GTK style
 export GTK_OVERLAY_SCROLLING=0
-export STEAM_RUNTIME=0
 
 userresources=$HOME/.Xresources
 usermodmap=$HOME/.Xmodmap
@@ -46,7 +45,7 @@ eval "$(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)"
 export SSH_AUTH_SOCK
 guake&
 unclutter&  # Hide mouse pointer on inactivity.
-/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1&  # Polkit authentication agent.
+/usr/lib/mate-polkit/polkit-mate-authentication-agent-1&  # Polkit authentication agent.
 # picom&
 
 exec i3
