@@ -31,6 +31,7 @@
 	aa = "!f() { git add -p && git commit --amend --no-edit; }; f"
 	ac = "!f() { git add -p && git commit -m \"${1-up}\"; }; f"
 	acp = "!f() { git add -p && git commit -m \"${1-up}\" && git push; }; f"
+	fif = push --force-if-includes --force-with-lease
 	cb = "!f() { git checkout -b "$1" 2>&1 | grep -v 'fatal: A branch named' || git checkout "$1"; }; f"
 	chp = checkout -p
 	d = diff \
