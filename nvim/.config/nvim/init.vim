@@ -1,47 +1,13 @@
-set number relativenumber
-set foldlevelstart=6
-
-set ts=4 sw=4 expandtab
-
-" Use the system clipboard
 set clipboard+=unnamedplus
+set nu
+set mouse+=a
 
-" Use , as the leader key
-let mapleader=" "
-let maplocalleader = ","
-
-" Enable mouse mode
-set mouse=a
-
-" #4684: skip nvim's auto-enable logic
-filetype plugin indent on
-" Don't autocomment next line on 'o' or enter.
-autocmd FileType * setlocal formatoptions-=ro
-set textwidth=0
-
-source ~/.config/nvim/plugins.vim
-source ~/.config/nvim/maps.vim
-"set termguicolors
-set background=dark
-colorscheme gruvbox
-
-set smartcase
-" https://vi.stackexchange.com/a/11222/
 set inccommand=nosplit
 
-" When off a buffer is unloaded when it is abandoned. When on a buffer becomes
-" hidden when it is abandoned.
-set hidden
+set ignorecase
+set smartcase
 
-" Turn backup off
-set nobackup
-set nowb
-set noswapfile
-
-" Use whole words when opening URLs.
-" This avoids cutting off parameters (after '?') and anchors (after '#').
-" http://vi.stackexchange.com/q/2801/1631
-let g:netrw_gx="<cWORD>"
+set scrolloff=10
 
 " Have Vim jump to the last position when reopening a file
 if has("autocmd")
@@ -49,16 +15,64 @@ if has("autocmd")
     \| exe "normal! g'\"" | endif
 endif
 
-au BufNewFile,BufRead *.tikz set filetype=tex
-au BufNewFile,BufRead *.gv set filetype=dot
+set ts=4 sw=4 expandtab
 
-" Used by neosnippet
-" See blog posts for introduction:
-" https://alok.github.io/2018/04/26/using-vim-s-conceal-to-make-languages-more-tolerable/
-" https://alok.github.io/2018/05/09/more-about-vim-conceal/<Paste>
-set conceallevel=0
+let mapleader=" "
+let maplocalleader = ","
 
-set wrap
-set linebreak
-set breakindent
-let &showbreak='⏎ '
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+let $FZF_DEFAULT_OPTS = '--bind alt-a:select-all,alt-d:deselect-all'
+
+set background=dark
+autocmd vimenter * ++nested colorscheme gruvbox
+
+call plug#begin('~/.local/share/nvim/plugged')
+
+Plug 'https://github.com/williamboman/mason.nvim'
+Plug 'https://github.com/williamboman/mason-lspconfig.nvim'
+Plug 'https://github.com/neovim/nvim-lspconfig'
+
+" close buffer without closing windows
+Plug 'https://github.com/moll/vim-bbye'
+
+" Theme
+Plug 'https://github.com/morhetz/gruvbox'
+
+" gcc -> toggle comments
+Plug 'https://github.com/tpope/vim-commentary'
+" For git
+Plug 'https://github.com/tpope/vim-fugitive'
+" Plug 'https://github.com/shumphrey/fugitive-gitlab.vim'
+Plug 'https://github.com/tpope/vim-rhubarb'
+let g:fugitive_gitlab_domains = ['https://gitlab.ppro.com']
+
+Plug 'https://github.com/tpope/vim-surround'
+" 's' is not that useful: bind it to vim-surround
+xmap s <Plug>VSurround
+
+Plug 'https://github.com/junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'https://github.com/junegunn/fzf.vim'
+
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+let g:go_fmt_autosave = 0
+let g:go_imports_autosave = 0
+
+call plug#end()
+
+set completeopt=menu,menuone,noselect
+
+luafile ~/.config/nvim/lua.lua
+
+nnoremap <Leader>w :w<CR>
+noremap Y y$
+
+nnoremap <Leader>q :bd<CR>
+nnoremap <Leader>f :Files<CR>
+nnoremap <Leader>b :Buffers<CR>
+
+nnoremap <CR> :nohlsearch<CR><CR>
+
+silent !mkdir -p /tmp/vim-undo /tmp/vim-backup /tmp/vim-swp &>/dev/null
+set undodir=/tmp/vim-undo//
+set backupdir=/tmp/vim-backup//
+set directory=/tmp/vim-swp//
