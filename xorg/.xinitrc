@@ -35,7 +35,7 @@ if [ -d /etc/X11/xinit/xinitrc.d ] ; then
  unset f
 fi
 
-[[ -f "$HOME/.xinit-local.sh" ]] && source "$HOME/.xinit-local.sh"
+[[ -f "$HOME/.xinit-local" ]] && source "$HOME/.xinit-local"
 
 numlockx&  # Enable numlock on start.
 thunar --daemon&  # Thunar file manager as daemon.
