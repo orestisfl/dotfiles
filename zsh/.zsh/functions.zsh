@@ -1,3 +1,15 @@
+# Based on: https://unix.stackexchange.com/a/605328
+histdel () {
+    line="$(fc -l 0 | awk '{$1=$1};1' | fzf --tac | cut -d ' ' -f 1)" || return
+
+    HISTORY_IGNORE=${(b)history[$line]}
+
+    builtin fc -W
+    builtin fc -p $HISTFILE $HISTSIZE $SAVEHIST
+
+    print "Deleted '$HISTORY_IGNORE' from history."
+}
+
 # launch an app
 function launch {
     type $1 >/dev/null || { print "$1 not found" && return 1 }
