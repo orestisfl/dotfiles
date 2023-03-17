@@ -1,13 +1,4 @@
 #!/bin/sh
-export AUTOLOCK_TIME=7
-export LOCK_RESOLUTION="1366*768"
-
 nm-applet&
 cbatticon -l 15 -r 3&
-
-# Auto-lock after some time.
-xautolock -locker "$HOME/bin/lock.sh" -time "${AUTOLOCK_TIME}"&
-# Auto-lock after suspend.
-# https://wiki.archlinux.org/index.php/Power_management#xss-lock
-xss-lock -- "$HOME/bin/lock.sh"&
-setxkbmap -layout us,gr -option 'grp:alt_shift_toggle'&
+picom&

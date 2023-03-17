@@ -44,6 +44,5 @@ eval "$(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)"
 export SSH_AUTH_SOCK
 unclutter&  # Hide mouse pointer on inactivity.
 /usr/lib/mate-polkit/polkit-mate-authentication-agent-1&  # Polkit authentication agent.
-# picom&
 
 exec i3
