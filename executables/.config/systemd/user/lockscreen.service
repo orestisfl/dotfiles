@@ -1,9 +1,0 @@
-[Unit]
-Description=Lockscreen downloader
-
-[Service]
-Type=simple
-ExecStart=/usr/bin/python %h/bin/download_lockscreens.py
-
-[Install]
-WantedBy=multi-user.target
