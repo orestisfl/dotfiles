@@ -4,7 +4,7 @@ i3_path="$HOME/i3"
 i3_build="$i3_path/build"
 unset I3SOCK
 export PATH="$i3_path:$i3_build:$PATH"
-export TERMINAL=urxvt
+export TERMINAL=uxterm
 
 finish() {
     i3-msg exit
@@ -36,17 +36,16 @@ if [ -f "$userresources" ]; then
     xrdb -merge "$userresources"
 fi
 
-cp ~/.i3/config /tmp/i3.config
 trap handle_SIGINT INT
 echo "Passing args '$*' to i3"
 if [[ -n "$ISSUE_I3" ]]; then
     (i3 --moreversion 2>&- || i3 --version) > /tmp/version
-    i3 -c ~/Desktop/default.config --shmlog-size=26214400 "$@"
+    i3 -c /etc/i3/config --shmlog-size=26214400 "$@"
     i3-dump-log | vipe | bzip2 -c | curl --data-binary @- http://logs.i3wm.org
 elif [[ -n "$GDB_I3" ]]; then
-    gdb --args i3 -c /tmp/i3.config -V -d all "$@"
+    gdb --args i3 -V -d all "$@"
 else
-    i3 -c /tmp/i3.config -V "$@" 2>&1 &
+    i3 -V "$@" 2>&1 &
     wait $!
 fi
 finish
