@@ -23,7 +23,7 @@ alias c="xclip -in -selection clipboard"
 alias v="(xclip -o -selection clipboard || xclip -o) | sed -e '\$a\'"
 
 # Shortcuts
-alias ydl="yt-dlp -f best"
+alias ydl="yt-dlp"
 alias ydl-music="yt-dlp -f bestaudio -x"
 alias ydl-music-mp3="yt-dlp -f bestaudio -x --audio-format mp3"
 alias mksrcinfo='makepkg --printsrcinfo > .SRCINFO'
