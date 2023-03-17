@@ -1,0 +1,11 @@
+[Unit]
+Description=Execute downloader
+
+[Timer]
+OnBootSec=6min
+Persistent=true
+OnCalendar=daily
+Unit=backup.service
+
+[Install]
+WantedBy=timers.target
