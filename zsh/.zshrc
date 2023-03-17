@@ -27,13 +27,6 @@ source ~/.zsh/zsh-completions.zsh
 ZSH_AUTOSUGGEST_USE_ASYNC=1
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
-export FZF_COMPLETION_TRIGGER='~~'
-export FZF_DEFAULT_COMMAND='fd'
-export FZF_DEFAULT_OPTS='--bind alt-a:select-all,alt-d:deselect-all'
-export FZF_CTRL_T_COMMAND='fd'
-export FZF_CTRL_T_OPTS="--preview 'bat -n --color=always {}' --bind 'ctrl-/:change-preview-window(down|hidden|)'"
-export FZF_ALT_C_COMMAND='fd --type d'
-export FZF_ALT_C_OPTS="--preview 'tree -C {}'"
 source /usr/share/fzf/completion.zsh
 source /usr/share/fzf/key-bindings.zsh
 
