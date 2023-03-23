@@ -5,8 +5,7 @@ export VISUAL=nvim
 export SYSTEMD_EDITOR=nvim
 
 export GOPATH=$HOME/go
-export PATH=$HOME/bin/exes:$PATH
-export PATH=$PATH:/usr/bin/core_perl
+export PATH=$HOME/bin/exes:$HOME/bin:$PATH:$HOME/go/bin:/usr/bin/core_perl
 # Unset manpath so we can inherit from /etc/manpath via the `manpath` command
 unset MANPATH  # delete if you already modified MANPATH elsewhere in your configuration
 
