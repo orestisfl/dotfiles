@@ -29,7 +29,7 @@ unsetopt FLOW_CONTROL      # Disable start/stop characters in shell editor.
 # cache time of 20 hours, so it should almost always regenerate the first time a
 # shell is opened each day.
 autoload -Uz compinit
-compfiles=(${ZDOTDIR:-$HOME}/.zcompdump(Nm-20))
+compfiles=(${ZDOTDIR:-$HOME}/.zcompdump(Nmh-20))
 if [[ $#compfiles > 0 ]]; then
   compinit -i -C
 else
