@@ -9,7 +9,7 @@
 [format]
 	pretty = oneline
 [credential]
-	helper = cache --timeout=3600
+	helper = libsecret
 [merge]
 	conflictStyle = diff3
 [rerere]
