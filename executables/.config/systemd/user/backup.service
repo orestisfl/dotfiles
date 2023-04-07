@@ -1,9 +1,13 @@
 [Unit]
-Description=Backup history
+Description=Perform backup
+StartLimitIntervalSec=3600
+StartLimitBurst=5
 
 [Service]
 Type=simple
-ExecStart=/bin/bash %h/bin/backup-history.sh
+ExecStart=/bin/bash %h/bin/backup.sh
+Restart=on-failure
+RestartSec=600
 
 [Install]
 WantedBy=multi-user.target

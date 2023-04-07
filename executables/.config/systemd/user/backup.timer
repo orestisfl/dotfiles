@@ -1,8 +1,8 @@
 [Unit]
-Description=Execute downloader
+Description=Backup timer
 
 [Timer]
-OnBootSec=6min
+OnBootSec=15min
 Persistent=true
 OnCalendar=daily
 Unit=backup.service
