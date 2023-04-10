@@ -1,29 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <actions>
 <action>
-	<icon>terminator</icon>
+	<icon>org.gnome.Terminal</icon>
 	<name>Open Terminal Here</name>
+	<submenu></submenu>
 	<unique-id>1479157868089252-1</unique-id>
 	<command>i3-sensible-terminal --working-directory=%f</command>
 	<description></description>
+	<range></range>
 	<patterns>*</patterns>
 	<directories/>
 </action>
 <action>
-	<icon>Thunar</icon>
+	<icon>org.xfce.thunar</icon>
 	<name>Open as root</name>
+	<submenu></submenu>
 	<unique-id>1449159239230371-5</unique-id>
 	<command>thunar &apos;admin://%f&apos;</command>
 	<description>opens current directory as root with thunar</description>
+	<range></range>
 	<patterns>*</patterns>
 	<directories/>
 </action>
 <action>
-	<icon>geany</icon>
+	<icon>nvim</icon>
 	<name>Edit as root</name>
+	<submenu></submenu>
 	<unique-id>1449159267668261-6</unique-id>
 	<command>i3-sensible-terminal -- sudoedit %f</command>
 	<description>edit file as root with geany</description>
+	<range></range>
 	<patterns>*</patterns>
 	<other-files/>
 	<text-files/>
@@ -31,9 +37,11 @@
 <action>
 	<icon>insert-link-symbolic</icon>
 	<name>Create symlink</name>
+	<submenu></submenu>
 	<unique-id>1481425324037951-3</unique-id>
 	<command>ln -s %f %n.symlink</command>
 	<description>Creates a symbolic link to the selected object</description>
+	<range></range>
 	<patterns>*</patterns>
 	<directories/>
 	<audio-files/>
@@ -43,30 +51,25 @@
 	<video-files/>
 </action>
 <action>
-	<icon>object-merge</icon>
-	<name>Join</name>
-	<unique-id>1496661459302216-1</unique-id>
-	<command>cat %F &gt; joined.txt</command>
-	<description>Join selected text files</description>
-	<patterns>*</patterns>
-	<text-files/>
-</action>
-<action>
-	<icon>baobab</icon>
+	<icon>org.gnome.baobab</icon>
 	<name>Disk Usage</name>
+	<submenu></submenu>
 	<unique-id>1481425048545091-2</unique-id>
 	<command>baobab %F</command>
 	<description>Disk Usage with baobab. Multiple directories can be selected, multiple windows will pop.</description>
+	<range></range>
 	<patterns>*</patterns>
 	<startup-notify/>
 	<directories/>
 </action>
 <action>
-	<icon>meld</icon>
+	<icon>org.gnome.Meld</icon>
 	<name>Diff with meld</name>
+	<submenu></submenu>
 	<unique-id>1449159356097970-8</unique-id>
 	<command>meld %F</command>
 	<description>Compare with meld</description>
+	<range></range>
 	<patterns>*</patterns>
 	<directories/>
 	<other-files/>
@@ -75,57 +78,35 @@
 <action>
 	<icon>diffpdf</icon>
 	<name>Diff with diffpdf</name>
+	<submenu></submenu>
 	<unique-id>1496661549487946-4</unique-id>
 	<command>diffpdf %F</command>
 	<description>Diff with diffpdf</description>
+	<range></range>
 	<patterns>*.pdf</patterns>
 	<other-files/>
 </action>
 <action>
-	<icon>gitg</icon>
-	<name>Open gitg</name>
-	<unique-id>1479729913615308-2</unique-id>
-	<command>gitg %d</command>
-	<description></description>
-	<patterns>.git</patterns>
-	<directories/>
-</action>
-<action>
 	<icon>libreoffice-main</icon>
 	<name>Convert to pdf</name>
+	<submenu></submenu>
 	<unique-id>1504801025224864-1</unique-id>
 	<command>libreoffice --convert-to pdf %F</command>
 	<description>Convert file to pdf using libreoffice</description>
+	<range></range>
 	<patterns>*.ppt;*.pptx;*.doc;*.docx;*.txt;*.xls;*.odt</patterns>
 	<startup-notify/>
 	<other-files/>
 	<text-files/>
 </action>
 <action>
-	<icon>graphui</icon>
-	<name>Convert to pdf</name>
-	<unique-id>1559158879071847-1</unique-id>
-	<command>dot -Tpdf -O %f</command>
-	<description>Convert file to pdf using graphviz</description>
-	<patterns>*.gv</patterns>
-	<other-files/>
-	<text-files/>
-</action>
-<action>
-	<icon>pdfeditor</icon>
-	<name>pdfcrop</name>
-	<unique-id>1559234625874832-2</unique-id>
-	<command>cp %f /tmp/to-crop.pdf &amp;&amp; pdfcrop /tmp/to-crop.pdf %f</command>
-	<description>pdfcrop</description>
-	<patterns>*.pdf</patterns>
-	<other-files/>
-</action>
-<action>
 	<icon>gtk-convert</icon>
 	<name>To UTF-8</name>
+	<submenu></submenu>
 	<unique-id>1497454094821451-10</unique-id>
 	<command>~/bin/greek-to-utf.sh %F</command>
 	<description></description>
+	<range></range>
 	<patterns>*.srt</patterns>
 	<other-files/>
 	<text-files/>
@@ -133,44 +114,33 @@
 <action>
 	<icon>mkvmergeGUI</icon>
 	<name>extract subtitles</name>
+	<submenu></submenu>
 	<unique-id>1502571079623929-9</unique-id>
 	<command>~/bin/mkv-extract-subs.py --progress --notify %F</command>
 	<description></description>
+	<range></range>
 	<patterns>*</patterns>
 	<video-files/>
 </action>
 <action>
 	<icon>sound-icon</icon>
 	<name>Extract Audio</name>
+	<submenu></submenu>
 	<unique-id>1555923884943015-1</unique-id>
 	<command>bash -c &apos;ffmpeg -i &quot;$0&quot; -map 0:1 -c:a copy &quot;${0%%.*}&quot;.m4a ; notify-send &quot;Extract audio: $?&quot;&apos; %f </command>
 	<description>https://unix.stackexchange.com/a/332907/</description>
+	<range></range>
 	<patterns>*</patterns>
 	<video-files/>
 </action>
 <action>
-	<name>llvm-dis</name>
-	<unique-id>1592834702942778-1</unique-id>
-	<command>for file in %F ; do llvm-dis &quot;$file&quot; ; done</command>
-	<description>Takes an LLVM bitcode file and converts it into human-readable LLVM assembly language</description>
-	<patterns>*.bc</patterns>
-	<other-files/>
-</action>
-<action>
-	<name>llvm-as</name>
-	<unique-id>1592835916644280-1</unique-id>
-	<command>for file in %F ; do llvm-as &quot;$file&quot; ; done</command>
-	<description>Reads a file containing human-readable LLVM assembly language, translates it to LLVM bitcode</description>
-	<patterns>*.ll</patterns>
-	<other-files/>
-	<text-files/>
-</action>
-<action>
 	<icon>python</icon>
 	<name>py format</name>
+	<submenu></submenu>
 	<unique-id>1595610531649434-1</unique-id>
 	<command>isort %f &amp;&amp; black %f</command>
 	<description>isort &amp;&amp; black</description>
+	<range></range>
 	<patterns>*.py</patterns>
 	<text-files/>
 </action>
