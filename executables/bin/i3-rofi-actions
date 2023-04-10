@@ -19,7 +19,19 @@ function add_option() {
     options_order+=("$1")
 }
 
+function switch_autorandr() {
+    result="$(autorandr | rofi -matching fuzzy -dmenu -i -p 'Pick configuration: ')"
+    autorandr --list | while read line; do
+        echo "$line -- $result"
+        echo "$result" | grep "$line" \
+            && autorandr --force --load "$line" && return \
+            || continue
+    done
+}
+export -f switch_autorandr
+
 # Fill options.
+which autorandr && add_option "Autorandr" switch_autorandr
 add_option_if_file "Toggle screens" "$HOME/.screenlayout/toggle-radeon.sh"
 add_option_if_file "Rename workspace" "$HOME/bin/i3-workspace-rename.py"
 add_option "Sleep monitor" "xset dpms force suspend; sleep 0.1; xset dpms force suspend"
