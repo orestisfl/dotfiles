@@ -42,6 +42,7 @@ Plug 'https://github.com/morhetz/gruvbox'
 Plug 'https://github.com/tpope/vim-commentary'
 " For git
 Plug 'https://github.com/tpope/vim-fugitive'
+command! Gbrowse GBrowse
 " Plug 'https://github.com/shumphrey/fugitive-gitlab.vim'
 Plug 'https://github.com/tpope/vim-rhubarb'
 let g:fugitive_gitlab_domains = ['https://gitlab.ppro.com']
@@ -76,3 +77,5 @@ silent !mkdir -p /tmp/vim-undo /tmp/vim-backup /tmp/vim-swp &>/dev/null
 set undodir=/tmp/vim-undo//
 set backupdir=/tmp/vim-backup//
 set directory=/tmp/vim-swp//
+
+let g:netrw_browsex_viewer= "xdg-open"
