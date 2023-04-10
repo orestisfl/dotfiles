@@ -43,13 +43,11 @@ add_option "Exit" "i3-msg exit"
 add_option "Suspend system" "systemctl suspend"
 add_option "Reboot system" "systemctl reboot"
 add_option "Power-off system" "systemctl poweroff"
-# add_option "Hibernate" "systemctl hibernate"
 options_keys=$(printf '%s\n' "${options_order[@]}")  # Get keys as a string, seperated by newlines.
 options_len=$(echo -e "$options_keys"|wc -l)
 echo -e "$options_keys"
 
 launcher="rofi -matching fuzzy -l $options_len -dmenu -i -p 'Pick action: '"
 selection=$(echo -e "$options_keys" | eval "$launcher" | tr -d '\r\n')
-echo "$selection : ${options[$selection]}"
 
-eval "${options[$selection]}"
+out="$(eval ${options[$selection]} 2>&1)" || zenity --error --text="Command failed: $out" --no-markup
