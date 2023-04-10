@@ -11,9 +11,6 @@ source ~/.zsh/prompt.zsh
 source ~/.zsh/aliases.zsh
 source ~/.zsh/functions.zsh
 
-# https://github.com/wting/autojump
-source /usr/share/autojump/autojump.zsh
-
 # https://github.com/t413/zsh-background-notify.git
 source /usr/share/zsh/plugins/zsh-background-notify/bgnotify.plugin.zsh
 
@@ -29,6 +26,8 @@ source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 source /usr/share/fzf/completion.zsh
 source /usr/share/fzf/key-bindings.zsh
+
+eval "$(zoxide init zsh)"
 
 # https://github.com/zsh-users/zsh-syntax-highlighting
 # sudo pacman -S zsh-syntax-highlighting
