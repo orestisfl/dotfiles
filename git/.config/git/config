@@ -26,7 +26,7 @@
 	c = commit --verbose
 	fzf = "!f() { git show $(git log --pretty=oneline --color=always | fzf --ansi | awk '{print $1}'); }; f"
 	last = "!f() { git lf -1 ${1-HEAD}; }; f"
-	rpr = "!f() { git rebase --autosquash -i $(git merge-base $(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@') $(git rev-parse --abbrev-ref HEAD)); }; f"
+	rpr = "!f() { git rebase --autosquash -i $(git merge-base $(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/@@') $(git rev-parse --abbrev-ref HEAD)); }; f"
 	ror = "!f() { git fetch --all && git rebase $(git print-om) --autostash ; }; f"
 	aa = "!f() { git add -p && git commit --amend --no-edit; }; f"
 	ac = "!f() { git add -p && git commit -m \"${1-up}\"; }; f"
