@@ -10,6 +10,11 @@ histdel () {
     print "Deleted '$HISTORY_IGNORE' from history."
 }
 
+function waitpidof() {
+    [[ -z "$1" ]] && echo "Usage: $0 <name of process>" && return 1
+    while (pidof "$1" || (sleep 5 && pidof "$1")); do sleep 1; done
+}
+
 # launch an app
 function launch {
     type $1 >/dev/null || { print "$1 not found" && return 1 }
