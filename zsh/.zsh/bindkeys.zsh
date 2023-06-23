@@ -9,9 +9,6 @@ bindkey "^D" delete-char
 bindkey "^F" forward-char
 bindkey "^B" backward-char
 
-# xdg-open + fzf
-bindkey "^O" fo
-
 # bind UP and DOWN arrow keys
 zmodload zsh/terminfo
 bindkey "$terminfo[kcuu1]" history-substring-search-up
@@ -58,5 +55,6 @@ autoload -z edit-command-line
 zle -N edit-command-line
 bindkey "^X^E" edit-command-line
 
-# jump
-bindkey "^J" jump
+# ~/.zsh/functions.zsh
+bindkey "^O" fo
+bindkey '^[z' zoxide_cd

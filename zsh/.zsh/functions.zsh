@@ -1,5 +1,5 @@
 # Based on: https://unix.stackexchange.com/a/605328
-histdel () {
+function histdel () {
     line="$(fc -l 0 | awk '{$1=$1};1' | fzf --tac | cut -d ' ' -f 1)" || return
 
     HISTORY_IGNORE=${(b)history[$line]}
@@ -19,6 +19,17 @@ function waitpidof() {
 function launch {
     type $1 >/dev/null || { print "$1 not found" && return 1 }
     $@ &>/dev/null &|
+}
+
+function vix() {
+    file=${1:-}
+    if [[ -z "$file" ]]; then
+        nvim
+    else
+        touch "$file"
+        chmod +x "$file"
+        nvim "$file"
+    fi
 }
 
 # Pretty print specified PATH.
@@ -63,12 +74,6 @@ man() {
             man "$@"
 }
 
-# most recent items at bottom, replace recent w/ TODAY-YESTERDAY
-# https://www.reddit.com/r/archlinux/comments/41s1w4/what_is_your_favorite_one_liner_to_use/cz50y1m
-r (){
-    ls -vAFq --color=yes -got --si --time-style=long-iso "$@" | sed "s/$(date +%Y-%m-%d)/\x1b[32m     TODAY\x1b[m/;s/$(date +'%Y-%m-%d' -d yesterday)/\x1b[33m YESTERDAY\x1b[m/" | tac
-}
-
 function color_to_greyscale_pdf(){
     if [ ! $2 ] ;then
         2=$(basename $1 .pdf)
@@ -109,14 +114,6 @@ function venv() {
     pip install black ipdb ipython loguru pylint tqdm
 }
 
-# Count lines from git repo
-function gloc(){
-    local dest=$(mktemp -d)
-    git clone --depth 1 "$1" "$dest" &> /dev/null &&
-      cloc "$dest" &&
-      rm -rf "$dest"
-}
-
 slash-backward-kill-word() {
     local WORDCHARS="*?_-.[]~=&;!#$%^(){}<>"
     zle backward-kill-word
@@ -155,3 +152,12 @@ fo(){
     return $ret
 }
 zle -N fo
+
+zoxide_cd () {
+    local dir
+    dir=$(zoxide query -i)
+    cd -- $dir
+    zle reset-prompt
+}
+
+zle -N zoxide_cd
