@@ -15,7 +15,7 @@ unset MANPATH  # delete if you already modified MANPATH elsewhere in your config
 # awk: Only unique matches
 export FZF_DEFAULT_COMMAND='{ fd --type f & git ls-files } | sed -E "s/^\.\///" | awk "!x[\$0]++"'
 export FZF_COMPLETION_TRIGGER='~~'
-export FZF_DEFAULT_OPTS='--bind alt-a:select-all,alt-d:deselect-all'
+export FZF_DEFAULT_OPTS='--bind alt-a:select-all,alt-d:deselect-all,ctrl-u:preview-half-page-up,ctrl-d:preview-half-page-down'
 export FZF_CTRL_T_COMMAND='fd'
 export FZF_CTRL_T_OPTS="--preview 'bat -n --color=always {}' --bind 'ctrl-/:change-preview-window(down|hidden|)'"
 export FZF_ALT_C_COMMAND='fd --type d'
