@@ -15,7 +15,7 @@
 [rerere]
 	enabled = true
 [alias]
-	b = "!f() { git checkout $(git for-each-ref refs/heads/ --format='%(refname:short)' | fzf); }; f"
+	b = "!f() { git checkout $([[ $1 ]] && echo $1 || git for-each-ref refs/heads/ --format='%(refname:short)' | fzf); }; f"
 	bD = branch -D
 	ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
 	ls = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate
