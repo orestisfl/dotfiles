@@ -2,7 +2,7 @@
 Description=Backup timer
 
 [Timer]
-OnBootSec=15min
+ExecStartPre=/bin/sleep 15m
 Persistent=true
 OnCalendar=daily
 Unit=backup.service

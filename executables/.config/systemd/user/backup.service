@@ -8,6 +8,3 @@ Type=simple
 ExecStart=/bin/bash %h/bin/backup.sh
 Restart=on-failure
 RestartSec=600
-
-[Install]
-WantedBy=multi-user.target
