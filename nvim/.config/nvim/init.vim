@@ -79,3 +79,21 @@ set backupdir=/tmp/vim-backup//
 set directory=/tmp/vim-swp//
 
 let g:netrw_browsex_viewer= "xdg-open"
+
+function! Rg(fullscreen, ...)
+    let l:pat = ''
+    let l:dir = ''
+    if a:0 > 0
+        let l:args = split(a:1)
+        let l:pat = l:args[0]
+        if len(l:args) > 1
+            let l:dir = l:args[1]
+        endif
+    endif
+    let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case --hidden --glob "!.git" -- %s || true'
+    let initial_command = printf(command_fmt, l:pat.' '.l:dir)
+    let reload_command = printf(command_fmt, '{q}'.' '.l:dir)
+    let spec = {'options': ['--phony', '--query', l:pat, '--bind', 'change:reload:'.reload_command]}
+    call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
+endfunction
+command! -bang -nargs=? -complete=dir Rg call Rg(<bang>0, <f-args>)
