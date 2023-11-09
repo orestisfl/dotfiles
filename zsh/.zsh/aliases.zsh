@@ -7,6 +7,7 @@ alias grep='grep --color=auto'
 alias rename=perl-rename
 alias vi=vim
 alias vim=nvim
+alias rg="rg --hidden --glob '!.git'"
 
 # ls related
 alias exa=' exa --git'
