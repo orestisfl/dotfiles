@@ -67,3 +67,5 @@
 	excludesFile = ~/.config/git/gitignore_global
 [push]
 	autoSetupRemote = true
+[init]
+	defaultBranch = main
