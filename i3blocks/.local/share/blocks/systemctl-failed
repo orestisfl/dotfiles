@@ -1,0 +1,28 @@
+#!/bin/bash
+set -euo pipefail
+
+if [ -n "$BLOCK_BUTTON" ]; then
+    systemctl --user reset-failed
+    systemctl reset-failed
+fi
+
+function match() {
+    local regex="([0-9]+) loaded units listed.*"
+    if [[ $1 =~ $regex ]]; then
+        failed_count="${BASH_REMATCH[1]}"
+        echo "$failed_count"
+    else
+        return 1
+    fi
+}
+
+res1=$(match "$(systemctl --failed)") \
+    && res2=$(match "$(systemctl --user --failed)") \
+    || ( echo failed to match && exit 33 )
+res=$((res1+res2))
+
+if [[ $res -gt 0 ]]; then
+    echo "systemctl --failed: $res"
+    echo "$res"
+    exit 33
+fi

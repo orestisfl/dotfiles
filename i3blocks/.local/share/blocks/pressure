@@ -1,0 +1,20 @@
+#!/usr/bin/env python
+import re
+
+s = ""
+done = False
+for tpe in ("cpu", "memory", "io"):
+    with open("/proc/pressure/" + tpe) as f:
+        a, b = re.search(r"avg10=(\S*) avg60=(\S*)", f.readline()).groups()
+    a = float(a)
+    b = float(b)
+    if a > 1:
+        color = "red" if a > 5 else "yellow"
+        a = f'<span foreground="{color}">{a}</span>'
+        color = "red" if b > 5 else "yellow"
+        b = f'<span foreground="{color}">{b}</span>' if b > 1 else str(b)
+        s = f"{s} {tpe}: ({a},{b})"
+
+if s:
+    print("", s.strip())
+    print("", s.strip())
