@@ -12,7 +12,7 @@ source ~/.zsh/aliases.zsh
 source ~/.zsh/functions.zsh
 
 # https://github.com/t413/zsh-background-notify.git
-source /usr/share/zsh/plugins/zsh-background-notify/bgnotify.plugin.zsh
+source ~/.zsh/bgnotify.plugin.zsh
 
 # command not found from pkgfile
 source /usr/share/doc/pkgfile/command-not-found.zsh
