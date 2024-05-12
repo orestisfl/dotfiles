@@ -1,2 +1,6 @@
 nm-applet&
 cbatticon -l 15 -r 3&
+
+xautolock -locker i3lock -time 10 -notify 10 -notifier 'notify-send "Screen will lock in 10s"'&
+xss-lock 'i3lock'&
+(sleep 2 && xrandr --auto && autorandr --change)&
