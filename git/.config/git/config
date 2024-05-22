@@ -12,11 +12,13 @@
 	helper = libsecret
 [merge]
 	conflictStyle = diff3
+	tool = meld
 [rerere]
 	enabled = true
 [alias]
 	b = "!f() { git checkout $([[ $1 ]] && echo $1 || git for-each-ref refs/heads/ --format='%(refname:short)' | fzf); }; f"
 	bD = branch -D
+	bclean = "!f() { git fetch --all --prune && git branch -D $(git for-each-ref --format '%(refname) %(upstream:track)' refs/heads | awk '$2 == \"[gone]\" {sub(\"refs/heads/\", \"\", $1); print $1}'); }; f"
 	ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
 	ls = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate
 	lf = log --pretty=fuller --decorate --stat
