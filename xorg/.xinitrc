@@ -1,6 +1,6 @@
 #!/bin/sh
 export VISUAL=nvim
-export TERMINAL=gnome-terminal
+export TERMINAL=alacritty
 export DESKTOP_SESSION=gnome
 # export QT_STYLE_OVERRIDE=GTK+  # Tell Qt to use GTK style
 export GTK_OVERLAY_SCROLLING=0
