@@ -44,3 +44,5 @@ source ~/.zsh/bindkeys.zsh
 typeset -U path cdpath fpath manpath
 
 source /etc/profile.d/vte.sh
+
+eval "$(atuin init zsh --disable-up-arrow)"
