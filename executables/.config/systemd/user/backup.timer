@@ -2,7 +2,6 @@
 Description=Backup timer
 
 [Timer]
-ExecStartPre=/bin/sleep 15m
 Persistent=true
 OnCalendar=daily
 Unit=backup.service
