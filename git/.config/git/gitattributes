@@ -1,0 +1,2 @@
+go.mod merge=union
+go.sum merge=union
