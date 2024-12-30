@@ -1,18 +1,36 @@
 # Based on: https://unix.stackexchange.com/a/605328
+function aws_multi_region() {
+    aws ec2 describe-regions \
+        --query "Regions[].{Name:RegionName}" \
+        --output text \
+        | parallel --color-failed --group --jobs 32 "bash -c \"echo {}: && aws --region {} $@\""
+}
+alias aws-multi-region=aws_multi_region
+
 function histdel () {
     line="$(fc -l 0 | awk '{$1=$1};1' | fzf --tac | cut -d ' ' -f 1)" || return
 
     HISTORY_IGNORE=${(b)history[$line]}
-
     builtin fc -W
     builtin fc -p $HISTFILE $HISTSIZE $SAVEHIST
 
+    [[ -n "$HISTORY_IGNORE" ]] && atuin search --search-mode prefix "$HISTORY_IGNORE" --delete
     print "Deleted '$HISTORY_IGNORE' from history."
 }
 
 function waitpidof() {
     [[ -z "$1" ]] && echo "Usage: $0 <name of process>" && return 1
     while (pidof "$1" || (sleep 5 && pidof "$1")); do sleep 1; done
+}
+
+killall() {
+    /usr/bin/killall $@ || return $?
+    for i in {1..10}; do
+        /usr/bin/killall $@ &> /dev/null || return 0
+        sleep 0.1
+    done
+    echo still alive
+    return 1
 }
 
 # launch an app
@@ -55,39 +73,6 @@ function swap_2_files(){
 
 function rec_fix_trailing_whitespace(){
     find . -name '.git' -prune -o -type f -name "$1" -exec sed --in-place 's/[[:space:]]\+$//' {} \+
-}
-
-# colored man
-# https://github.com/robbyrussell/oh-my-zsh/blob/master/plugins/colored-man-pages/colored-man-pages.plugin.zsh
-man() {
-    env \
-        LESS_TERMCAP_mb=$(printf "\e[1;31m") \
-        LESS_TERMCAP_md=$(printf "\e[1;31m") \
-        LESS_TERMCAP_me=$(printf "\e[0m") \
-        LESS_TERMCAP_se=$(printf "\e[0m") \
-        LESS_TERMCAP_so=$(printf "\e[1;44;33m") \
-        LESS_TERMCAP_ue=$(printf "\e[0m") \
-        LESS_TERMCAP_us=$(printf "\e[1;32m") \
-        PAGER="${commands[less]:-$PAGER}" \
-        _NROFF_U=1 \
-        PATH="$HOME/bin:$PATH" \
-            man "$@"
-}
-
-function color_to_greyscale_pdf(){
-    if [ ! $2 ] ;then
-        2=$(basename $1 .pdf)
-        2+="-greyscale.pdf"
-    fi
-    gs \
-        -sOutputFile=$2 \
-        -sDEVICE=pdfwrite \
-        -sColorConversionStrategy=Gray \
-        -dProcessColorModel=/DeviceGray \
-        -dCompatibilityLevel=1.4 \
-        -dNOPAUSE \
-        -dBATCH \
-        $1
 }
 
 function pdfa4(){

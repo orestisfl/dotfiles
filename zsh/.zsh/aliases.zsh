@@ -22,12 +22,20 @@ alias lt='l --sort=newest' # Lists sorted by date, most recent last.
 alias c="xclip -in -selection clipboard"
 alias v="(xclip -o -selection clipboard || xclip -o) | sed -e '\$a\'"
 
+# help
+unalias run-help
+alias help='autoload -Uz run-help && run-help'
+
 # Shortcuts
 alias autoremove='sudo pacman -Rns $(pacman -Qdtq)'
 alias drm='docker run -it --rm'
 alias drmv='docker run -it --rm -v "$PWD:/workdir" --workdir /workdir'
+alias entrr='entr -rnc'
+alias fd='fd --hyperlink'
 alias ghis='gh issue list -L 100 | fzf --preview "gh issue view {+1}"'
 alias ghpr="gh pr list | fzf --preview 'gh pr diff --color=always {+1}' | awk '{print \$1}' | xargs --no-run-if-empty gh pr checkout"
+alias k8s-show-ns="kubectl api-resources --verbs=list --namespaced -o name | xargs -n 1 kubectl get --show-kind --ignore-not-found -n"
+alias k='~/bin/kubectl-wrapper.py'
 alias mksrcinfo='makepkg --printsrcinfo > .SRCINFO'
 alias pipupg="pip3 freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip3 install -U"
 alias sdi='systemd-inhibit --what=handle-lid-switch'
