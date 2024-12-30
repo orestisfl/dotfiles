@@ -1,13 +1,12 @@
 # Subtitute old software with modern and improve some commands.
 alias cat=bat
-alias diff=colordiff
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias grep='grep --color=auto'
 alias rename=perl-rename
+alias rg="rg --hyperlink-format=default --hidden --glob '!.git'"
 alias vi=vim
 alias vim=nvim
-alias rg="rg --hyperlink-format=default --hidden --glob '!.git'"
 
 # ls related
 alias exa=' exa --git'

@@ -27,6 +27,8 @@ source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /usr/share/fzf/completion.zsh
 source /usr/share/fzf/key-bindings.zsh
 
+for file in ~/.zsh/*ignored.zsh; do source "$file"; done
+
 eval "$(zoxide init zsh)"
 
 # https://github.com/zsh-users/zsh-syntax-highlighting

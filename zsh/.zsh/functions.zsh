@@ -71,10 +71,6 @@ function swap_2_files(){
     mv $1 $TMPFILE && mv $2 $1 && mv $TMPFILE $2
 }
 
-function rec_fix_trailing_whitespace(){
-    find . -name '.git' -prune -o -type f -name "$1" -exec sed --in-place 's/[[:space:]]\+$//' {} \+
-}
-
 function pdfa4(){
     if [ ! $1 ] ;then
         return 1
