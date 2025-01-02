@@ -40,8 +40,8 @@ alias pipupg="pip3 freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 
 alias sdi='systemd-inhibit --what=handle-lid-switch'
 alias ydl-music-mp3='yt-dlp -f bestaudio -x --audio-format mp3'
 alias ydl-music='yt-dlp -f bestaudio -x'
-alias ydl-playlist="yt-dlp -f best --write-srt -o '%(autonumber)s-%(title)s.%(ext)s'"
-alias ydl=yt-dlp
+alias ydl-playlist="yt-dlp --write-subs -o '%(autonumber)s-%(title)s.%(ext)s'"
+alias ydl='yt-dlp --write-subs'
 
 # Typos
 alias υαυ=yay

@@ -83,16 +83,15 @@ function pdfa4(){
 }
 
 function venv() {
-    [[ ! $1 ]] && echo 'This function needs an argument' && return 1
     [[ $2 ]] && echo 'This function takes exactly one argument' && return 1
 
-    local dir="$HOME/.cache/myenvs/$1"
-    [[ -d "$dir" ]] && source "$dir/bin/activate" && return 0
+    local dir=${1:-.venv}
+    [[ -f "$dir/bin/activate" ]] && source "$dir/bin/activate" && return 0
 
     python3 -m venv "$dir"
     source "$dir/bin/activate"
     pip install -U pip
-    pip install black ipdb ipython loguru pylint tqdm
+    pip install black isort ipython
 }
 
 slash-backward-kill-word() {
