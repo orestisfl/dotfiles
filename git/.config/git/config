@@ -31,8 +31,8 @@
 	rpr = "!f() { git rebase --autosquash -i $(git merge-base $(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/@@') $(git rev-parse --abbrev-ref HEAD)); }; f"
 	ror = "!f() { git fetch --all && git rebase $(git print-om) --autostash ; }; f"
 	aa = "!f() { git add -p && git commit --amend --no-edit; }; f"
-	ac = "!f() { git add -p && git commit -m \"${1-up}\"; }; f"
-	acp = "!f() { git add -p && git commit -m \"${1-up}\" && git rev-parse --short=12 HEAD && git push; }; f"
+	ac = "!f() { git add -p && { if [ -z \"$1\" ]; then git commit; else git commit -m \"$1\"; fi; }; }; f"
+	acp = "!f() { git add -p && { if [ -z \"$1\" ]; then git commit; else git commit -m \"$1\"; fi; } && git rev-parse --short=12 HEAD && git push; }; f"
 	fif = push --force-if-includes --force-with-lease
 	cb = "!f() { git checkout -b "$1" 2>&1 | grep -v 'fatal: A branch named' || git checkout "$1"; }; f"
 	chp = checkout -p
