@@ -1,0 +1,9 @@
+# /etc/udev/rules.d/99-smart-audio.rules
+
+# Rule for Bluetooth headset connect/disconnect
+ACTION=="add", SUBSYSTEM=="input", ATTRS{phys}=="__BLUETOOTH_MAC_ADDRESS__", RUN+="/usr/local/bin/smart-audio-switcher.sh --device-connect bluetooth"
+ACTION=="remove", SUBSYSTEM=="input", ATTRS{phys}=="__BLUETOOTH_MAC_ADDRESS__", RUN+="/usr/local/bin/smart-audio-switcher.sh --device-disconnect"
+
+# Rule for any display plug/unplug event on the graphics card
+# This now calls the main script directly to perform the check.
+ACTION=="change", SUBSYSTEM=="drm", KERNEL=="card*", RUN+="/usr/local/bin/smart-audio-switcher.sh --hdmi-check"
