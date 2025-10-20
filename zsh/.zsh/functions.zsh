@@ -83,7 +83,9 @@ function pdfa4(){
 }
 
 function venv() {
-    [[ $2 ]] && echo 'This function takes exactly one argument' && return 1
+    [[ $2 ]] && echo 'This function takes one argument at most' && return 1
+
+    [[ -z ${1:-} ]] && [[ -f bin/activate-hermit ]] && source bin/activate-hermit && return 0
 
     local dir=${1:-.venv}
     [[ -f "$dir/bin/activate" ]] && source "$dir/bin/activate" && return 0
@@ -99,6 +101,18 @@ slash-backward-kill-word() {
     zle backward-kill-word
 }
 zle -N slash-backward-kill-word
+
+forward-space() {
+    local WORDCHARS="*?_-.[]~=&;!#$%^(){}<>/:"
+    zle forward-word
+}
+zle -N forward-space
+
+backward-space() {
+    local WORDCHARS="*?_-.[]~=&;!#$%^(){}<>/:"
+    zle backward-word
+}
+zle -N backward-space
 
 # C-e: open file with mimeopen
 # C-c: cd to dirname of file

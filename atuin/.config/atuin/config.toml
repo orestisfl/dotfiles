@@ -49,7 +49,7 @@ update_check = false
 ## in any directory within a git repository tree (default: false).
 ##
 ## To use workspace mode by default when available, set this to true and
-## set filter_mode to "workspace" or leave it unspecified and 
+## set filter_mode to "workspace" or leave it unspecified and
 ## set search.filters to include "workspace" before other filter modes.
 # workspaces = false
 
@@ -265,4 +265,3 @@ records = true
 ## The "workspace" mode is skipped when not in a workspace or workspaces = false.
 ## Default filter mode can be overridden with the filter_mode setting.
 filters = [ "global", "session", "workspace", "directory" ]
-

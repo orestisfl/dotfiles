@@ -6,8 +6,8 @@
 bindkey "^A" beginning-of-line
 bindkey "^E" end-of-line
 bindkey "^D" delete-char
-bindkey "^F" forward-char
-bindkey "^B" backward-char
+bindkey "^F" forward-space
+bindkey "^B" backward-space
 
 # bind UP and DOWN arrow keys
 zmodload zsh/terminfo
@@ -29,7 +29,7 @@ bindkey -M vicmd 'k' history-substring-search-up
 bindkey -M vicmd 'j' history-substring-search-down
 
 # delete key
-bindkey "^[[3~"  delete-char
+bindkey "^[[3~" delete-char
 bindkey "^[3;5~" delete-char
 # ctrl+left/right
 bindkey '^[Oc' forward-word

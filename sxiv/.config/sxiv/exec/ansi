@@ -18,7 +18,7 @@
                 <span class="hl kwb">echo</span> <span class="hl opt">-</span>n <span class="hl str">&quot;</span><span class="hl ipl">$file</span><span class="hl str">&quot;</span> | xclip <span class="hl opt">-</span>selection clipboard <span class="hl opt">;;</span>
         <span class="hl str">&quot;C-w&quot;</span><span class="hl opt">)</span>
                 nitrogen <span class="hl opt">--</span>save <span class="hl opt">--</span>set-zoom-fill <span class="hl str">&quot;</span><span class="hl ipl">$file</span><span class="hl str">&quot;</span> <span class="hl opt">;;</span>
-        <span class="hl str">&quot;C-e&quot;</span><span class="hl opt">)</span>  
+        <span class="hl str">&quot;C-e&quot;</span><span class="hl opt">)</span>
                 gimp <span class="hl str">&quot;</span><span class="hl ipl">$file</span><span class="hl str">&quot;</span> <span class="hl opt">;;</span>
         <span class="hl kwa">esac</span>
 <span class="hl kwa">done</span>

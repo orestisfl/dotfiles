@@ -1,15 +1,17 @@
 #!/bin/sh
-while read file
-do
-        case "$1" in
-        "C-d")
-                trash-put "$file" ;;
-        "C-u")
-                mv "$file" ../ ;;
-        "C-r")
-                convert -rotate 90 "$file" "$file" ;;
-        "C-e")  
-                gimp "$file" ;;
-        esac
+while read file; do
+    case "$1" in
+    "C-d")
+        trash-put "$file"
+        ;;
+    "C-u")
+        mv "$file" ../
+        ;;
+    "C-r")
+        convert -rotate 90 "$file" "$file"
+        ;;
+    "C-e")
+        gimp "$file"
+        ;;
+    esac
 done
-

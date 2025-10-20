@@ -6,14 +6,30 @@ status=$(cat /sys/class/net/${device}/operstate)
 URGENT_VALUE=20
 
 if [[ ${status} == "up" ]]; then
-  if [[ -d "/sys/class/net/${device}/wireless" ]]; then
-    quality=$(awk 'NR==3 {print $3 "00 %"}''' /proc/net/wireless)
-    echo "${quality}"
+    if [[ -d "/sys/class/net/${device}/wireless" ]]; then
+        # Correctly parse wireless quality for the given device
+        quality_line=$(grep "^\s*${device}:" /proc/net/wireless)
+        if [ -n "$quality_line" ]; then
+            # The 3rd field is link quality. It's a value like "58.".
+            raw_quality=$(echo "$quality_line" | awk '{print $3}' | sed 's/\.//')
 
-    if [[ ${quality} -le ${URGENT_VALUE} ]]; then
-      exit 33
+            # This value is typically out of 70. Let's calculate percentage.
+            quality_perc=$((raw_quality * 100 / 70))
+
+            if [ "$quality_perc" -gt 100 ]; then
+                quality_perc=100
+            fi
+
+            echo "${quality_perc}%"
+
+            if [[ ${quality_perc} -le ${URGENT_VALUE} ]]; then
+                exit 33
+            fi
+        else
+            # Could not find device in /proc/net/wireless
+            echo "W:?"
+        fi
+    else
+        echo "on"
     fi
-  else
-    echo "on"
-  fi
 fi

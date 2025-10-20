@@ -201,5 +201,6 @@ Temporary Items
 ### Custom ###
 !binaries/bin
 !i3blocks/bin
+.hermit/
 
 tags

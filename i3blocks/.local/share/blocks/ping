@@ -4,5 +4,5 @@ ping_average=${ping_average%.*}
 
 echo "$ping_average"
 if [ "$ping_average" -gt 150 ]; then
-  exit 33
+    exit 33
 fi

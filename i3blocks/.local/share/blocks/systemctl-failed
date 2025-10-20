@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-if [ -n "$BLOCK_BUTTON" ]; then
+if [ -n "${BLOCK_BUTTON:-}" ]; then
     systemctl --user reset-failed
     systemctl reset-failed
 fi
@@ -16,10 +16,10 @@ function match() {
     fi
 }
 
-res1=$(match "$(systemctl --failed)") \
-    && res2=$(match "$(systemctl --user --failed)") \
-    || ( echo failed to match && exit 33 )
-res=$((res1+res2))
+res1=$(match "$(systemctl --failed)") &&
+    res2=$(match "$(systemctl --user --failed)") ||
+    (echo failed to match && exit 33)
+res=$((res1 + res2))
 
 if [[ $res -gt 0 ]]; then
     echo "systemctl --failed: $res"

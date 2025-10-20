@@ -1,0 +1,33 @@
+exclude: bin/
+repos:
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+    -   id: trailing-whitespace
+    -   id: end-of-file-fixer
+    -   id: check-yaml
+    -   id: check-added-large-files
+- repo: https://github.com/pycqa/isort
+  rev: 7.0.0
+  hooks:
+    - id: isort
+      name: isort (python)
+      args: ["--profile", "black"]
+- repo: https://github.com/psf/black
+  rev: 25.9.0
+  hooks:
+    - id: black
+- repo: local
+  hooks:
+    - id: shfmt
+      name: Run shfmt
+      entry: shfmt
+      args: [
+        "-i",
+        "4",
+        "-w"
+      ]
+      language: system
+      pass_filenames: true
+      types: [shell]
+      exclude: zsh/

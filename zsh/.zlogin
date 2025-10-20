@@ -5,9 +5,9 @@ export VISUAL=nvim
 export SYSTEMD_EDITOR=nvim
 
 export GOPATH=$HOME/go
-export PATH=$HOME/bin/exes:$HOME/bin:$PATH:$HOME/go/bin:/usr/bin/core_perl
+export PATH=$HOME/.local/bin:$HOME/bin:$PATH:$HOME/go/bin:/usr/bin/core_perl:$HOME/.local/share/npm-global/bin
 # Unset manpath so we can inherit from /etc/manpath via the `manpath` command
-unset MANPATH  # delete if you already modified MANPATH elsewhere in your configuration
+unset MANPATH # delete if you already modified MANPATH elsewhere in your configuration
 
 # git ls-files: all tracked files, even if starting with dot
 # fd --type f: all non-ignored files, even if in submodule
@@ -23,3 +23,4 @@ export FZF_ALT_C_OPTS="--preview 'tree -C {}'"
 
 [[ -z $DISPLAY && $XDG_VTNR -eq 1 && -z "$TMUX" ]] && exec startx
 export TERM=linux
+export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/gcr/ssh"

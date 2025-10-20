@@ -39,8 +39,8 @@
 
 # Examples of commands:
 
-"xbindkeys_show" 
-  control+shift+alt+q 
+"xbindkeys_show"
+  control+shift+alt+q
 
 # Thumb Button UP= Ctrl+Tab
 "xte 'keydown Control_L' 'key Tab' 'keyup Control_L'"

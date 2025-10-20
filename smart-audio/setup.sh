@@ -14,8 +14,8 @@ cd "$(dirname "$(readlink -f "$0")")"
 
 # Check if running as root, if not, elevate with pkexec.
 if [ "$(id -u)" -ne 0 ]; then
-	echo "This script requires root privileges. Elevating with pkexec..." >&2
-	exec pkexec env BLUETOOTH_MAC_ADDRESS="$BLUETOOTH_MAC_ADDRESS" bash "$(readlink -f "$0")" "$@"
+    echo "This script requires root privileges. Elevating with pkexec..." >&2
+    exec pkexec env BLUETOOTH_MAC_ADDRESS="$BLUETOOTH_MAC_ADDRESS" bash "$(readlink -f "$0")" "$@"
 fi
 
 # --- Installation ---
@@ -31,20 +31,20 @@ chmod 755 /usr/local/bin/smart-audio-switcher.sh
 
 # 3. Process and copy the udev rule to its destination.
 if [ -f "./99-smart-audio.rules" ]; then
-	# Check for Bluetooth MAC address environment variable
-	if [ -z "$BLUETOOTH_MAC_ADDRESS" ]; then
-		echo "ERROR: BLUETOOTH_MAC_ADDRESS environment variable is not set." >&2
-		echo "Please set it to the MAC address of your Bluetooth device." >&2
-		echo "Example: export BLUETOOTH_MAC_ADDRESS=\"8c:f8:c5:c5:33:b0\"" >&2
-		exit 1
-	fi
+    # Check for Bluetooth MAC address environment variable
+    if [ -z "$BLUETOOTH_MAC_ADDRESS" ]; then
+        echo "ERROR: BLUETOOTH_MAC_ADDRESS environment variable is not set." >&2
+        echo "Please set it to the MAC address of your Bluetooth device." >&2
+        echo "Example: export BLUETOOTH_MAC_ADDRESS=\"8c:f8:c5:c5:33:b0\"" >&2
+        exit 1
+    fi
 
-	echo "Processing and copying 99-smart-audio.rules to /etc/udev/rules.d/..." >&2
-	# Replace the placeholder with the actual MAC address from the env var
-	sed "s/__BLUETOOTH_MAC_ADDRESS__/$BLUETOOTH_MAC_ADDRESS/g" ./99-smart-audio.rules >/etc/udev/rules.d/99-smart-audio.rules
+    echo "Processing and copying 99-smart-audio.rules to /etc/udev/rules.d/..." >&2
+    # Replace the placeholder with the actual MAC address from the env var
+    sed "s/__BLUETOOTH_MAC_ADDRESS__/$BLUETOOTH_MAC_ADDRESS/g" ./99-smart-audio.rules >/etc/udev/rules.d/99-smart-audio.rules
 else
-	echo "WARN: 99-smart-audio.rules not found in current directory. Skipping copy." >&2
-	echo "      Ensure it is already in place in /etc/udev/rules.d/" >&2
+    echo "WARN: 99-smart-audio.rules not found in current directory. Skipping copy." >&2
+    echo "      Ensure it is already in place in /etc/udev/rules.d/" >&2
 fi
 
 # 4. Reload udev rules to apply the changes immediately.

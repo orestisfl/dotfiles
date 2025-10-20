@@ -4,8 +4,8 @@
 INSTANCE="${BLOCK_INSTANCE}"
 
 if [[ "${INSTANCE}" != "" ]]; then
-  ARGUMENTS="--player ${INSTANCE}"
-  ps -e | grep "${INSTANCE}" &> /dev/null
+    ARGUMENTS="--player ${INSTANCE}"
+    ps -e | grep "${INSTANCE}" &>/dev/null
 fi
 if [ $? == 1 ]; then
     exit 0
@@ -30,14 +30,14 @@ INFO_ALBUM=$(playerctl ${ARGUMENTS} metadata album)
 INFO_ARTIST=$(playerctl ${ARGUMENTS} metadata artist)
 
 if [[ "${PLAYER_STATUS}" = "Paused" ]]; then
-  CUR_ICON="${ICON_PAUSE}"
+    CUR_ICON="${ICON_PAUSE}"
 elif [[ "${PLAYER_STATUS}" = "Playing" ]]; then
-  CUR_ICON="${ICON_PLAY}"
+    CUR_ICON="${ICON_PLAY}"
 else
-  CUR_ICON="${ICON_STOP}"
+    CUR_ICON="${ICON_STOP}"
 fi
 
 if [[ "${INFO_TITLE}" != "" ]] && [[ "${INFO_ARTIST}" != "" ]]; then
-  echo "${INFO_ARTIST} - ${INFO_TITLE} ${CUR_ICON}"
-  echo "${INFO_ARTIST} - ${INFO_TITLE} ${CUR_ICON}"
+    echo "${INFO_ARTIST} - ${INFO_TITLE} ${CUR_ICON}"
+    echo "${INFO_ARTIST} - ${INFO_TITLE} ${CUR_ICON}"
 fi

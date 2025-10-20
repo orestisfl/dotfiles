@@ -2,14 +2,13 @@
 # i3-rofi-actions
 # Use rofi to call systemctl for shutdown, reboot, etc
 # Taken from https://github.com/okraits/rofi-tools/blob/822d21d99104fba14f1eaee61f4258905ab91250/rofi-power
-set -e
+set -euo pipefail
 
 declare -A options
 declare -a options_order
 
-function add_option_if_file(){
-    if [[ -f "$2" ]]
-    then
+function add_option_if_file() {
+    if [[ -f "$2" ]]; then
         add_option "$1" "$2"
     fi
 }
