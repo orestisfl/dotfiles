@@ -40,16 +40,15 @@ fi
 [[ -f "$HOME/.xinit-local" ]] && source "$HOME/.xinit-local"
 
 numlockx&  # Enable numlock on start.
-thunar --daemon&  # Thunar file manager as daemon.
 unclutter&  # Hide mouse pointer on inactivity.
 
 systemd-cat -t polkit-mate-authentication-agent /usr/lib/mate-polkit/polkit-mate-authentication-agent-1 &
 keepassxc&
-eval "$(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets)"
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/gcr/ssh"
 
-setxkbmap -layout us,gr -option 'grp:alt_shift_toggle' -option 'compose:ralt'
+setxkbmap -layout us,gr -option 'grp:alt_shift_toggle' -option 'compose:ralt' -option 'caps:escape'
 alttab -mk Super_L -kk grave -w 1 -d 1 &
+systemd-cat -t thunar -- thunar --daemon &
 trash-empty -f 30&
 
 exec i3
