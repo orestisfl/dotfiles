@@ -4,11 +4,10 @@
 # It is called by udev rules and logs all output to the systemd journal.
 # It uses the card's index for reliability when setting profiles.
 
+# The system username that runs PulseAudio
+USER="orestis"
 main() {
 	# --- CONFIGURATION ---
-	# The system username that runs PulseAudio
-	USER="orestis"
-
 	# The name pattern of the sound card to control for profile switching.
 	SOUND_CARD_NAME_PATTERN="alsa_card.pci-0000_00_1f.3"
 
@@ -17,7 +16,7 @@ main() {
 	HDMI_PROFILE="output:hdmi-stereo+input:analog-stereo"
 	HDMI_SINK="alsa_output.pci-0000_00_1f.3.hdmi-stereo"
 
-	ANALOG_PROFILE="duplex:analog-stereo"
+	ANALOG_PROFILE="output:analog-stereo+input:analog-stereo"
 	ANALOG_SINK="alsa_output.pci-0000_00_1f.3.analog-stereo"
 	# --- END CONFIGURATION ---
 
@@ -98,6 +97,12 @@ main() {
 	update_audio_sink
 }
 
-# Execute the main function and pipe all of its output (stdout and stderr)
-# to systemd-cat for logging with a specific tag.
-main "$@" 2>&1 | systemd-cat -t smart-audio-switcher
+if [[ -z "$INVOCATION_ID" ]]; then
+	CMD=(systemd-run --user --unit smart-audio-switcher -- "$0" "$@")
+	if [[ "$(id -un)" != "$USER" ]]; then
+		exec sudo -u "$USER" "${CMD[@]}"
+	else
+		exec "${CMD[@]}"
+	fi
+fi
+main "$@"
