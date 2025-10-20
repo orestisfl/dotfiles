@@ -10,10 +10,8 @@ set smartcase
 set scrolloff=10
 
 " Have Vim jump to the last position when reopening a file
-if has("autocmd")
-  au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
+autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
     \| exe "normal! g'\"" | endif
-endif
 
 set ts=4 sw=4 expandtab
 
@@ -25,6 +23,8 @@ let $FZF_DEFAULT_OPTS = '--bind alt-a:select-all,alt-d:deselect-all'
 
 set background=dark
 autocmd vimenter * ++nested colorscheme gruvbox
+set foldlevelstart=99
+autocmd FileType yaml set foldmethod=indent
 
 call plug#begin('~/.local/share/nvim/plugged')
 
