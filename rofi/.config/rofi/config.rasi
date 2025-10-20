@@ -1,6 +1,6 @@
 configuration {
-    ssh-command: "{terminal} -- {ssh-client} {host} [-p {port}]";
-    run-shell-command: "{terminal} -- {cmd}";
+    ssh-command: "{terminal} -e {ssh-client} {host} [-p {port}]";
+    run-shell-command: "{terminal} -e {cmd}";
     kb-select-1: "";
     kb-select-2: "";
     kb-select-3: "";
@@ -11,4 +11,7 @@ configuration {
     kb-select-8: "";
     kb-select-9: "";
     kb-select-10: "";
+    terminal: "alacritty";
+
+    dpi: 1;
 }
