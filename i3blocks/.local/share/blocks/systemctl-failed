@@ -1,10 +1,15 @@
 #!/bin/bash
 set -euo pipefail
 
-if [ -n "${BLOCK_BUTTON:-}" ]; then
+case "${BLOCK_BUTTON:-}" in
+"1") # Left click
+    i3-sensible-terminal -e sh -c 'echo SYSTEM-WIDE FAILED UNITS:; systemctl --failed; echo; echo USER FAILED UNITS:; systemctl --user --failed; echo; read -p "Press enter to close..."' &
+    ;;
+"3") # Right click
     systemctl --user reset-failed
     systemctl reset-failed
-fi
+    ;;
+esac
 
 function match() {
     local regex="([0-9]+) loaded units listed.*"
