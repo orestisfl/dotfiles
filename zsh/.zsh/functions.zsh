@@ -149,8 +149,7 @@ zle -N fo
 
 zoxide_cd () {
     local dir
-    dir=$(zoxide query -i)
-    cd -- $dir
+    dir=$(zoxide query -i) && cd -- $dir
     zle reset-prompt
 }
 zle -N zoxide_cd
