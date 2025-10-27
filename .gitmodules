@@ -1,3 +1,6 @@
 [submodule "zsh/.zsh/zsh-saneopt"]
 	path = zsh/.zsh/zsh-saneopt
 	url = https://github.com/willghatch/zsh-saneopt
+[submodule "zsh/.zsh/zsh-defer"]
+	path = zsh/.zsh/zsh-defer
+	url = https://github.com/romkatv/zsh-defer

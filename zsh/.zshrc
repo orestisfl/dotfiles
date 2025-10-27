@@ -2,6 +2,7 @@
 # Load in the start so that they can get overriden later.
 bindkey -e # default keymap, first command so that it doesn't override anything.
 source ~/.zsh/zsh-saneopt/saneopt.plugin.zsh
+source ~/.zsh/zsh-defer/zsh-defer.plugin.zsh
 
 # http://zanshin.net/2013/02/02/zsh-configuration-from-the-ground-up/
 source ~/.zsh/colors.zsh
@@ -19,11 +20,11 @@ source /usr/share/doc/pkgfile/command-not-found.zsh
 
 # https://github.com/sorin-ionescu/prezto/blob/master/modules/completion/init.zsh
 source ~/.zsh/zsh-completions.zsh
-source /tmp/completions.zsh
+zsh-defer source /tmp/completions.zsh
 
 # https://github.com/tarruda/zsh-autosuggestions
 ZSH_AUTOSUGGEST_USE_ASYNC=1
-source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+zsh-defer source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 source /usr/share/fzf/completion.zsh
 source /usr/share/fzf/key-bindings.zsh
@@ -32,7 +33,8 @@ for file in ~/.zsh/*ignored.zsh; do source "$file"; done
 
 # https://github.com/zsh-users/zsh-syntax-highlighting
 # sudo pacman -S zsh-syntax-highlighting
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# Defer loading of zsh-syntax-highlighting to speed up startup.
+zsh-defer source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # https://github.com/zsh-users/zsh-history-substring-search
 # pacaur -S zsh-history-substring-search-git
