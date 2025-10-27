@@ -153,5 +153,19 @@ zoxide_cd () {
     cd -- $dir
     zle reset-prompt
 }
-
 zle -N zoxide_cd
+
+jqfmt() {
+  if (( $# == 0 )); then
+    print -u2 "Usage: jqfmt file [file...]"
+    return 1
+  fi
+
+  for file in "$@"; do
+    if ! jq -S . <"$file" | sponge "$file"; then
+      print -u2 "jqfmt: Failed to process '$file'"
+      return 1
+    fi
+  done
+  return 0
+}

@@ -38,6 +38,7 @@ alias k='~/bin/kubectl-wrapper.py'
 alias mksrcinfo='makepkg --printsrcinfo > .SRCINFO'
 alias pipupg="pip3 freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip3 install -U"
 alias sdi='systemd-inhibit --what=handle-lid-switch'
+alias tojson="grep -oE '\{.*' | jq -R 'fromjson?'"
 alias ydl-music-mp3='yt-dlp -f bestaudio -x --audio-format mp3'
 alias ydl-music='yt-dlp -f bestaudio -x'
 alias ydl-playlist="yt-dlp --write-subs -o '%(autonumber)s-%(title)s.%(ext)s'"
