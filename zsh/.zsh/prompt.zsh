@@ -40,14 +40,6 @@ function PR_DIR {
     echo -n %{$reset_color%}
 }
 
-export SPROMPT="Correct $fg[red]%R$reset_color to $fg[green]%r$reset_color [(y)es (n)o (a)bort (e)dit]? "
-
-# User customizable options
-PR_ARROW_CHAR='↪'
-RPR_SHOW_USER="false"
-RPR_SHOW_HOST="false"
-RPR_SHOW_GIT="true"
-
 # An exclamation point if the previous command did not complete successfully
 function PR_ERROR() {
     echo "%(?..%(!.%{$fg[violet]%}.%{$fg[red]%})%B(╯°□°）╯︵┻━┻%b%{$reset_color%} )"
@@ -55,15 +47,7 @@ function PR_ERROR() {
 
 # The arrow in red (for root) or violet (for regular user)
 function PR_ARROW() {
-    echo "%(!.%{$fg[red]%}.%{$fg[violet]%})${PR_ARROW_CHAR}%{$reset_color%}"
-}
-
-# Set custom rhs prompt
-# User in red (for root) or violet (for regular user)
-function RPR_USER() {
-    if [[ "${RPR_SHOW_USER}" == "true" ]]; then
-        echo "%(!.%{$fg[red]%}.%{$fg[violet]%})%B%n%b%{$reset_color%}"
-    fi
+    echo "%(!.%{$fg[red]%}.%{$fg[violet]%})↪%{$reset_color%}"
 }
 
 # Set RHS prompt for git repositories
@@ -140,11 +124,9 @@ function parse_git_state() {
 
 # If inside a Git repository, print its branch and state
 function git_prompt_string() {
-    if [[ "${RPR_SHOW_GIT}" == "true" ]]; then
-        local git_where="$(parse_git_branch)"
-        local git_detached="$(parse_git_detached)"
-        [ -n "$git_where" ] && echo " $GIT_PROMPT_SYMBOL$(parse_git_state)$GIT_PROMPT_PREFIX%{$fg[magenta]%}%B${git_where#(refs/heads/|tags/)}%b$git_detached$GIT_PROMPT_SUFFIX"
-    fi
+    local git_where="$(parse_git_branch)"
+    local git_detached="$(parse_git_detached)"
+    [ -n "$git_where" ] && echo " $GIT_PROMPT_SYMBOL$(parse_git_state)$GIT_PROMPT_PREFIX%{$fg[magenta]%}%B${git_where#(refs/heads/|tags/)}%b$git_detached$GIT_PROMPT_SUFFIX"
 }
 
 # Left-hand prompt
