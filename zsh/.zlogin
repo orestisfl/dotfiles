@@ -21,6 +21,12 @@ export FZF_CTRL_T_OPTS="--preview 'bat -n --color=always {}' --bind 'ctrl-/:chan
 export FZF_ALT_C_COMMAND='fd --type d'
 export FZF_ALT_C_OPTS="--preview 'tree -C {}'"
 
+# Completions
+register-python-argcomplete --shell zsh pipx register-python-argcomplete > /tmp/completions.zsh
+zoxide init zsh >> /tmp/completions.zsh
+atuin init zsh --disable-up-arrow >> /tmp/completions.zsh
+elastic-package completion zsh >> /tmp/completions.zsh
+
 [[ -z $DISPLAY && $XDG_VTNR -eq 1 && -z "$TMUX" ]] && exec startx
 export TERM=linux
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/gcr/ssh"
