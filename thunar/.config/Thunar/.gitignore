@@ -1,3 +1,0 @@
-# This .gitignore file also helps forcing stow to symlink the whole directory.
-accels.scm
-renamerrc
