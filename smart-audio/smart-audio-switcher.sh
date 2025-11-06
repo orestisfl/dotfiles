@@ -99,10 +99,6 @@ main() {
 
 if [[ -z "$INVOCATION_ID" ]]; then
     CMD=(systemd-run --user --unit smart-audio-switcher -- "$0" "$@")
-    if [[ "$(id -un)" != "$USER" ]]; then
-        exec sudo -u "$USER" "${CMD[@]}"
-    else
-        exec "${CMD[@]}"
-    fi
+    exec sudo -u "$USER" "${CMD[@]}"
 fi
 main "$@"
