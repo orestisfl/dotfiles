@@ -1,5 +1,5 @@
 set clipboard+=unnamedplus
-set nu
+set number
 set mouse+=a
 
 set inccommand=nosplit
@@ -18,7 +18,6 @@ set ts=4 sw=4 expandtab
 let mapleader=" "
 let maplocalleader = ","
 
-let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 let $FZF_DEFAULT_OPTS = '--bind alt-a:select-all,alt-d:deselect-all'
 
 set background=dark
