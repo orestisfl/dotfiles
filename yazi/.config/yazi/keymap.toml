@@ -3,4 +3,7 @@ prepend_keymap = [
 { on = [ "<C-n>" ], run = '''
     shell 'ripdrag "$@" -x 2>/dev/null &' --confirm
 ''' },
+{ on = ["f"], run="plugin jump-to-char", desc="Jump to char" },
+{ on = ["+"], run="plugin zoom 1", desc="Zoom in hovered file" },
+{ on = ["-"], run="plugin zoom -1", desc="Zoom out hovered file" },
 ]
