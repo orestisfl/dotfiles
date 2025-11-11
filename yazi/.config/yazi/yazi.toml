@@ -8,6 +8,22 @@ id   = "git"
 name = "*/"
 run  = "git"
 
+# Opener definitions
+[opener]
+baobab = [
+	{ run = 'baobab "$1"', desc = "Baobab", orphan = true, for = "linux" },
+]
+
+reveal = [
+	{ run = "xdg-open %d1", desc = "Reveal gigi" },
+]
+
+# Open rules - add baobab as an option for directories in open --interactive
+[open]
+prepend_rules = [
+	{ name = "*/", use = [ "edit", "open", "baobab" ] },
+]
+
 # keymap.toml
 [[mgr.prepend_keymap]]
 on   = "+"

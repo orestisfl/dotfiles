@@ -1,9 +1,19 @@
 [mgr]
 prepend_keymap = [
-{ on = [ "<C-n>" ], run = '''
-    shell 'ripdrag "$@" -x 2>/dev/null &' --confirm
-''' },
+{ on = [ "<C-n>" ], run = "shell 'ripdrag \"$@\" -x 2>/dev/null' --orphan" },
 { on = ["f"], run="plugin jump-to-char", desc="Jump to char" },
 { on = ["+"], run="plugin zoom 1", desc="Zoom in hovered file" },
 { on = ["-"], run="plugin zoom -1", desc="Zoom out hovered file" },
+{ on = ["g", "t"], run = "cd ~/.local/share/Trash/files", desc = "Go to trash folder" },
+{ on = ["c", "o"], run = "shell 'cat \"$@\" | xclip -selection clipboard'", desc = "Copy file contents to xclip" },
+{ on = ["l"], run = "plugin smart-enter", desc = "Enter the child directory, or open the file" },
+{ on = ["<enter>"], run = "plugin smart-enter", desc = "Enter the child directory, or open the file" },
+{ on = ["2"], run = "plugin smart-switch 1", desc = "Switch or create tab 2" },
+{ on = ["3"], run = "plugin smart-switch 2", desc = "Switch or create tab 3" },
+{ on = ["4"], run = "plugin smart-switch 3", desc = "Switch or create tab 4" },
+{ on = ["5"], run = "plugin smart-switch 4", desc = "Switch or create tab 5" },
+{ on = ["6"], run = "plugin smart-switch 5", desc = "Switch or create tab 6" },
+{ on = ["7"], run = "plugin smart-switch 6", desc = "Switch or create tab 7" },
+{ on = ["8"], run = "plugin smart-switch 7", desc = "Switch or create tab 8" },
+{ on = ["9"], run = "plugin smart-switch 8", desc = "Switch or create tab 9" },
 ]
