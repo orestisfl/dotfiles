@@ -1,0 +1,12 @@
+[Unit]
+Description=Monthly Timer for %i service
+
+[Timer]
+OnCalendar=daily
+AccuracySec=30s
+RandomizedDelaySec=60
+Persistent=true
+Unit=%i.service
+
+[Install]
+WantedBy=default.target
