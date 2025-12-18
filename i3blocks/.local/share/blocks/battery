@@ -1,10 +1,13 @@
 #!/bin/bash
 
 BATTERY_INFO=$(acpi -b | grep -v Unknown | grep -v unavailable | grep "Battery")
-BATTERY_STATE=$(echo "${BATTERY_INFO}" | grep -wo "Full\|Charging\|Discharging")
-BATTERY_POWER=$(echo "${BATTERY_INFO}" | grep -o '[0-9]\+%' | tr -d '%')
+BATTERY_STATE=$(echo "${BATTERY_INFO}" | grep -wo "Full\|Charging\|Discharging" | head -1)
+BATTERY_POWER=$(echo "${BATTERY_INFO}" | grep -o '[0-9]\+%' | tr -d '%' | head -1)
 
 URGENT_VALUE=10
+
+# Exit silently if no battery info available
+[[ -z "${BATTERY_POWER}" ]] && exit 0
 
 if [[ ${BATTERY_STATE} == "Charging" ]]; then
     echo "${BATTERY_POWER}%+"

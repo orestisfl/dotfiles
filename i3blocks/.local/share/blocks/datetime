@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# export LC_TIME="el_GR.UTF-8"
-
 if [ -n "$BLOCK_BUTTON" ]; then
     gsimplecal &
 fi

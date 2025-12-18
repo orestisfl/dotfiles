@@ -1,0 +1,12 @@
+AllowShortBlocksOnASingleLine: false
+AllowShortFunctionsOnASingleLine: None
+AllowShortIfStatementsOnASingleLine: false
+AllowShortLoopsOnASingleLine: false
+AlwaysBreakBeforeMultilineStrings: false
+BasedOnStyle: google
+ColumnLimit: 0
+IndentWidth: 4
+InsertBraces: true
+PointerBindsToType: false
+SortIncludes: false
+SpaceBeforeParens: ControlStatements
