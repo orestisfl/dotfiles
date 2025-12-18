@@ -1,8 +1,10 @@
 # /etc/udev/rules.d/99-smart-audio.rules
 
-# Rule for Bluetooth headset connect/disconnect
-ACTION=="add", SUBSYSTEM=="input", ATTRS{phys}=="__BLUETOOTH_MAC_ADDRESS__", RUN+="/usr/local/bin/smart-audio-switcher.sh --device-connect bluetooth"
-ACTION=="remove", SUBSYSTEM=="input", ATTRS{phys}=="__BLUETOOTH_MAC_ADDRESS__", RUN+="/usr/local/bin/smart-audio-switcher.sh --device-disconnect"
+# Rule for Bluetooth device connect/disconnect
+# Uses bluetooth subsystem with DEVTYPE=link which fires for any BT device connection.
+# The script handles prioritization (it checks for bluez_output sinks).
+ACTION=="add", SUBSYSTEM=="bluetooth", ENV{DEVTYPE}=="link", RUN+="/usr/local/bin/smart-audio-switcher.sh --device-connect bluetooth"
+ACTION=="remove", SUBSYSTEM=="bluetooth", ENV{DEVTYPE}=="link", RUN+="/usr/local/bin/smart-audio-switcher.sh --device-disconnect"
 
 # Rule for any display plug/unplug event on the graphics card
 # This now calls the main script directly to perform the check.

@@ -92,6 +92,12 @@ main() {
     # --- MAIN SCRIPT ENTRYPOINT ---
     echo "Script called with:" "$@"
 
+    # For Bluetooth connect events, wait a moment for PulseAudio to register the sink
+    if [[ "$1" == "--device-connect" && "$2" == "bluetooth" ]]; then
+        echo "Waiting for Bluetooth sink to appear in PulseAudio..."
+        sleep 2
+    fi
+
     # Any udev event now triggers the same intelligent check, which sets
     # the audio output according to the defined device priority.
     update_audio_sink
@@ -99,6 +105,15 @@ main() {
 
 if [[ -z "$INVOCATION_ID" ]]; then
     CMD=(systemd-run --user --unit smart-audio-switcher -- "$0" "$@")
-    exec sudo -u "$USER" "${CMD[@]}"
+    exec sudo -u "$USER" XDG_RUNTIME_DIR="/run/user/$(id -u "$USER")" "${CMD[@]}"
 fi
+
+# Use flock to prevent concurrent runs (race condition from multiple udev events)
+LOCK_FILE="/tmp/smart-audio-switcher.lock"
+exec {lock_fd}>"$LOCK_FILE"
+if ! flock -n "$lock_fd"; then
+    echo "Another instance is already running. Exiting."
+    exit 0
+fi
+
 main "$@"
