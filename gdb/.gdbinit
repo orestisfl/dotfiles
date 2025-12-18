@@ -33,3 +33,5 @@ define dslist
   set $next = $next.$arg1.sle_next
  end
 end
+
+set debuginfod enabled on
