@@ -54,6 +54,26 @@ main() {
         return 1
     }
 
+    # Wait for a Bluetooth sink to appear in PulseAudio (with timeout)
+    # Returns the sink name in BT_SINK variable if found
+    wait_for_bluetooth_sink() {
+        local max_attempts=10
+        local delay=1
+        local attempt=1
+
+        while [ $attempt -le $max_attempts ]; do
+            BT_SINK=$(run_pactl list short sinks 2>/dev/null | grep "bluez_output" | awk '{print $2}' | head -n 1)
+            if [ -n "$BT_SINK" ]; then
+                return 0
+            fi
+            echo "Waiting for Bluetooth sink (attempt $attempt/$max_attempts)..."
+            sleep $delay
+            ((attempt++))
+        done
+
+        return 1
+    }
+
     # This function decides the best output based on a priority list.
     # Priority: Bluetooth > HDMI > Analog
     update_audio_sink() {
@@ -112,10 +132,14 @@ main() {
     # --- MAIN SCRIPT ENTRYPOINT ---
     echo "Script called with:" "$@"
 
-    # For Bluetooth connect events, wait a moment for PulseAudio to register the sink
+    # For Bluetooth connect events, wait for the sink to appear and switch to it
     if [[ "$1" == "--device-connect" && "$2" == "bluetooth" ]]; then
-        echo "Waiting for Bluetooth sink to appear in PulseAudio..."
-        sleep 2
+        if wait_for_bluetooth_sink; then
+            echo "Found Bluetooth sink: $BT_SINK. Setting as default."
+            run_pactl set-default-sink "$BT_SINK"
+            return
+        fi
+        echo "Bluetooth sink did not appear in time, running normal priority check..."
     fi
 
     # Any udev event now triggers the same intelligent check, which sets
