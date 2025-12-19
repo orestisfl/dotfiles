@@ -35,14 +35,34 @@ main() {
         sudo -u "$USER" PULSE_RUNTIME_PATH="$pulse_socket_path" pactl "$@" 2>&1
     }
 
+    # Wait for a sound card to appear in PulseAudio (with timeout)
+    wait_for_sound_card() {
+        local max_attempts=10
+        local delay=1
+        local attempt=1
+
+        while [ $attempt -le $max_attempts ]; do
+            if run_pactl list short cards 2>/dev/null | grep -q "$SOUND_CARD_NAME_PATTERN"; then
+                return 0
+            fi
+            echo "Waiting for sound card '$SOUND_CARD_NAME_PATTERN' (attempt $attempt/$max_attempts)..."
+            sleep $delay
+            ((attempt++))
+        done
+
+        echo "ERROR: Sound card '$SOUND_CARD_NAME_PATTERN' not found after ${max_attempts}s" >&2
+        return 1
+    }
+
     # This function decides the best output based on a priority list.
     # Priority: Bluetooth > HDMI > Analog
     update_audio_sink() {
         echo "Updating audio sink based on device priority..."
 
-        # A small delay can help ensure devices are fully available to PulseAudio
-        # after a connection event before we try to switch to them.
-        # sleep 1
+        # Wait for PulseAudio to be ready with our sound card
+        if ! wait_for_sound_card; then
+            return 1
+        fi
 
         # 1. Check for Bluetooth devices (Highest Priority)
         local BT_SINK
