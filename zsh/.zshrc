@@ -35,6 +35,7 @@ for file in ~/.zsh/*ignored.zsh; do source "$file"; done
 # sudo pacman -S zsh-syntax-highlighting
 # Defer loading of zsh-syntax-highlighting to speed up startup.
 zsh-defer source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+zsh-defer -c "ZSH_HIGHLIGHT_STYLES[comment]='fg=245'"  # Make comments visible (gray)
 
 # https://github.com/zsh-users/zsh-history-substring-search
 # pacaur -S zsh-history-substring-search-git
@@ -45,5 +46,3 @@ source ~/.zsh/bindkeys.zsh
 
 # automatically remove duplicates from these arrays
 typeset -U path cdpath fpath manpath
-
-source /etc/profile.d/vte.sh
