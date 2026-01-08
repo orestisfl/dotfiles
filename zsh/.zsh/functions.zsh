@@ -87,8 +87,22 @@ function venv() {
 
     [[ -z ${1:-} ]] && [[ -f bin/activate-hermit ]] && source bin/activate-hermit && return 0
 
-    local dir=${1:-.venv}
-    [[ -f "$dir/bin/activate" ]] && source "$dir/bin/activate" && return 0
+    if [[ -z ${1:-} ]]; then
+        # Search for .venv or venv directories recursively up to /home or /
+        local search_dir="$PWD"
+        while [[ "$search_dir" != "/home" && "$search_dir" != "/" ]]; do
+            local activate_file="$search_dir/.venv/bin/activate"
+            [[ -f "$activate_file" ]] || activate_file="$search_dir/venv/bin/activate"
+            [[ -f "$activate_file" ]] && echo "Activating $activate_file" && source "$activate_file" && return 0
+            search_dir="$(dirname "$search_dir")"
+        done
+        # Not found, create .venv in current directory
+        local dir=".venv"
+    else
+        local dir="$1"
+    fi
+
+    [[ -f "$dir/bin/activate" ]] && echo "Activating $dir/bin/activate" && source "$dir/bin/activate" && return 0
 
     python3 -m venv "$dir"
     source "$dir/bin/activate"
@@ -175,4 +189,22 @@ function y() {
 	IFS= read -r -d '' cwd < "$tmp"
 	[ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
 	rm -f -- "$tmp"
+}
+
+if [[ $1 == run_yazi ]]
+then
+    y
+set --
+fi
+
+function toggle_dpi() {
+    local current=$(grep -oP 'Xft\.dpi:\s*\K\d+' ~/.config/xft.xres)
+    local new_dpi
+    case "$current" in
+        96)  new_dpi=144 ;;
+        144) new_dpi=96 ;;
+        *)   echo "Unknown DPI: $current" >&2; return 1 ;;
+    esac
+    sed -i "s/Xft.dpi: $current/Xft.dpi: $new_dpi/" ~/.config/xft.xres
+    xrdb -merge <(echo "Xft.dpi: $new_dpi") && i3-msg restart && exit
 }
