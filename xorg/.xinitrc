@@ -44,7 +44,6 @@ unclutter&  # Hide mouse pointer on inactivity.
 
 systemd-cat -t polkit-mate-authentication-agent /usr/lib/mate-polkit/polkit-mate-authentication-agent-1 &
 keepassxc&
-# eval "$(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets)"
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/gcr/ssh"
 
 setxkbmap -layout us,gr -option 'grp:alt_shift_toggle' -option 'compose:ralt' -option 'caps:escape'
