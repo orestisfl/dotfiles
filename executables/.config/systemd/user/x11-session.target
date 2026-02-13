@@ -1,0 +1,8 @@
+[Unit]
+Description=User X11 Session
+Documentation=man:systemd.special(7)
+Wants=graphical-session.target
+After=graphical-session.target
+
+[Install]
+WantedBy=default.target

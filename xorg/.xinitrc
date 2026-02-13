@@ -4,7 +4,7 @@ export TERMINAL=alacritty
 export DESKTOP_SESSION=gnome
 # export QT_STYLE_OVERRIDE=GTK+  # Tell Qt to use GTK style
 export GTK_OVERLAY_SCROLLING=0
-export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dawt.useSystemAAFontSettings=gasp -Dsun.java2d.xrender=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
+#export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dawt.useSystemAAFontSettings=gasp -Dsun.java2d.xrender=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
 export GTK_THEME='Materia-dark-compact'
 
 userresources=$HOME/.Xresources
@@ -44,11 +44,15 @@ unclutter&  # Hide mouse pointer on inactivity.
 
 systemd-cat -t polkit-mate-authentication-agent /usr/lib/mate-polkit/polkit-mate-authentication-agent-1 &
 keepassxc&
+# eval "$(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets)"
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/gcr/ssh"
 
 setxkbmap -layout us,gr -option 'grp:alt_shift_toggle' -option 'compose:ralt' -option 'caps:escape'
 alttab -mk Super_L -kk grave -w 1 -d 1 &
-systemd-cat -t thunar -- thunar --daemon &
 trash-empty -f 30&
+
+# Start graphical-session.target (via x11-session.target) for X11 services
+systemctl --user import-environment DISPLAY XAUTHORITY
+systemctl --user start --no-block x11-session.target
 
 exec i3

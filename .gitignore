@@ -204,3 +204,6 @@ Temporary Items
 .hermit/
 
 tags
+
+# Managed elsewhere; keep local copies untracked
+executables/.config/systemd/user/gh-notifications-filter.*
