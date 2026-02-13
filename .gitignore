@@ -207,3 +207,6 @@ tags
 
 # Managed elsewhere; keep local copies untracked
 executables/.config/systemd/user/gh-notifications-filter.*
+
+# Mutable Xresources overrides (e.g. toggle_dpi)
+xorg/.config/xft.local.xres

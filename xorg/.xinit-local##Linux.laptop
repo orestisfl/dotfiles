@@ -15,6 +15,3 @@ xidlehook \
     '' &
 
 xss-lock 'i3lock'&
-
-# Laptop HiDPI override (desktop uses the default from ~/.config/xft.xres)
-printf 'Xft.dpi: 144\n' | xrdb -merge

@@ -198,13 +198,27 @@ set --
 fi
 
 function toggle_dpi() {
-    local current=$(grep -oP 'Xft\.dpi:\s*\K\d+' ~/.config/xft.xres)
-    local new_dpi
+    local base_file="$HOME/.config/xft.xres"
+    local local_file="$HOME/.config/xft.local.xres"
+
+    local base_dpi current new_dpi
+    base_dpi="$(grep -oP 'Xft\.dpi:\s*\K\d+' "$base_file" 2>/dev/null | head -n1)"
+    current="$(grep -oP 'Xft\.dpi:\s*\K\d+' "$local_file" 2>/dev/null | head -n1)"
+    [[ -n "$current" ]] || current="$base_dpi"
+    [[ -n "$current" ]] || current=144
+
     case "$current" in
         96)  new_dpi=144 ;;
         144) new_dpi=96 ;;
         *)   echo "Unknown DPI: $current" >&2; return 1 ;;
     esac
-    sed -i "s/Xft.dpi: $current/Xft.dpi: $new_dpi/" ~/.config/xft.xres
-    xrdb -merge <(echo "Xft.dpi: $new_dpi") && i3-msg restart && exit
+
+    # Only keep a local override when it differs from the base.
+    if [[ -n "$base_dpi" && "$new_dpi" == "$base_dpi" ]]; then
+        rm -f -- "$local_file"
+        xrdb -merge <(echo "Xft.dpi: $new_dpi") && i3-msg restart && exit
+    fi
+
+    printf 'Xft.dpi: %s\n' "$new_dpi" >"$local_file"
+    xrdb -merge "$local_file" && i3-msg restart && exit
 }

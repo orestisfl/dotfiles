@@ -25,6 +25,14 @@ if [ -f "$userresources" ]; then
     xrdb -merge "$userresources"
 fi
 
+# Apply Xft defaults and optional local overrides (mutable; used by toggle_dpi).
+if [ -f "$HOME/.config/xft.xres" ]; then
+    xrdb -merge "$HOME/.config/xft.xres"
+fi
+if [ -f "$HOME/.config/xft.local.xres" ]; then
+    xrdb -merge "$HOME/.config/xft.local.xres"
+fi
+
 if [ -f "$usermodmap" ]; then
     xmodmap "$usermodmap"
 fi
