@@ -1,0 +1,67 @@
+#!/bin/bash
+set -euo pipefail
+
+# Laptop backup: restic → gcloud (via rclone serve restic)
+
+history_repo_dir="$HOME/Documents/history-backup"
+backup_exclude_file="$HOME/Documents/backup-exclude"
+restic_host="laptop"
+
+# Keep a lightweight history snapshot in a git repo (optional).
+if [[ -d "$history_repo_dir/.git" ]]; then
+    (
+        cd "$history_repo_dir"
+        command -v pacman >/dev/null && pacman -Qqe >pkg-list || true
+        cp -f "$HOME/.zhistory" zsh-history
+        git add .
+        git commit --no-gpg-sign -m "$(date)" || true
+    )
+fi
+
+# Skip backup on metered connections.
+if command -v nmcli >/dev/null; then
+    connection_uuid="$(nmcli -t -m multiline -f UUID connection show --active | head -n1 | cut -c 6- || true)"
+    if [[ -n "$connection_uuid" ]]; then
+        metered="$(nmcli -t -m multiline -f connection.metered connection show "$connection_uuid" | cut -c 20- || true)"
+        # possible values are "yes", "no", "unknown"
+        [[ "$metered" != "yes" ]]
+    fi
+fi
+
+# Start rclone REST server for restic.
+rclone serve restic --addr localhost:8123 -v gdrive:backup &
+rclone_pid="$!"
+cleanup() {
+    kill "$rclone_pid" 2>/dev/null || true
+}
+trap cleanup EXIT
+
+for _ in {1..30}; do
+    nc -z localhost 8123 && break
+    sleep 1
+done
+nc -z localhost 8123
+
+# Fail fast if the secret is locked.
+if command -v secret-tool >/dev/null; then
+    secret-tool search backup restic 2>&1 1>/dev/null | grep -q 'Cannot get secret of a locked object' && exit 1 || true
+fi
+
+export RESTIC_REPOSITORY="rest:http://localhost:8123/"
+export RESTIC_PASSWORD_COMMAND='secret-tool lookup backup restic'
+
+pidof restic >/dev/null && echo 'restic already running' && exit 1 || restic unlock
+
+restic backup \
+    --verbose \
+    --one-file-system \
+    --exclude-caches \
+    --exclude-file="$backup_exclude_file" \
+    ~ /etc || [[ $? -eq 3 ]]
+
+# Print changed files (best-effort).
+restic diff $(restic --json snapshots --host "$restic_host" | jq -r '.[-2:][].id') || true
+
+# Keep one snapshot per day forever.
+restic forget --prune --keep-within-daily 100y
+

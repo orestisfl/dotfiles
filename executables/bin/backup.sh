@@ -1,19 +1,6 @@
 #!/bin/bash
 set -euo pipefail
 
-export BORG_REPO="$HOME/Documents/history-backup"
-export BORG_PASSPHRASE=""
-
-pacman -Qqe > ~/Documents/pkg-list
-
-borg create \
-    --show-rc \
-    --stats \
-    --verbose \
-    --one-file-system \
-    ::'{hostname}-{now}' \
-    ~/.zhistory ~/Documents/pkg-list || {
-    retcode=$?
-    echo "$retcode"
-    [[ $retcode -eq 0 ]] || [[ $retcode -eq 1 ]] || exit $retcode
-}
+echo "backup.sh: no host-specific backup configured for this machine." >&2
+echo "Expected an rcm-style host-specific file (e.g. backup.sh##Linux.laptop or backup.sh##Laptop.desktop)." >&2
+exit 1

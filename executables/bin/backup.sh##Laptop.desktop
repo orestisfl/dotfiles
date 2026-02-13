@@ -1,0 +1,22 @@
+#!/bin/bash
+set -euo pipefail
+
+# Desktop backup: borg
+
+export BORG_REPO="$HOME/Documents/history-backup"
+export BORG_PASSPHRASE=""
+
+pacman -Qqe >"$HOME/Documents/pkg-list"
+
+borg create \
+    --show-rc \
+    --stats \
+    --verbose \
+    --one-file-system \
+    ::'{hostname}-{now}' \
+    "$HOME/.zhistory" "$HOME/Documents/pkg-list" || {
+    retcode=$?
+    echo "$retcode"
+    [[ $retcode -eq 0 ]] || [[ $retcode -eq 1 ]] || exit $retcode
+}
+
