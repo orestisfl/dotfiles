@@ -1,52 +1,126 @@
 #!/bin/bash
 # i3-rofi-actions
 # Use rofi to call systemctl for shutdown, reboot, etc
-# Taken from https://github.com/okraits/rofi-tools/blob/822d21d99104fba14f1eaee61f4258905ab91250/rofi-power
 set -euo pipefail
 
 declare -A options
 declare -a options_order
 
-function add_option_if_file() {
-    if [[ -f "$2" ]]; then
-        add_option "$1" "$2"
-    fi
+have() {
+	command -v "$1" >/dev/null 2>&1
 }
 
-function add_option() {
-    options["$1"]="$2"
-    options_order+=("$1")
+add_option_if_file() {
+	if [[ -f "$2" ]]; then
+		add_option "$1" "$2"
+	fi
 }
 
-function switch_autorandr() {
-    result="$(autorandr | rofi -matching fuzzy -dmenu -i -p 'Pick configuration: ')"
-    autorandr --list | while read line; do
-        echo "$line -- $result"
-        echo "$result" | grep "$line" \
-            && autorandr --force --load "$line" && return \
-            || continue
-    done
+add_option() {
+	options["$1"]="$2"
+	options_order+=("$1")
+}
+
+switch_autorandr() {
+	autorandr --change --debug --default solo
 }
 export -f switch_autorandr
 
+ddcutil_brightness() {
+	value="$(zenity --entry --entry-text="$(ddcutil --model 'LG HDR 4K' getvcp 10 --brief | cut -d ' ' -f 4)")"
+	[[ -n "$value" ]] || return 0
+
+	(light -S "$value" || true) &
+	(ddcutil --model 'LG HDR 4K' setvcp 10 "$value" || true) &
+	ddcutil --model 'HP E27d G4' setvcp 10 "$value" || true
+	wait
+}
+export -f ddcutil_brightness
+
+bluetooth_on() {
+	systemctl is-active bluetooth >/dev/null 2>&1 || systemctl start bluetooth
+
+	for i in {0..2}; do
+		rfkill unblock bluetooth
+		bluetoothctl power on && break
+		sleep 1
+	done
+
+	for i in {0..2}; do
+		mapfile -t trusted_ids < <(bluetoothctl devices Trusted | awk '{print $2}')
+		for id in "${trusted_ids[@]}"; do
+			[[ -n "$id" ]] || continue
+			bluetoothctl connect "$id" && return 0 || true
+		done
+		sleep 1
+	done
+
+    blueman-manager &
+    disown
+}
+export -f bluetooth_on
+
+bluetooth_off() {
+	bluetoothctl devices Connected | cut -d ' ' -f 2 | xargs -n 1 bluetoothctl disconnect || true
+	bluetoothctl power off
+	(killall blueman-applet blueman-tray blueman-manager || true)
+}
+export -f bluetooth_off
+
+run_action() {
+	local action="$1"
+
+	if declare -F "$action" >/dev/null; then
+		"$action"
+		return
+	fi
+
+	if [[ -f "$action" ]]; then
+		"$action"
+		return
+	fi
+
+	bash -lc "$action"
+}
+
 # Fill options.
-which autorandr && add_option "Autorandr" switch_autorandr
-add_option_if_file "Toggle screens" "$HOME/.screenlayout/toggle-radeon.sh"
+have gcalcli && ! pidof zoom >/dev/null 2>&1 && add_option "Join zoom meeting" "$HOME/bin/join-zoom.sh"
+pidof zoom >/dev/null 2>&1 && add_option "Kill zoom" "killall zoom & killall aomhost & wait"
+
 add_option_if_file "Rename workspace" "$HOME/bin/i3-workspace-rename.py"
+have bluetoothctl &&
+	add_option "Bluetooth on" "bluetooth_on" &&
+	add_option "Bluetooth off" "bluetooth_off"
+
 add_option "Sleep monitor" "xset dpms force suspend; sleep 0.1; xset dpms force suspend"
-add_option_if_file "Lock" "$HOME/bin/lock.sh"
-which blueetoothctl \
-    && add_option "Bluetooth on" "bluetoothctl power on" \
-    && add_option "Bluetooth off" "bluetoothctl power off"
 add_option "Exit" "i3-msg exit"
 add_option "Suspend system" "systemctl suspend"
 add_option "Reboot system" "systemctl reboot"
 add_option "Power-off system" "systemctl poweroff"
-options_keys=$(printf '%s\n' "${options_order[@]}")  # Get keys as a string, seperated by newlines.
-options_len=$(echo -e "$options_keys"|wc -l)
-echo -e "$options_keys"
 
-launcher="rofi -matching fuzzy -l $options_len -dmenu -i -p 'Pick action: '"
-selection=$(echo -e "$options_keys" | eval "$launcher" | tr -d '\r\n')
+have autorandr && add_option "Autorandr" switch_autorandr
+# 0x0090 = HDMI1
+# 0x0091 = HDMI2
+# 0x00D0 = DP-1
+# 0x00D1 = DP-2
+# 0x00D2 = USB-C
+have xrandr && xrandr | grep -Eq '\b(DP|HDMI)-[0-9]+ connected' &&
+	{
+		add_option "Change external monitor brightness" ddcutil_brightness
+		add_option "Switch monitor to PC" "autorandr --force --load solo && ddcutil --model 'LG HDR 4K' setvcp xf4 x00D0 --i2c-source-addr=x50 --noverify --trcfile i2c_execute"
+	}
 
-out="$(eval ${options[$selection]} 2>&1)" || zenity --error --text="Command failed: $out" --no-markup
+options_len="${#options_order[@]}"
+printf '%s\n' "${options_order[@]}"
+
+selection="$(
+	printf '%s\n' "${options_order[@]}" |
+		rofi -matching fuzzy -l "$options_len" -dmenu -i -p 'Pick action: ' |
+		tr -d '\r\n'
+)"
+
+[[ -n "$selection" ]] || exit 0
+action="${options[$selection]:-}"
+[[ -n "$action" ]] || exit 0
+
+out="$(run_action "$action" 2>&1)" || zenity --error --text="Command failed: $out" --no-markup
