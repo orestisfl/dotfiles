@@ -37,8 +37,8 @@ main() {
 
     # Wait for a sound card to appear in PulseAudio (with timeout)
     wait_for_sound_card() {
-        local max_attempts=10
-        local delay=1
+        local max_attempts=15
+        local delay=2
         local attempt=1
 
         while [ $attempt -le $max_attempts ]; do
