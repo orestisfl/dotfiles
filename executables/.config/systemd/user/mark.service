@@ -1,0 +1,21 @@
+[Unit]
+Description=Mark windows with _NET_WM_STATE_SKIP_TASKBAR
+After=graphical-session.target
+Requires=graphical-session.target
+
+[Service]
+# Small delay to let i3 fully initialize windows
+ExecStartPre=/usr/bin/sleep 2
+ConditionPathIsExecutable=%h/bin/skipTaskbar
+ExecStart=%h/bin/skipTaskbar
+StandardOutput=null
+StandardError=journal
+
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=1
+StartLimitIntervalSec=600
+StartLimitBurst=20
+
+[Install]
+WantedBy=graphical-session.target

@@ -1,0 +1,3 @@
+skipTaskbar
+*.exe
+*.test
