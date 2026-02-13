@@ -211,3 +211,6 @@ executables/.config/systemd/user/cleanup.service
 
 # Mutable Xresources overrides (e.g. toggle_dpi)
 xorg/.config/xft.local.xres
+
+# Local git identity (per-host, not tracked)
+git/.config/git/local

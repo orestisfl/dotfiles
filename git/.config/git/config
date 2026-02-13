@@ -1,7 +1,9 @@
 [user]
 	name = Orestis Floros
-	email = orestisflo@gmail.com
-	signingkey = A09DBD7D3222C1C3
+
+# Per-host identity is kept in ~/.config/git/local (not tracked).
+[include]
+	path = ~/.config/git/local
 [color]
 	ui = true
 [diff]
@@ -18,7 +20,7 @@
 [alias]
 	b = "!f() { git checkout $([[ $1 ]] && echo $1 || git for-each-ref refs/heads/ --format='%(refname:short)' | fzf); }; f"
 	bD = branch -D
-	bclean = "!f() { git fetch --all --prune && git branch -D $(git for-each-ref --format '%(refname) %(origin:track)' refs/heads | awk '$2 == \"[gone]\" {sub(\"refs/heads/\", \"\", $1); print $1}'); }; f"
+	bclean = "!f() { git fetch --all --prune && git branch -D $(git for-each-ref --format '%(refname) %(upstream:track)' refs/heads | awk '$2 == \"[gone]\" {sub(\"refs/heads/\", \"\", $1); print $1}'); }; f"
 	ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
 	ls = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate
 	lf = log --pretty=fuller --decorate --stat
