@@ -39,5 +39,5 @@ fi
 
 if [[ "${INFO_TITLE}" != "" ]] && [[ "${INFO_ARTIST}" != "" ]]; then
     echo "${INFO_ARTIST} - ${INFO_TITLE} ${CUR_ICON}"
-    echo "${INFO_ARTIST} - ${INFO_TITLE} ${CUR_ICON}"
+    echo "${CUR_ICON}"
 fi
