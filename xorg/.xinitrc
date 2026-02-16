@@ -2,6 +2,7 @@
 export VISUAL=nvim
 export TERMINAL=alacritty
 export DESKTOP_SESSION=gnome
+export XDG_SESSION_TYPE=x11
 # export QT_STYLE_OVERRIDE=GTK+  # Tell Qt to use GTK style
 export GTK_OVERLAY_SCROLLING=0
 #export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dawt.useSystemAAFontSettings=gasp -Dsun.java2d.xrender=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
