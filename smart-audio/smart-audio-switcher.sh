@@ -31,8 +31,13 @@ main() {
             return 1
         fi
 
-        # Explicitly pass the PULSE_RUNTIME_PATH to the sudo environment.
-        sudo -u "$USER" PULSE_RUNTIME_PATH="$pulse_socket_path" pactl "$@" 2>&1
+        # Explicitly pass the PULSE_RUNTIME_PATH. Avoid sudo when already the target user
+        # (sudo may fail under systemd --user / udev due to missing tty).
+        if [ "$(id -un)" = "$USER" ]; then
+            PULSE_RUNTIME_PATH="$pulse_socket_path" pactl "$@" 2>&1
+        else
+            sudo -u "$USER" PULSE_RUNTIME_PATH="$pulse_socket_path" pactl "$@" 2>&1
+        fi
     }
 
     # Wait for a sound card to appear in PulseAudio (with timeout)
@@ -149,7 +154,11 @@ main() {
 
 if [[ -z "$INVOCATION_ID" ]]; then
     CMD=(systemd-run --user --unit smart-audio-switcher -- "$0" "$@")
-    exec sudo -u "$USER" XDG_RUNTIME_DIR="/run/user/$(id -u "$USER")" "${CMD[@]}"
+    if ! sudo -u "$USER" XDG_RUNTIME_DIR="/run/user/$(id -u "$USER")" "${CMD[@]}"; then
+        # If the user manager isn't ready yet (early boot/login), don't fail udev.
+        echo "WARN: systemd-run --user failed; user session may not be ready yet" >&2
+    fi
+    exit 0
 fi
 
 # Use flock to prevent concurrent runs (race condition from multiple udev events)
