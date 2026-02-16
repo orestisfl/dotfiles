@@ -1,21 +1,45 @@
 package main
 
 import (
+	"errors"
 	"fmt"
+	"log"
 
 	"github.com/jezek/xgb"
 	"github.com/jezek/xgb/xproto"
 	"go.i3wm.org/i3/v4"
 )
 
+func isBadWindow(err error) bool {
+	var we xproto.WindowError
+	if errors.As(err, &we) {
+		return true
+	}
+	// Some errors surface as ValueError with NiceName "Window".
+	var ve xproto.ValueError
+	if errors.As(err, &ve) && ve.NiceName == "Window" {
+		return true
+	}
+	return false
+}
+
 func xcbChangePropertyAtom(window xproto.Window, property xproto.Atom, atom xproto.Atom, add bool) {
+	defer func() {
+		if r := recover(); r != nil {
+			log.Printf("skipTaskbar: recovered panic for window=%d: %v", window, r)
+		}
+	}()
+
 	cookie := xproto.GetProperty(conn, false, window, property, xproto.GetPropertyTypeAny, 0, 4096)
 	reply, err := cookie.Reply()
 	if err != nil {
-		panic(err)
+		// Windows can disappear between tree scan and property access.
+		if isBadWindow(err) {
+			return
+		}
+		log.Printf("skipTaskbar: GetProperty failed for window=%d: %v", window, err)
+		return
 	}
-
-	fmt.Println("Got", reply.Value)
 
 	var atoms []xproto.Atom
 	if reply.ValueLen > 0 {
@@ -39,11 +63,13 @@ func xcbChangePropertyAtom(window xproto.Window, property xproto.Atom, atom xpro
 		values = append(values, c...)
 	}
 
-	fmt.Println(byte(atom), values, atoms)
-
 	err = xproto.ChangePropertyChecked(conn, xproto.PropModeReplace, window, property, xproto.AtomAtom, 32, uint32(len(values)/4), values).Check()
 	if err != nil {
-		panic(err)
+		if isBadWindow(err) {
+			return
+		}
+		log.Printf("skipTaskbar: ChangeProperty failed for window=%d: %v", window, err)
+		return
 	}
 }
 
