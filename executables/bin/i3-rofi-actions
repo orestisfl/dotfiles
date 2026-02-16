@@ -38,32 +38,50 @@ ddcutil_brightness() {
 export -f ddcutil_brightness
 
 bluetooth_on() {
-	systemctl is-active bluetooth >/dev/null 2>&1 || systemctl start bluetooth
+	# Avoid hanging rofi if bluetoothd/controller isn't ready.
+	btctl() {
+        timeout 5s bluetoothctl "$@"
+	}
+
+	systemctl is-active bluetooth >/dev/null 2>&1 || systemctl start bluetooth >/dev/null 2>&1 || true
 
 	for i in {0..2}; do
 		rfkill unblock bluetooth
-		bluetoothctl power on && break
+		btctl power on && break
 		sleep 1
 	done
 
 	for i in {0..2}; do
-		mapfile -t trusted_ids < <(bluetoothctl devices Trusted | awk '{print $2}')
+		mapfile -t trusted_ids < <(btctl devices Trusted | awk '{print $2}')
 		for id in "${trusted_ids[@]}"; do
 			[[ -n "$id" ]] || continue
-			bluetoothctl connect "$id" && return 0 || true
+			btctl connect "$id" && return 0 || true
 		done
 		sleep 1
 	done
 
-    blueman-manager &
-    disown
+	have blueman-manager && {
+		blueman-manager &
+		disown
+	}
 }
 export -f bluetooth_on
 
 bluetooth_off() {
-	bluetoothctl devices Connected | cut -d ' ' -f 2 | xargs -n 1 bluetoothctl disconnect || true
-	bluetoothctl power off
-	(killall blueman-applet blueman-tray blueman-manager || true)
+	btctl() {
+        timeout 5s bluetoothctl "$@"
+	}
+
+	mapfile -t connected_ids < <(btctl devices Connected | awk '{print $2}')
+	for id in "${connected_ids[@]}"; do
+		[[ -n "$id" ]] || continue
+		btctl disconnect "$id" || true
+	done
+
+	btctl power off || true
+	rfkill block bluetooth || true
+	systemctl stop bluetooth.service >/dev/null 2>&1 || true
+	killall blueman-applet blueman-tray blueman-manager || true
 }
 export -f bluetooth_off
 
