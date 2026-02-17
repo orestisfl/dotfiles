@@ -29,7 +29,7 @@ zsh-defer source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.
 source /usr/share/fzf/completion.zsh
 source /usr/share/fzf/key-bindings.zsh
 
-for file in ~/.zsh/*ignored.zsh; do source "$file"; done
+for file in ~/.zsh/*ignored.zsh(N); do source "$file"; done
 
 # https://github.com/zsh-users/zsh-syntax-highlighting
 # sudo pacman -S zsh-syntax-highlighting
