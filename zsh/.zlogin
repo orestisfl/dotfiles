@@ -25,7 +25,7 @@ export FZF_ALT_C_OPTS="--preview 'tree -C {}'"
 register-python-argcomplete --shell zsh pipx register-python-argcomplete > /tmp/completions.zsh
 zoxide init zsh >> /tmp/completions.zsh
 atuin init zsh --disable-up-arrow >> /tmp/completions.zsh
-elastic-package completion zsh >> /tmp/completions.zsh
+elastic-package completion zsh 2>/dev/null >> /tmp/completions.zsh
 
 [[ -z $DISPLAY && $XDG_VTNR -eq 1 && -z "$TMUX" ]] && exec startx
 export TERM=linux
