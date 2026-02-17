@@ -7,6 +7,7 @@ cd "${dotfiles}"
 
 ./stow.sh
 ./create-alt-links.sh
+(cd i3blocks/.local/share/blocks && make -j)
 
 # Build helper binaries that live in this repo but aren't stowed.
 if command -v go >/dev/null 2>&1; then
