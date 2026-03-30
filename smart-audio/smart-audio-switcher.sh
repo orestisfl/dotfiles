@@ -20,23 +20,40 @@ main() {
     ANALOG_SINK="alsa_output.pci-0000_00_1f.3.analog-stereo"
     # --- END CONFIGURATION ---
 
-    # Function to run pactl commands with the correct user environment
-    run_pactl() {
-        local user_id
-        user_id=$(id -u "$USER")
-        local pulse_socket_path="/run/user/$user_id/pulse"
+    # Resolve user environment once
+    USER_ID=$(id -u "$USER")
+    RUNTIME_DIR="/run/user/$USER_ID"
+    IS_TARGET_USER=$([ "$(id -un)" = "$USER" ] && echo true || echo false)
 
-        if [ ! -S "$pulse_socket_path/native" ]; then
-            echo "ERROR: PulseAudio socket not found for user $USER at $pulse_socket_path" >&2
+    # Run a command as the target user with the correct environment
+    run_as_user() {
+        if $IS_TARGET_USER; then
+            "$@" 2>&1
+        else
+            sudo -u "$USER" "$@" 2>&1
+        fi
+    }
+
+    run_pactl() {
+        if [ ! -S "$RUNTIME_DIR/pulse/native" ]; then
+            echo "ERROR: PulseAudio socket not found at $RUNTIME_DIR/pulse" >&2
             return 1
         fi
+        run_as_user env PULSE_RUNTIME_PATH="$RUNTIME_DIR/pulse" pactl "$@"
+    }
 
-        # Explicitly pass the PULSE_RUNTIME_PATH. Avoid sudo when already the target user
-        # (sudo may fail under systemd --user / udev due to missing tty).
-        if [ "$(id -un)" = "$USER" ]; then
-            PULSE_RUNTIME_PATH="$pulse_socket_path" pactl "$@" 2>&1
+    # Set the default sink via both pactl and wpctl (persistent WirePlumber default).
+    set_default_sink() {
+        local sink_name="$1"
+        run_pactl set-default-sink "$sink_name"
+
+        local node_id
+        node_id=$(run_pactl list short sinks | grep "$sink_name" | awk '{print $1}')
+        if [ -n "$node_id" ]; then
+            run_as_user env XDG_RUNTIME_DIR="$RUNTIME_DIR" wpctl set-default "$node_id"
+            echo "Set WirePlumber default to node $node_id ($sink_name)."
         else
-            sudo -u "$USER" PULSE_RUNTIME_PATH="$pulse_socket_path" pactl "$@" 2>&1
+            echo "WARN: Could not resolve node ID for sink '$sink_name', wpctl default not set." >&2
         fi
     }
 
@@ -94,7 +111,7 @@ main() {
         BT_SINK=$(run_pactl list short sinks | grep "bluez_output" | awk '{print $2}' | head -n 1)
         if [ -n "$BT_SINK" ]; then
             echo "Found Bluetooth sink: $BT_SINK. Setting as default."
-            run_pactl set-default-sink "$BT_SINK"
+            set_default_sink "$BT_SINK"
             return
         fi
         echo "No active Bluetooth sink found."
@@ -113,7 +130,7 @@ main() {
 
                 echo "Found sound card '$SOUND_CARD_NAME_PATTERN' at index $card_index."
                 run_pactl set-card-profile "$card_index" "$HDMI_PROFILE"
-                run_pactl set-default-sink "$HDMI_SINK"
+                set_default_sink "$HDMI_SINK"
                 return
             fi
         done
@@ -131,7 +148,7 @@ main() {
 
         echo "Found sound card '$SOUND_CARD_NAME_PATTERN' at index $card_index."
         run_pactl set-card-profile "$card_index" "$ANALOG_PROFILE"
-        run_pactl set-default-sink "$ANALOG_SINK"
+        set_default_sink "$ANALOG_SINK"
     }
 
     # --- MAIN SCRIPT ENTRYPOINT ---
@@ -141,7 +158,7 @@ main() {
     if [[ "$1" == "--device-connect" && "$2" == "bluetooth" ]]; then
         if wait_for_bluetooth_sink; then
             echo "Found Bluetooth sink: $BT_SINK. Setting as default."
-            run_pactl set-default-sink "$BT_SINK"
+            set_default_sink "$BT_SINK"
             return
         fi
         echo "Bluetooth sink did not appear in time, running normal priority check..."
