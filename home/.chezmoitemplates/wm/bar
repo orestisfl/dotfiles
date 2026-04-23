@@ -1,14 +1,13 @@
+{{- if .xorg }}
 # Status bar. Sway has no tray_output: it renders the tray on whichever
 # output holds the focused workspace.
 
 bar {
     status_command i3blocks -c ~/.config/i3blocks.conf
     font "pango:Droid Sans, FontAwesome 9"
-    {{- if .xorg }}
     tray_output primary
     tray_output DP-1
     tray_output eDP-1
-    {{- end }}
     colors {
         separator          #969896
         background         #1d1f21
@@ -19,3 +18,7 @@ bar {
         urgent_workspace   #cc6666 #cc6666 #ffffff
     }
 }
+{{- else if .wayland }}
+# Status bar is waybar (~/.config/waybar/), started from wm/session.
+# No `bar {}` block needed.
+{{- end }}

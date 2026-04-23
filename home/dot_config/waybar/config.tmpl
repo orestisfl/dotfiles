@@ -1,0 +1,135 @@
+{{- if .wayland -}}
+{
+    "layer": "top",
+    "position": "bottom",
+    "height": 26,
+    "spacing": 2,
+
+    "modules-left":   ["sway/workspaces", "sway/mode"],
+    "modules-center": [],
+    "modules-right": [
+        "custom/playerctl",
+        "custom/ping",
+        "custom/pressure",
+        "custom/bandwidth",
+        "custom/network",
+        "pulseaudio",
+        "cpu",
+        "battery",
+        "memory",
+        "disk",
+        "custom/systemctl-failed",
+        "custom/packages",
+        "custom/weather",
+        "clock",
+        "sway/language",
+        "tray"
+    ],
+
+    "sway/workspaces": {
+        "all-outputs": false,
+        "enable-bar-scroll": true,
+        "disable-scroll-wraparound": true,
+        "format": "{name}"
+    },
+    "sway/mode": {
+        "format": "{}"
+    },
+    "sway/language": {
+        "format": "\u2328 {short}",
+        "on-click": "swaymsg 'input type:keyboard xkb_switch_layout next'"
+    },
+
+    "custom/playerctl": {
+        "exec": "~/.local/share/blocks/playerctl | head -n1",
+        "exec-if": "pgrep -x spotify >/dev/null",
+        "interval": 5,
+        "signal": 10,
+        "on-click":        "playerctl --player=spotify previous",
+        "on-click-middle": "playerctl --player=spotify play-pause",
+        "on-click-right":  "playerctl --player=spotify next"
+    },
+    "custom/ping": {
+        "format": "\uf0ac {}",
+        "exec": "~/.local/share/blocks/ping",
+        "interval": 30
+    },
+    "custom/pressure": {
+        "format": "{}",
+        "exec": "~/.local/share/blocks/pressure | head -n1",
+        "interval": 10
+    },
+    "custom/bandwidth": {
+        "format": "\uf0e8 {}",
+        "exec": "CRIT_RX=10000000 CRIT_TX=1000000 ~/.local/share/blocks/bandwidth"
+    },
+    "custom/network": {
+        "format": "\uf1eb {}",
+        "exec": "BLOCK_INSTANCE=nmcli ~/.local/share/blocks/network",
+        "interval": 10
+    },
+    "pulseaudio": {
+        "format": "\uf028 {volume}%",
+        "format-muted": "\uf026 muted",
+        "on-click": "pavucontrol"
+    },
+    "cpu": {
+        "format": "\uf2db {usage}%",
+        "interval": 2,
+        "states": { "warning": 70, "critical": 90 }
+    },
+    "battery": {
+        "format": "\uf240 {capacity}%",
+        "format-charging":    "\uf240 {capacity}%+",
+        "format-discharging": "\uf240 {capacity}%-",
+        "states": { "warning": 20, "critical": 10 },
+        "interval": 5
+    },
+    "memory": {
+        "format": "\uf538 {percentage}%",
+        "interval": 30,
+        "states": { "warning": 80, "critical": 90 }
+    },
+    "memory#swap": {
+        "format": "\uf0ec {swapPercentage}%",
+        "interval": 30,
+        "states": { "warning": 40, "critical": 50 }
+    },
+    "custom/swap": {
+        "format": "swp {}",
+        "exec": "~/.local/share/blocks/swap"
+    },
+    "disk": {
+        "format": "\uf0a0 {free}",
+        "path": "{{ .chezmoi.homeDir }}",
+        "interval": 30,
+        "states": { "warning": 80, "critical": 90 }
+    },
+    "custom/systemctl-failed": {
+        "format": "{}",
+        "exec": "~/.local/share/blocks/systemctl-failed | head -n1",
+        "interval": 300,
+        "on-click":       "BLOCK_BUTTON=1 ~/.local/share/blocks/systemctl-failed",
+        "on-click-right": "BLOCK_BUTTON=3 ~/.local/share/blocks/systemctl-failed"
+    },
+    "custom/packages": {
+        "format": "\uf019 {}",
+        "exec": "checkupdates 2>/dev/null | wc -l",
+        "interval": 300
+    },
+    "custom/weather": {
+        "format": "{}",
+        "exec": "BLOCK_INSTANCE=2867714 ~/.local/share/blocks/weather | head -n1",
+        "interval": 120
+    },
+    "clock": {
+        "format": "\uf073 {:%a %d %b %H:%M}",
+        "tooltip-format": "<tt>{calendar}</tt>",
+        "interval": 5,
+        "on-click": "gsimplecal"
+    },
+    "tray": {
+        "spacing": 6
+    }
+}
+{{- end -}}

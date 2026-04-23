@@ -2,6 +2,7 @@
 
 # --- Autostart --------------------------------------------------------------
 
+exec --no-startup-id waybar
 exec --no-startup-id /usr/lib/mate-polkit/polkit-mate-authentication-agent-1
 exec --no-startup-id nm-applet --indicator
 exec --no-startup-id cbatticon -l 15 -r 3
