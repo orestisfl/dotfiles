@@ -1,5 +1,5 @@
 {{ if .xorg -}}
-{{- if eq .chezmoi.hostname "giraffe" }}
+{{- if eq .chezmoi.hostname "giraffe" -}}
 workspace 1 output primary DP-1 DP-2 HDMI-1
 workspace 3 output primary DP-1 DP-2 HDMI-1
 workspace 5 output primary DP-1 DP-2 HDMI-1
@@ -19,7 +19,7 @@ workspace 14   output eDP-1
 workspace zoom output eDP-1
 {{- end }}
 {{- else if .wayland -}}
-{{- if eq .chezmoi.hostname "carbon" }}
+{{- if eq .chezmoi.hostname "carbon" -}}
 output eDP-1 {
     resolution 1920x1200
     position 0 903
@@ -38,8 +38,7 @@ output "LG Electronics LG HDR 4K 301MAKRKFW57" {
     position 2240 328
 }
 
-# Sway picks the first connected output from each list, so everything falls
-# back to the laptop panel when externals are away.
+# First connected output in each list wins; falls back to the laptop panel.
 workspace 1 output "LG Electronics LG HDR 4K 301MAKRKFW57" "HP Inc. HP E27d G4 3CQ1110W1P" eDP-1
 workspace 3 output "LG Electronics LG HDR 4K 301MAKRKFW57" "HP Inc. HP E27d G4 3CQ1110W1P" eDP-1
 workspace 5 output "LG Electronics LG HDR 4K 301MAKRKFW57" "HP Inc. HP E27d G4 3CQ1110W1P" eDP-1

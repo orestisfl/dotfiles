@@ -1,8 +1,5 @@
-# Window rules. i3 matches via class/instance/window_role/window_type; sway
-# uses app_id for Wayland-native clients, falling back to X11 criteria for
-# XWayland (see `man 5 sway` → CRITERIA).
-
 {{ if .xorg -}}
+# Window rules. Match by class / instance / window_role / window_type.
 assign [instance=i3test] workspace testing
 assign [class=Slack]     workspace 10
 for_window [class=Spotify] move to workspace number 14
@@ -23,6 +20,7 @@ for_window [title="(?i)zoom workplace" class="zoom"]  move to workspace zoom
 for_window [title="annotate_toolbar" class="zoom"]    move to scratchpad
 no_focus   [title="(?i)zoom"]
 {{- else if .wayland -}}
+# Window rules. `app_id` for native clients; `class`/`instance` for XWayland.
 assign [app_id="(?i)slack"] workspace 10
 for_window [app_id="(?i)spotify"] move to workspace number 14
 

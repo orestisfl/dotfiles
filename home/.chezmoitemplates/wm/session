@@ -1,4 +1,4 @@
-# Autostart, idle and distro snippets. Sway-only; Xorg uses ~/.xinitrc.
+# Autostart, idle, distro snippets.
 
 # --- Autostart --------------------------------------------------------------
 
@@ -23,8 +23,7 @@ exec --no-startup-id systemctl --user start --no-block graphical-session.target
 
 # --- Idle -------------------------------------------------------------------
 
-# Approximates the previous X11 xidlehook: dim at 9:40, lock at 10:00,
-# monitors off at 10:20, suspend at 1:10:00.
+# Dim at 9:40, lock at 10:00, screens off at 10:20, suspend at 1:10:00.
 exec swayidle -w \
     timeout 580 'light -S 30 2>/dev/null || brightnessctl set 30%' \
         resume 'light -S 100 2>/dev/null || brightnessctl set 100%' \

@@ -1,5 +1,4 @@
-# Input devices. Sway-only; the X11 equivalents live in ~/.xinitrc.
-
+# Input devices.
 input type:keyboard {
     xkb_layout us,gr
     xkb_options grp:alt_shift_toggle,compose:ralt,caps:escape

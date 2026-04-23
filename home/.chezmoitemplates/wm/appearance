@@ -1,5 +1,4 @@
-# Appearance: fonts, borders, focus/mouse behaviour, client colors.
-
+# Appearance.
 default_border normal 5
 hide_edge_borders smart
 
