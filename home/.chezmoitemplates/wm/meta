@@ -8,7 +8,8 @@ set $menu rofi -modes combi -show combi -combi-modes window#drun
 {{- if .xorg }}
 set $lock i3lock
 {{- else if .wayland }}
-set $lock swaylock -f -c 000000
+# Keep the Wayland locker visually minimal; PAM handles fingerprint auth.
+set $lock gtklock -d -g Adwaita-dark -s ~/.config/gtklock/style.css
 
 # Hide the cursor after 3s idle.
 seat * hide_cursor 3000
