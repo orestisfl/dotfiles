@@ -1,0 +1,34 @@
+# Needed for MFA:
+ignore nou2f
+ignore private-dev
+
+# blink-common.profile adds `nogroups`, which drops the supplementary `video`
+# group and breaks webcam access (zoom then can't open /dev/video*). The
+# upstream zoom.profile mentions this workaround in a comment.
+ignore nogroups
+
+# Intel IPU6 webcam (ov08x40 sensor): the kernel only exposes raw ISP pipeline
+# nodes on /dev/video*, which are not usable by v4l2 clients like Zoom. The
+# actual camera is a libcamera source exported to pipewire. Preload the
+# pipewire v4l2 interceptor so that /dev/video0 transparently maps to the
+# "Built-in Front Camera" pipewire node. See `pw-v4l2(1)` / pipewire-v4l2.
+env LD_PRELOAD=/usr/lib/pipewire-0.3/v4l2/libpw-v4l2.so
+
+ignore mkdir ${HOME}/.cache/zoom
+ignore mkfile ${HOME}/.config/zoomus.conf
+ignore mkdir ${HOME}/.zoom
+
+# Allow the sandbox-local firefox profile used for SSO browsing. The default
+# Electron/blink profile chain blacklists ~/.mozilla via disable-programs.inc,
+# which makes firefox raise "profile missing" inside the sandbox even though
+# we've placed a profiles.ini and a populated profile dir under the private
+# home.
+noblacklist ${HOME}/.mozilla
+
+# Make a completely new home directory.
+private ${HOME}/.cache/zoom.data
+
+# Tighten the sandbox (requires unprivileged user namespaces; verified enabled).
+# Adds: caps.drop all, nonewprivs, seccomp !chroot,
+#       protocol unix,inet,inet6,netlink
+#include electron-common-hardened.inc.profile

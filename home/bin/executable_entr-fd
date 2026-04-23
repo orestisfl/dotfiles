@@ -1,0 +1,60 @@
+#!/bin/bash
+set -euo pipefail
+
+# Initialize an empty array to store the -e options
+extensions=()
+
+# Parse the command-line arguments
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        -e)
+            # Shift to the next argument to get the extension value
+            if [[ -n "$2" && "$2" != -* ]]; then
+                extensions+=("$2")
+                shift
+            else
+                echo "Error: -e requires a value."
+                exit 1
+            fi
+            ;;
+        --)
+            # End of options; break to process the remaining command
+            shift
+            break
+            ;;
+        -*)
+            echo "Error: Unknown option $1"
+            exit 1
+            ;;
+        *)
+            # Break if it's not an option (the command starts here)
+            break
+            ;;
+    esac
+    shift
+done
+
+# Store the remaining arguments as the command to execute
+command_to_execute="$@"
+
+# Check if a command was provided
+if [[ -z "$command_to_execute" ]]; then
+    echo "Error: No command to execute."
+    exit 1
+fi
+
+# Build the fd command
+fd_command="fd"
+for ext in "${extensions[@]}"; do
+    fd_command+=" -e $ext"
+done
+
+# Debugging output (optional)
+echo "FD Command: $fd_command"
+echo "Command to execute with entr: $command_to_execute"
+
+# Execute the fd command and pipe into entr
+while true; do
+    eval "$fd_command" | entr -rnc bash -c "echo working; $command_to_execute; echo done"
+    sleep 0.1;
+done

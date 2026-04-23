@@ -1,0 +1,40 @@
+#!/bin/bash
+
+set -e
+
+if [ -z "$1" ]; then
+  echo "Usage: $0 <github-url>"
+  exit 1
+fi
+
+URL="$1"
+
+# Extract owner, repo, type and number from URL
+# This regex is designed to capture owner/repo, type (pull/issues), and number for known GitHub PR/Issue URLs.
+# For other URLs, it will not match, and the script will fall through to the curl logic.
+REPO_INFO=$(echo "$URL" | sed -E -n 's/https:\/\/github.com\/([^\/]+\/[^\/]+)\/(pull|issues)\/([0-9]+).*/\1 \2 \3/p')
+
+TITLE=""
+
+if [ -n "$REPO_INFO" ]; then
+  OWNER_REPO=$(echo "$REPO_INFO" | cut -d' ' -f1)
+  TYPE=$(echo "$REPO_INFO" | cut -d' ' -f2)
+  NUMBER=$(echo "$REPO_INFO" | cut -d' ' -f3)
+
+  # Determine API endpoint based on type
+  if [ "$TYPE" == "pull" ]; then
+    API_ENDPOINT="repos/$OWNER_REPO/pulls/$NUMBER"
+  elif [ "$TYPE" == "issues" ]; then
+    API_ENDPOINT="repos/$OWNER_REPO/issues/$NUMBER"
+  fi
+
+  # Get title using gh api
+  TITLE=$(gh api "$API_ENDPOINT" --jq '.title')
+else
+  # Fallback to curl for other GitHub URLs (e.g., files, gists, repo homepages)
+  # Fetch the HTML and extract the content of the <title> tag
+  TITLE=$(curl -s "$URL" | grep -o '<title>[^<]*' | sed -E 's/<title>(.*)/\1/')
+fi
+
+# Print markdown link
+echo "[$TITLE]($URL)"

@@ -1,0 +1,159 @@
+#!/usr/bin/env python3
+"""
+Combines ripgrep (rg) with go test -run.
+
+Uses ripgrep to find all files containing given test names,
+extracts base packages, and runs go test with those packages.
+"""
+
+import argparse
+import os
+import re
+import subprocess
+import sys
+
+
+def find_test_files(pattern):
+    """Use ripgrep to find files containing the test pattern."""
+    try:
+        result = subprocess.run(
+            ["rg", "-l", f"func {pattern}", "--glob", "*_test.go"],
+            capture_output=True,
+            text=True,
+        )
+        if result.returncode not in (0, 1):  # 1 means no matches
+            print(f"Error running ripgrep: {result.stderr}", file=sys.stderr)
+            sys.exit(1)
+
+        files = result.stdout.strip().split("\n")
+        return [f for f in files if f]  # Filter empty strings
+    except FileNotFoundError:
+        print("Error: ripgrep (rg) not found. Please install it.", file=sys.stderr)
+        sys.exit(1)
+
+
+def filter_files(files, include=None, exclude=None):
+    """Filter files using include/exclude regex patterns."""
+    result = files
+    if include:
+        try:
+            pattern = re.compile(include)
+            result = [f for f in result if pattern.search(f)]
+        except re.error as e:
+            print(f"Error: invalid include regex '{include}': {e}", file=sys.stderr)
+            sys.exit(1)
+    if exclude:
+        try:
+            pattern = re.compile(exclude)
+            result = [f for f in result if not pattern.search(f)]
+        except re.error as e:
+            print(f"Error: invalid exclude regex '{exclude}': {e}", file=sys.stderr)
+            sys.exit(1)
+    return result
+
+
+def extract_packages(files):
+    """Extract unique package directories from file paths."""
+    packages = set()
+    for file_path in files:
+        # Get the directory containing the test file
+        package_dir = os.path.dirname(file_path)
+        if not package_dir:
+            package_dir = "."
+        # Convert to Go package path format
+        packages.add(f"./{package_dir}")
+    return sorted(packages)
+
+
+def run_go_test(pattern, packages, extra_args, dry_run=False):
+    """Run go test with the specified pattern and packages."""
+    if not packages:
+        print(f"No test files found matching pattern: {pattern}", file=sys.stderr)
+        sys.exit(1)
+
+    cmd = ["go", "test", "-run", pattern] + extra_args + packages
+
+    if dry_run:
+        print(" ".join(cmd))
+        sys.exit(0)
+
+    print(f"Running: {' '.join(cmd)}", file=sys.stderr)
+
+    result = subprocess.run(cmd)
+    sys.exit(result.returncode)
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        description="Combine ripgrep with go test -run to find and run tests by pattern.",
+        epilog="""
+Examples:
+  %(prog)s TestFoo
+  %(prog)s TestFoo -v -count=1
+  %(prog)s -count=1 TestFoo -v
+  %(prog)s "TestFoo|TestBar" -race
+  %(prog)s --dry-run TestIntegration -v
+  %(prog)s --include filebeat TestInput
+  %(prog)s --exclude x-pack TestNew
+        """,
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    )
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Print the go test command without executing it",
+    )
+    parser.add_argument(
+        "--include",
+        metavar="REGEX",
+        help="Only include files matching this regex pattern",
+    )
+    parser.add_argument(
+        "--exclude",
+        metavar="REGEX",
+        help="Exclude files matching this regex pattern",
+    )
+
+    # Use parse_known_args to allow go test args anywhere
+    args, remaining = parser.parse_known_args()
+
+    # Find the pattern: first non-flag argument
+    pattern = None
+    go_test_args = []
+    for arg in remaining:
+        if pattern is None and not arg.startswith("-"):
+            pattern = arg
+        else:
+            go_test_args.append(arg)
+
+    if not pattern:
+        parser.error("test name pattern required")
+
+    # Find test files containing the pattern
+    files = find_test_files(pattern)
+
+    if not files:
+        print(f"No test files found matching pattern: {pattern}", file=sys.stderr)
+        sys.exit(1)
+
+    # Apply include/exclude filters
+    files = filter_files(files, args.include, args.exclude)
+
+    if not files:
+        print(f"No test files remaining after filtering", file=sys.stderr)
+        sys.exit(1)
+
+    # Extract package directories
+    packages = extract_packages(files)
+
+    print(f"Found {len(files)} file(s) in {len(packages)} package(s):", file=sys.stderr)
+    for pkg in packages:
+        print(f"  {pkg}", file=sys.stderr)
+    print(file=sys.stderr)
+
+    # Run go test
+    run_go_test(pattern, packages, go_test_args, args.dry_run)
+
+
+if __name__ == "__main__":
+    main()

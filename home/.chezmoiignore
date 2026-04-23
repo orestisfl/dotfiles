@@ -1,0 +1,49 @@
+{{/*
+  Per-host scoping. Prefer a `.tmpl` with a role guard over an entry here;
+  chezmoi skips files whose template renders empty.
+*/}}
+
+{{- if not .xorg }}
+.config/i3
+{{- end }}
+
+{{- if not .wayland }}
+.config/sway
+{{- end }}
+
+{{- /* X11-only files on wayland hosts (GTK3 theming comes from xdg-desktop-portal). */}}
+{{- if .wayland }}
+.Xresources
+.config/colors.xres
+.config/gtk-3.0
+.config/systemd/user/x11-session.target
+.config/xft.xres
+.xbindkeysrc
+.xinitrc
+bin/draw-resize.sh
+start-xephyr.sh
+{{- end }}
+
+{{- /* Repo / editor / build metadata at any depth. */}}
+**/.clang-format
+**/.git
+**/.gitignore
+**/.idea
+**/*.gz
+**/LICENSE
+**/README.md
+**/compile_commands.json
+
+{{- /* Managed out-of-band, not from this repo. */}}
+.config/systemd/user/camera-bridge-watcher*
+.config/systemd/user/*.target.wants/camera-bridge-watcher*
+
+{{- /* Built by run_onchange_after_10-build-i3blocks. */}}
+.local/share/blocks/bandwidth
+.local/share/blocks/battery
+.local/share/blocks/cpu
+.local/share/blocks/memory
+.local/share/blocks/network
+.local/share/blocks/pressure
+.local/share/blocks/space
+.local/share/blocks/swap

@@ -1,0 +1,33 @@
+[mgr]
+prepend_keymap = [
+    { on = [ "<C-n>" ], run = "shell 'ripdrag \"$@\" -x 2>/dev/null' --orphan" },
+    { on = ["f"], run = "plugin jump-to-char", desc = "Jump to char" },
+    { on = ["+"], run = "plugin zoom 1", desc = "Zoom in hovered file" },
+    { on = ["-"], run = "plugin zoom -1", desc = "Zoom out hovered file" },
+    { on = ["g", "t"], run = "cd ~/.local/share/Trash/files", desc = "Go to trash folder" },
+    { on = ["c", "o"], run = "shell 'cat \"$@\" | xclip -selection clipboard'", desc = "Copy file contents to xclip" },
+    { on = ["l"], run = "plugin smart-enter", desc = "Enter the child directory, or open the file" },
+    { on = ["<enter>"], run = "plugin smart-enter", desc = "Enter the child directory, or open the file" },
+    { on = ["2"], run = "plugin smart-switch 1", desc = "Switch or create tab 2" },
+    { on = ["3"], run = "plugin smart-switch 2", desc = "Switch or create tab 3" },
+    { on = ["4"], run = "plugin smart-switch 3", desc = "Switch or create tab 4" },
+    { on = ["5"], run = "plugin smart-switch 4", desc = "Switch or create tab 5" },
+    { on = ["6"], run = "plugin smart-switch 5", desc = "Switch or create tab 6" },
+    { on = ["7"], run = "plugin smart-switch 6", desc = "Switch or create tab 7" },
+    { on = ["8"], run = "plugin smart-switch 7", desc = "Switch or create tab 8" },
+    { on = ["9"], run = "plugin smart-switch 8", desc = "Switch or create tab 9" },
+
+    # gvfs mount helpers (see boydaihungst/gvfs README for scheme reference).
+    { on = [ "M", "m" ], run = "plugin gvfs -- select-then-mount --jump", desc = "Select device to mount and jump to its mount point" },
+    { on = [ "M", "R" ], run = "plugin gvfs -- remount-current-cwd-device", desc = "Remount device under cwd" },
+    { on = [ "M", "u" ], run = "plugin gvfs -- select-then-unmount --eject", desc = "Select device then eject" },
+    { on = [ "M", "U" ], run = "plugin gvfs -- select-then-unmount --eject --force", desc = "Select device then force to eject/unmount" },
+    { on = [ "M", "a" ], run = "plugin gvfs -- add-mount", desc = "Add a GVFS mount URI" },
+    { on = [ "M", "e" ], run = "plugin gvfs -- edit-mount", desc = "Edit a GVFS mount URI" },
+    { on = [ "M", "r" ], run = "plugin gvfs -- remove-mount", desc = "Remove a GVFS mount URI" },
+    { on = [ "g", "m" ], run = "plugin gvfs -- jump-to-device", desc = "Select device then jump to its mount point" },
+    { on = [ "g", "m" ], run = "plugin gvfs -- jump-to-device --automount", desc = "Automount then select device to jump to its mount point" },
+    { on = [ "`", "`" ], run = "plugin gvfs -- jump-back-prev-cwd", desc = "Jump back to the position before jumped to device" },
+    { on = [ "M", "t" ], run = "plugin gvfs -- automount-when-cd", desc = "Enable automount when cd to device under cwd" },
+    { on = [ "M", "T" ], run = "plugin gvfs -- automount-when-cd --disabled", desc = "Disable automount when cd to device under cwd" },
+]

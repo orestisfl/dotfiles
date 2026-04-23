@@ -1,0 +1,34 @@
+# Window rules. i3 matches via class/instance/window_role/window_type; sway
+# uses app_id for Wayland-native clients, falling back to X11 criteria for
+# XWayland (see `man 5 sway` → CRITERIA).
+
+{{ if .xorg -}}
+assign [instance=i3test] workspace testing
+assign [class=Slack]     workspace 10
+for_window [class=Spotify] move to workspace number 14
+
+for_window [window_role=GtkFileChooserDialog] floating disable
+for_window [title=Guake]                      floating enable
+for_window [title="Xephyr on :50.0"]          floating disable
+for_window [class="ripdrag"]                  floating enable, sticky enable
+for_window [class=Gsimplecal]                 move position mouse
+
+for_window [class=Slack window_type=normal]           mark s
+for_window [class=jetbrains-goland window_type=normal] mark g
+for_window [class=jetbrains-idea window_type=normal]   mark j
+for_window [class="jetbrains-toolbox"]                 floating disable, border normal
+
+for_window [title="Meeting" class="zoom"]             floating disable, border normal, move to workspace 10, mark z
+for_window [title="(?i)zoom workplace" class="zoom"]  move to workspace zoom
+for_window [title="annotate_toolbar" class="zoom"]    move to scratchpad
+no_focus   [title="(?i)zoom"]
+{{- else if .wayland -}}
+assign [app_id="(?i)slack"] workspace 10
+for_window [app_id="(?i)spotify"] move to workspace number 14
+
+for_window [app_id="ripdrag"] floating enable, sticky enable
+
+for_window [app_id="jetbrains-goland"]  mark g
+for_window [app_id="jetbrains-idea"]    mark j
+for_window [app_id="jetbrains-toolbox"] floating disable, border normal
+{{- end }}

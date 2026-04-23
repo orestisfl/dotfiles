@@ -1,0 +1,13 @@
+{{- if .xorg -}}
+# Assembled from home/.chezmoitemplates/wm/* by chezmoi. Edit the partials,
+# not this file.
+
+{{ template "wm/meta" . }}
+{{ template "wm/appearance" . }}
+{{ template "wm/bar" . }}
+{{ template "wm/bindings" . }}
+{{ template "wm/modes" . }}
+{{ template "wm/workspaces" . }}
+{{ template "wm/windows" . }}
+{{ template "wm/outputs" . }}
+{{- end -}}

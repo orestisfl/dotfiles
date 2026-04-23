@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# Re-run smart-audio setup when the switcher or rules change. setup.sh
+# elevates via pkexec, so an interactive desktop session is required.
+#
+# hash: {{ include "../smart-audio/smart-audio-switcher.sh" | sha256sum }}
+# rules_hash: {{ include "../smart-audio/99-smart-audio.rules" | sha256sum }}
+
+set -euo pipefail
+
+setup="{{ .chezmoi.sourceDir }}/../smart-audio/setup.sh"
+
+if [[ ! -x "${setup}" ]]; then
+    echo "smart-audio: setup.sh missing, skipping" >&2
+    exit 0
+fi
+
+if [[ -z "${DISPLAY:-}${WAYLAND_DISPLAY:-}" ]]; then
+    echo "smart-audio: no desktop session, skipping (rerun 'chezmoi apply' from a GUI session or invoke smart-audio/setup.sh manually)" >&2
+    exit 0
+fi
+
+"${setup}"

@@ -1,0 +1,6 @@
+sourceDir = {{ .chezmoi.sourceDir | dir | quote }}
+
+[data]
+    xorg    = {{ eq .chezmoi.hostname "giraffe" }}
+    wayland = {{ or (eq .chezmoi.hostname "carbon") (eq .chezmoi.hostname "gili") }}
+    elastic  = {{ eq .chezmoi.hostname "carbon" }}

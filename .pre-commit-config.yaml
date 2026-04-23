@@ -1,4 +1,8 @@
-exclude: bin/
+exclude: |
+  (?x)^(
+    home/dot_local/share/blocks/.*\.(c|h)$|
+    .*\.tmpl$
+  )$
 repos:
 -   repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v6.0.0
@@ -30,4 +34,4 @@ repos:
       language: system
       pass_filenames: true
       types: [shell]
-      exclude: zsh/
+      exclude: ^home/dot_zsh/

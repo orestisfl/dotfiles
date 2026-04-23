@@ -1,0 +1,20 @@
+# Input devices. Sway-only; the X11 equivalents live in ~/.xinitrc.
+
+input type:keyboard {
+    xkb_layout us,gr
+    xkb_options grp:alt_shift_toggle,compose:ralt,caps:escape
+    xkb_numlock enabled
+}
+
+input type:touchpad {
+    dwt enabled
+    tap disabled
+    natural_scroll disabled
+    middle_emulation disabled
+    scroll_method two_finger
+    click_method button_areas
+}
+
+input type:pointer {
+    accel_profile adaptive
+}

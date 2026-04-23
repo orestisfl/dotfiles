@@ -1,0 +1,69 @@
+{{- if .elastic -}}
+#!/bin/bash
+set -euo pipefail
+
+history_repo_dir="$HOME/Documents/history-backup"
+backup_exclude_file="$HOME/Documents/backup-exclude"
+restic_host="$HOSTNAME"
+
+# Optional lightweight history snapshot.
+if [[ -d "$history_repo_dir/.git" ]]; then
+    (
+        cd "$history_repo_dir"
+        pacman -Qqe >pkg-list || true
+        modprobed-db list >/tmp/modprobed-list && mv /tmp/modprobed-list ./ || true
+        cp -f "$HOME/.zhistory" zsh-history
+        git add .
+        git commit --no-gpg-sign -m "$(date)" || true
+    )
+fi
+
+# Skip backup on metered connections (values: "yes", "no", "unknown").
+if command -v nmcli >/dev/null; then
+    connection_uuid="$(nmcli -t -m multiline -f UUID connection show --active | head -n1 | cut -c 6- || true)"
+    if [[ -n "$connection_uuid" ]]; then
+        metered="$(nmcli -t -m multiline -f connection.metered connection show "$connection_uuid" | cut -c 20- || true)"
+        [[ "$metered" != "yes" ]]
+    fi
+fi
+
+rclone serve restic --addr localhost:8123 -v gdrive:backup &
+rclone_pid="$!"
+cleanup() {
+    kill "$rclone_pid" 2>/dev/null || true
+}
+trap cleanup EXIT
+
+for _ in {1..30}; do
+    nc -z localhost 8123 && break
+    sleep 1
+done
+nc -z localhost 8123
+
+# Fail fast if the secret is locked.
+if command -v secret-tool >/dev/null; then
+    secret-tool search backup restic 2>&1 1>/dev/null | grep -q 'Cannot get secret of a locked object' && exit 1 || true
+fi
+
+export RESTIC_REPOSITORY="rest:http://localhost:8123/"
+export RESTIC_PASSWORD_COMMAND='secret-tool lookup backup restic'
+
+pidof restic >/dev/null && echo 'restic already running' && exit 1 || restic unlock
+
+restic backup \
+    --verbose \
+    --one-file-system \
+    --exclude-caches \
+    --exclude-file="$backup_exclude_file" \
+    ~ /etc || [[ $? -eq 3 ]]
+
+# Print changed files (best-effort).
+restic diff $(restic --json snapshots --host "$restic_host" | jq -r '.[-2:][].id') || true
+
+restic forget --prune \
+    --keep-within-hourly  2d  \
+    --keep-within-daily   31d \
+    --keep-within-weekly  6m  \
+    --keep-within-monthly 5y  \
+    --keep-within-yearly  100y
+{{- end -}}

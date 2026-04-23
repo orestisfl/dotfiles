@@ -1,0 +1,5 @@
+# One regex per line. Lines beginning with '#' are comments.
+# Any journal error line matching any regex here is treated as ignorable noise.
+
+# gnome-keyring PAM module when using ly or other non-GNOME display managers
+^.*gkr-pam: unable to locate daemon control file$

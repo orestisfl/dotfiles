@@ -1,0 +1,54 @@
+# Resize / mark / jump / swap / passthrough modes.
+
+mode "resize" {
+    bindsym j         resize shrink width  10 px or 10 ppt
+    bindsym k         resize grow   height 10 px or 10 ppt
+    bindsym l         resize shrink height 10 px or 10 ppt
+    bindsym semicolon resize grow   width  10 px or 10 ppt
+
+    bindsym Left  resize shrink width  10 px or 10 ppt
+    bindsym Down  resize grow   height 10 px or 10 ppt
+    bindsym Up    resize shrink height 10 px or 10 ppt
+    bindsym Right resize grow   width  10 px or 10 ppt
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+r mode "resize"
+
+mode "mark" {
+    bindsym Escape       mode "default"
+    bindsym $mod+Shift+q mode "default"
+    {{- range $c := list "a" "b" "c" "d" "e" "f" "g" "h" "i" "j" "k" "l" "m" "n" "o" "p" "q" "r" "s" "t" "u" "v" "w" "x" "y" "z" }}
+    bindsym      {{ $c }} mark {{ $c }}, mode "default"
+    bindsym $mod+{{ $c }} mark {{ $c }}, mode "default"
+    {{- end }}
+}
+bindsym $mod+m mode "mark"
+
+mode "jump" {
+    bindsym Escape           mode "default"
+    bindsym $mod+Shift+q     mode "default"
+    bindsym apostrophe       workspace back_and_forth, mode "default"
+    bindsym $mod+apostrophe  workspace back_and_forth, mode "default"
+    {{- range $c := list "a" "b" "c" "d" "e" "f" "g" "h" "i" "j" "k" "l" "m" "n" "o" "p" "q" "r" "s" "t" "u" "v" "w" "x" "y" "z" }}
+    bindsym      {{ $c }} [con_mark={{ $c }}] focus, mode "default"
+    bindsym $mod+{{ $c }} [con_mark={{ $c }}] focus, mode "default"
+    {{- end }}
+}
+bindsym $mod+apostrophe mode "jump"
+
+mode "swap" {
+    bindsym Escape       mode "default"
+    bindsym $mod+Shift+q mode "default"
+    {{- range $c := list "a" "b" "c" "d" "e" "f" "g" "h" "i" "j" "k" "l" "m" "n" "o" "p" "q" "r" "s" "t" "u" "v" "w" "x" "y" "z" }}
+    bindsym      {{ $c }} swap with mark {{ $c }}, mode "default"
+    bindsym $mod+{{ $c }} swap with mark {{ $c }}, mode "default"
+    {{- end }}
+}
+bindsym $mod+Shift+apostrophe mode "swap"
+
+mode "Passthrough Mode - Press $mod+F12 to exit" {
+    bindsym $mod+F12 mode "default"
+}
+bindsym $mod+F12 mode "Passthrough Mode - Press $mod+F12 to exit"

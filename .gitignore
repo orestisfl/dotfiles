@@ -199,18 +199,31 @@ Temporary Items
 *.icloud
 
 ### Custom ###
-!binaries/bin
-!i3blocks/bin
-.hermit/
-
 tags
 
-# Managed elsewhere; keep local copies untracked
-executables/.config/systemd/user/gh-notifications-filter.*
-executables/.config/systemd/user/cleanup.service
+# systemd user units: allow-list. Most of this dir is mutated at runtime by
+# `systemctl --user enable/disable` (symlinks under *.target.wants/) or is
+# managed out-of-band (camera-bridge-watcher, gh-notifications-filter,
+# cleanup.service, ...). Track only the units we explicitly author here.
+home/dot_config/systemd/user/*
+!home/dot_config/systemd/user/backup.service
+!home/dot_config/systemd/user/daily@.timer
+!home/dot_config/systemd/user/mark.service
+!home/dot_config/systemd/user/monthly@.timer
+!home/dot_config/systemd/user/x11-session.target
 
 # Mutable Xresources overrides (e.g. toggle_dpi)
-xorg/.config/xft.local.xres
+home/dot_config/xft.local.xres
 
 # Local git identity (per-host, not tracked)
-git/.config/git/local
+home/dot_config/git/local
+
+# IntelliJ / JetBrains project metadata dropped into blocks/
+home/dot_local/share/blocks/.idea/
+home/dot_local/share/blocks/.clang-format
+home/dot_local/share/blocks/compile_commands.json
+home/dot_local/share/blocks/.cache/
+
+# Scratch screenshots and similar one-offs checked in by mistake
+/screenshot-*.png
+/screenshot-*.jpg

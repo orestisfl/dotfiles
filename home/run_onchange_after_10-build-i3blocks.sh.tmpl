@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# Build the C i3blocks helpers. Re-runs whenever any tracked source or the
+# Makefile changes (chezmoi hashes the rendered script, hence the per-file
+# sha256 lines below).
+#
+{{- range (glob (joinPath .chezmoi.sourceDir "dot_local/share/blocks/*.c")) }}
+# {{ base . }}: {{ include (trimPrefix (printf "%s/" $.chezmoi.sourceDir) .) | sha256sum }}
+{{- end }}
+# Makefile: {{ include "dot_local/share/blocks/Makefile" | sha256sum }}
+
+set -euo pipefail
+
+blocks_dir="${HOME}/.local/share/blocks"
+if [[ ! -d "${blocks_dir}" ]]; then
+    echo "i3blocks: ${blocks_dir} missing, skipping build" >&2
+    exit 0
+fi
+if ! command -v make >/dev/null 2>&1; then
+    echo "i3blocks: make not found, skipping build" >&2
+    exit 0
+fi
+
+make -j -C "${blocks_dir}"

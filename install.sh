@@ -1,22 +1,24 @@
 #!/bin/bash
-set -e
-git config --local include.path ../.gitconfig
-host=$(hostname -s)
-dotfiles="$(dirname -- "$0")"
-cd "${dotfiles}"
+# Bootstrap dotfiles: render ~/.config/chezmoi/chezmoi.toml, install
+# pre-commit hooks, then `chezmoi apply`.
 
-./stow.sh
-./create-alt-links.sh
-(cd i3blocks/.local/share/blocks && make -j)
+set -euo pipefail
 
-# Build helper binaries that live in this repo but aren't stowed.
-if command -v go >/dev/null 2>&1; then
-    mkdir -p "$HOME/bin"
-    (
-        cd "$dotfiles/skipTaskbar"
-        GOBIN="$HOME/bin" go install .
-    )
-else
-    echo "skipTaskbar: go not found; skipping build" >&2
+dotfiles_dir="$(cd -- "$(dirname -- "$0")" >/dev/null && pwd)"
+cd "${dotfiles_dir}"
+
+if ! command -v chezmoi >/dev/null 2>&1; then
+    echo "chezmoi: not found. Install it first, e.g.:" >&2
+    echo "    sudo pacman -S chezmoi" >&2
+    echo "    # or: sh -c \"\$(curl -fsLS get.chezmoi.io)\" -- -b \"\$HOME/.local/bin\"" >&2
     exit 1
 fi
+
+# Re-run this after editing home/.chezmoi.toml.tmpl to refresh role flags.
+chezmoi init --source="${dotfiles_dir}"
+
+if command -v pre-commit >/dev/null 2>&1; then
+    (cd "${dotfiles_dir}" && pre-commit install --install-hooks) || true
+fi
+
+chezmoi apply --verbose "$@"

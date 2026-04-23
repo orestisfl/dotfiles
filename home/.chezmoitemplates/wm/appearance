@@ -1,0 +1,15 @@
+# Appearance: fonts, borders, focus/mouse behaviour, client colors.
+
+default_border normal 5
+hide_edge_borders smart
+
+focus_follows_mouse no
+mouse_warping output
+focus_wrapping workspace
+
+font pango:open Sans Mono 8
+
+client.focused          #81a2be #81a2be #1d1f21 #282a2e
+client.focused_inactive #373b41 #373b41 #969896 #282a2e
+client.unfocused        #282a2e #282a2e #969896 #282a2e
+client.urgent           #373b41 #cc6666 #ffffff #cc6666

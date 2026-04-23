@@ -1,0 +1,38 @@
+# Autostart, idle and distro snippets. Sway-only; Xorg uses ~/.xinitrc.
+
+# --- Autostart --------------------------------------------------------------
+
+exec --no-startup-id /usr/lib/mate-polkit/polkit-mate-authentication-agent-1
+exec --no-startup-id nm-applet --indicator
+exec --no-startup-id cbatticon -l 15 -r 3
+exec --no-startup-id keepassxc
+exec --no-startup-id trash-empty -f 30
+
+exec --no-startup-id systemd-run --user --unit=cursor-agent-notify \
+    --description="Cursor agent notification watcher" \
+    --property=Restart=on-failure --property=RestartSec=3 \
+    $HOME/Documents/software/work/agent-tools/cursor-agent-notify.py
+
+# Propagate the ~/.profile env (ly runs `/bin/sh -l` before `exec sway`) into
+# the systemd user instance so dbus-activated services see GTK_THEME etc.
+exec --no-startup-id systemctl --user import-environment \
+    TERMINAL VISUAL EDITOR GTK_THEME GTK_OVERLAY_SCROLLING SSH_AUTH_SOCK \
+    DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP
+exec --no-startup-id systemctl --user start --no-block graphical-session.target
+
+# --- Idle -------------------------------------------------------------------
+
+# Approximates the previous X11 xidlehook: dim at 9:40, lock at 10:00,
+# monitors off at 10:20, suspend at 1:10:00.
+exec swayidle -w \
+    timeout 580 'light -S 30 2>/dev/null || brightnessctl set 30%' \
+        resume 'light -S 100 2>/dev/null || brightnessctl set 100%' \
+    timeout 600 '$lock' \
+    timeout 620 'swaymsg "output * power off"' \
+        resume  'swaymsg "output * power on"' \
+    timeout 4200 'systemctl suspend' \
+    before-sleep '$lock'
+
+# --- Distro snippets --------------------------------------------------------
+
+include /etc/sway/config.d/*

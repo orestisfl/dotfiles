@@ -1,0 +1,26 @@
+# One regex per line. Lines beginning with '#' are comments.
+# Any kernel log line matching any regex here is treated as ignorable noise.
+#
+# Start empty and add patterns as you encounter known-benign messages.
+#
+# Example patterns (commented out):
+# ^.*usb .* reset high-speed USB device number .*$
+# ^.*i915 .* (GuC|HuC) .* failed.*$
+
+# Intel VMD: benign ahci probe failure (driver ultimately binds vmd)
+^.*kernel: ahci 0000:00:0e\.0: probe with driver ahci failed with error -[0-9]+$
+
+# HP docking monitor: USB-C connector status query not supported
+^.*kernel: usb 3-1\.4: cannot get connectors status:.*$
+
+# USB hub EMI re-enable (transient, self-correcting)
+^.*kernel: usb usb[0-9]+-port[0-9]+: disabled by hub \(EMI\?\), re-enabling\.\.\.$
+
+# Bluetooth firmware download failures (common on Intel AX chipsets at boot)
+^.*kernel: Bluetooth: hci[0-9]+: Failed to send firmware data.*$
+^.*kernel: Bluetooth: hci[0-9]+: sending frame failed.*$
+^.*kernel: Bluetooth: hci[0-9]+: FW download error recovery failed.*$
+^.*kernel: Bluetooth: hci[0-9]+: Failed to read MSFT supported features.*$
+
+# USB device enumeration failure (transient, follows EMI re-enable)
+^.*kernel: usb usb[0-9]+-port[0-9]+: unable to enumerate USB device$

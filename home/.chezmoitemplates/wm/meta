@@ -1,0 +1,18 @@
+# Cross-WM variables shared by i3 and sway.
+
+set $mod Mod4
+set $alt Mod1
+
+# Terminal wrapper that picks up the focused window's cwd.
+set $term ~/bin/alacritty.sh
+set $menu rofi -modi combi -show combi -combi-modi window,drun
+{{- if .xorg }}
+set $lock i3lock
+{{- else if .wayland }}
+set $lock swaylock -f -c 000000
+{{- end }}
+
+{{ if .wayland -}}
+# Xorg uses the separately-started `unclutter`.
+seat * hide_cursor 3000
+{{- end }}

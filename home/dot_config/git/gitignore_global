@@ -1,0 +1,10 @@
+.idea/
+.claude/
+.hermit/
+/.build/
+.DS_Store
+__pycache__/
+cmake-build-*/
+.worktrees/
+.worktreeinclude
+.config/wt.toml

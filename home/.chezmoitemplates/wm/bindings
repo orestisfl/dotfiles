@@ -1,0 +1,116 @@
+# Keybindings. WM-specific blocks (screenshots, notifications, session
+# control) are branched inline by role at the bottom of this file.
+
+floating_modifier $mod
+
+bindsym $mod+Return       exec --no-startup-id $term
+bindsym $mod+Shift+Return exec --no-startup-id alacritty msg create-window || exec alacritty
+bindsym Control+$alt+e    exec --no-startup-id "$term yazi"
+bindsym $mod+d            exec $menu
+bindsym $mod+Shift+d      exec rofi -show run
+bindsym $mod+backslash    exec keepassxc
+
+bindsym XF86Calculator exec speedcrunch
+bindsym XF86HomePage   exec firefox
+bindsym XF86WWW        exec firefox
+
+bindsym XF86AudioRaiseVolume exec --no-startup-id "pamixer -i 5 && ~/bin/notify-volume.sh"
+bindsym XF86AudioLowerVolume exec --no-startup-id "pamixer -d 5 && ~/bin/notify-volume.sh"
+bindsym XF86AudioMute        exec --no-startup-id "pamixer -t   && ~/bin/notify-volume.sh"
+bindsym XF86AudioPlay        exec --no-startup-id playerctl play-pause
+bindsym XF86AudioPause       exec --no-startup-id playerctl play-pause
+bindsym XF86AudioNext        exec --no-startup-id playerctl next
+bindsym XF86AudioPrev        exec --no-startup-id playerctl previous
+
+bindsym XF86MonBrightnessUp   exec --no-startup-id "light -A 10 2>/dev/null || brightnessctl set +10%"
+bindsym XF86MonBrightnessDown exec --no-startup-id "light -U 10 2>/dev/null || brightnessctl set 10%-"
+
+bindsym $mod+Shift+q kill
+
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+bindsym $mod+Left  focus left
+bindsym $mod+Down  focus down
+bindsym $mod+Up    focus up
+bindsym $mod+Right focus right
+
+bindsym $mod+Shift+h move left  100
+bindsym $mod+Shift+j move down  100
+bindsym $mod+Shift+k move up    100
+bindsym $mod+Shift+l move right 100
+bindsym $mod+Shift+Left  move left  100
+bindsym $mod+Shift+Down  move down  100
+bindsym $mod+Shift+Up    move up    100
+bindsym $mod+Shift+Right move right 100
+
+bindsym $mod+z split h
+bindsym $mod+v split v
+
+bindsym $mod+b border toggle
+bindsym $mod+f fullscreen
+
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+bindsym $mod+Shift+space    floating toggle
+bindsym $mod+Control+space  exec --no-startup-id ~/bin/toggle-sticky.py
+
+bindsym $mod+a       focus parent
+bindsym $mod+Shift+a focus child
+
+bindsym $mod+x          move workspace to output next
+bindsym $mod+Next       focus output right
+bindsym $mod+Prior      focus output left
+bindsym $mod+Tab        focus mode_toggle
+bindsym $mod+Shift+Tab  workspace prev_on_output
+bindsym $alt+Tab        workspace back_and_forth
+
+bindsym $mod+Shift+minus move scratchpad
+bindsym $mod+minus       scratchpad show
+
+bindsym $mod+Shift+M bar mode toggle
+
+bindsym $mod+Shift+c reload
+bindsym $mod+Shift+e exec $HOME/bin/i3-rofi-actions
+
+{{- $msg := "swaymsg" }}{{ if .xorg }}{{ $msg = "i3-msg" }}{{ end }}
+bindsym $mod+o       exec --no-startup-id "{{ $msg }} workspace number $($HOME/bin/i3-next-available-workspace.py)"
+bindsym $mod+Shift+o exec --no-startup-id "ws=$($HOME/bin/i3-next-available-workspace.py); {{ $msg }} move window to workspace $ws && {{ $msg }} workspace number $ws"
+
+{{ if .xorg -}}
+# --- i3 / Xorg ---------------------------------------------------------------
+
+# Restart i3 in-place (preserves layout). Sway has no equivalent.
+bindsym $mod+Shift+r restart
+
+bindsym Print         exec "shotgun $(hacksaw -f '-i %i -g %g') - | xclip -t 'image/png' -selection clipboard"
+bindsym $mod+Shift+p  exec "shotgun $(hacksaw -f '-i %i -g %g') - | xclip -t 'image/png' -selection clipboard"
+bindsym $mod+Print    exec "shotgun $(hacksaw -f '-i %i -g %g') \\"$HOME/screenshot-$(date).png\\""
+
+bindsym Control+space         exec --no-startup-id dunstctl close
+bindsym Control+Shift+space   exec --no-startup-id dunstctl close-all
+bindsym Control+Shift+period  exec --no-startup-id dunstctl context
+bindsym Control+grave         exec --no-startup-id dunstctl history-pop
+
+{{- else if .wayland -}}
+# --- sway / Wayland ----------------------------------------------------------
+
+bindsym $mod+Shift+r reload
+
+bindsym Print        exec grim -g "$(slurp -d)" - | wl-copy -t image/png
+bindsym $mod+Shift+p exec grim -g "$(slurp -d)" - | wl-copy -t image/png
+bindsym $mod+Print   exec grim -g "$(slurp -d)" "$HOME/screenshot-$(date +%Y%m%d-%H%M%S).png"
+
+bindsym $mod+Shift+s exec swaymsg 'output * power off'
+
+# The keymap i3blocks subscribes to sway's "input" IPC events.
+bindsym $mod+space input type:keyboard xkb_switch_layout next
+
+bindsym Control+space         exec --no-startup-id swaync-client --close-latest
+bindsym Control+Shift+space   exec --no-startup-id swaync-client --close-all
+bindsym Control+Shift+period  exec --no-startup-id swaync-client --action
+bindsym Control+grave         exec --no-startup-id swaync-client --toggle-panel
+{{- end }}

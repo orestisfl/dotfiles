@@ -1,0 +1,22 @@
+{{- if .xorg -}}
+#!/usr/bin/env bash
+# Build the skipTaskbar Go helper. Xorg-only; Wayland exposes skip-taskbar via
+# xdg-toplevel state.
+#
+# main_hash: {{ include "../skipTaskbar/main.go" | sha256sum }}
+# mod_hash:  {{ include "../skipTaskbar/go.mod" | sha256sum }}
+
+set -euo pipefail
+
+if ! command -v go >/dev/null 2>&1; then
+    echo "skipTaskbar: go not found, skipping build" >&2
+    exit 0
+fi
+
+src_dir="{{ .chezmoi.sourceDir }}/../skipTaskbar"
+mkdir -p "${HOME}/bin"
+(
+    cd "${src_dir}"
+    GOBIN="${HOME}/bin" go install .
+)
+{{- end -}}

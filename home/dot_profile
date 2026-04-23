@@ -1,0 +1,14 @@
+# POSIX-sh profile. ly runs `/bin/sh -l` before `exec sway`, so this is the
+# earliest place to set env for the GUI session. Keep portable: no zsh-isms.
+
+export TERMINAL=alacritty
+export VISUAL=nvim
+export EDITOR=nvim
+
+# Mirrored in environment.d for dbus-activated services.
+export GTK_THEME=Materia-dark-compact
+export GTK_OVERLAY_SCROLLING=0
+
+if [ -n "${XDG_RUNTIME_DIR:-}" ]; then
+    export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/gcr/ssh"
+fi

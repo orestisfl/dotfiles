@@ -1,0 +1,19 @@
+# zsh plugins (formerly git submodules).
+
+[".zsh/zsh-saneopt"]
+    type = "git-repo"
+    url = "https://github.com/willghatch/zsh-saneopt.git"
+    refreshPeriod = "168h"
+    [".zsh/zsh-saneopt".clone]
+        args = ["--depth", "1"]
+    [".zsh/zsh-saneopt".pull]
+        args = ["--ff-only"]
+
+[".zsh/zsh-defer"]
+    type = "git-repo"
+    url = "https://github.com/romkatv/zsh-defer.git"
+    refreshPeriod = "168h"
+    [".zsh/zsh-defer".clone]
+        args = ["--depth", "1"]
+    [".zsh/zsh-defer".pull]
+        args = ["--ff-only"]

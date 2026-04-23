@@ -1,0 +1,45 @@
+let mapleader = " "
+
+"" -- Suggested options --
+" Show a few lines of context around the cursor. Note that this makes the
+" text scroll if you mouse-click near the start or end of the window.
+set scrolloff=5
+
+set hlsearch                      " highlight search occurrences
+set ignorecase                    " ignore case in search patterns
+set smartcase                     " no ignore case when pattern is uppercase
+set incsearch                     " show search results while typing
+
+" Don't use Ex mode, use Q for formatting.
+map Q gq
+
+" make Y behave like D and C, yanking till end of line
+map Y y$
+
+"set clipboard+=unnamed
+set clipboard+=unnamedplus
+set clipboard+=ideaput
+
+set NERDTree
+set commentary
+set quickscope
+set surround
+
+map <leader>s :NERDTreeFind<CR>
+map <leader>w :w<CR>
+"map <leader>q <Action>(CloseContent)
+map <leader>q :bd<CR>
+map <leader>r <Action>(RenameElement)
+map <leader>f <Action>(GotoFile)
+map <leader>e <Action>(ExtractInterface)
+
+map + <Action>(EditorSelectWord)
+map - <Action>(EditorUnSelectWord)
+
+map <C-W>m <Action>(MoveEditorToOppositeTabGroup)
+map <C-W>w <Action>(OpenEditorInOppositeTabGroup)
+
+" map <leader>g <Action>(FindInPath)
+" map <leader>b <Action>(Switcher)
+nnoremap <CR> :nohlsearch<CR><CR>
+set ideajoin
