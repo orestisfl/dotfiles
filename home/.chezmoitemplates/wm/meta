@@ -5,7 +5,7 @@ set $alt Mod1
 
 # Terminal wrapper that picks up the focused window's cwd.
 set $term ~/bin/alacritty.sh
-set $menu rofi -modi combi -show combi -combi-modi window,drun
+set $menu rofi -modes combi -show combi -combi-modes window#drun
 {{- if .xorg }}
 set $lock i3lock
 {{- else if .wayland }}
