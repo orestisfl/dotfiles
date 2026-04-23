@@ -165,7 +165,7 @@ function precmd() {
     async &!
     ASYNC_PROC=$!
     # Terminal title.
-    print -Pn "\e]0;zsh%L %(1j,%j job%(2j|s|); ,)%~\a"
+    print -n '\e]0;zsh\a'
 }
 
 function TRAPUSR1() {

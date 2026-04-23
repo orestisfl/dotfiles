@@ -6,7 +6,7 @@
 #   1. Set a unique token as the window title via OSC 2.
 #   2. Poll `swaymsg -t get_tree` for a container with that name; grab con_id.
 #   3. `swaymsg [con_id=N] mark --add _<ALACRITTY_WINDOW_ID>`.
-#   4. zsh's precmd restores the title on the next prompt.
+#   4. Restore the title to the same format precmd uses.
 #
 # alacritty.sh reads the mark on the focused window and the matching file
 # under $XDG_RUNTIME_DIR/alacritty-cwd/<id>. The sway IPC round-trips are
@@ -31,6 +31,8 @@ if [[ -n "$ALACRITTY_WINDOW_ID" && -n "$SWAYSOCK" && -t 1 ]] && (( $+commands[sw
             sleep 0.02
         done
         [[ -n "$id" ]] && swaymsg -q -- "[con_id=$id] mark --add $_alacritty_sway_mark" 2>/dev/null
+        # Keep in sync with precmd in prompt.zsh.
+        print -n '\e]0;zsh\a' >/dev/tty 2>/dev/null
     }
 
     # The sway mark dies with the container; only the cwd file needs cleanup.
@@ -41,9 +43,5 @@ if [[ -n "$ALACRITTY_WINDOW_ID" && -n "$SWAYSOCK" && -t 1 ]] && (( $+commands[sw
     add-zsh-hook zshexit _alacritty_sway_cleanup
     _alacritty_sway_write_cwd
 
-    if (( $+functions[zsh-defer] )); then
-        zsh-defer _alacritty_sway_install_mark
-    else
-        _alacritty_sway_install_mark
-    fi
+    zsh-defer _alacritty_sway_install_mark
 fi
