@@ -1,8 +1,4 @@
-# Output / workspace layout. i3 addresses outputs by xrandr name; sway by
-# EDID (make + model + serial), which survives port rewiring.
-
 {{ if .xorg -}}
-# --- i3 / Xorg ---------------------------------------------------------------
 {{- if eq .chezmoi.hostname "giraffe" }}
 workspace 1 output primary DP-1 DP-2 HDMI-1
 workspace 3 output primary DP-1 DP-2 HDMI-1
@@ -23,21 +19,7 @@ workspace 14   output eDP-1
 workspace zoom output eDP-1
 {{- end }}
 {{- else if .wayland -}}
-# --- sway / Wayland ----------------------------------------------------------
 {{- if eq .chezmoi.hostname "carbon" }}
-# carbon: ThinkPad + HP E27d (portrait, DP) + LG HDR 4K (HDMI).
-#
-#                  +-----------+
-#                  |           |   +-------------+
-#                  | HP E27d   |   |             |
-#                  | (portrait)|   | LG HDR 4K   |
-#                  | 960x1706  |   | 1920x1080   |
-#     +--------+   |           |   +-------------+
-#     | eDP-1  |   |           |
-#     | 1280x  |   |           |
-#     |  800   |   |           |
-#     +--------+   +-----------+
-
 output eDP-1 {
     resolution 1920x1200
     position 0 903
@@ -52,7 +34,7 @@ output "HP Inc. HP E27d G4 3CQ1110W1P" {
 }
 
 output "LG Electronics LG HDR 4K 301MAKRKFW57" {
-    scale 2
+    scale 1.7
     position 2240 328
 }
 
