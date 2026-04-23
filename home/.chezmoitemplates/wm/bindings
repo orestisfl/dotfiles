@@ -100,9 +100,9 @@ bindsym Control+grave         exec --no-startup-id dunstctl history-pop
 
 bindsym $mod+Shift+r reload
 
-bindsym Print        exec grim -g "$(slurp -d)" - | wl-copy -t image/png
-bindsym $mod+Shift+p exec grim -g "$(slurp -d)" - | wl-copy -t image/png
-bindsym $mod+Print   exec grim -g "$(slurp -d)" "$HOME/screenshot-$(date +%Y%m%d-%H%M%S).png"
+bindsym Print        exec grimshot copy anything
+bindsym $mod+Shift+p exec grimshot copy anything
+bindsym $mod+Print   exec grimshot save anything
 
 bindsym $mod+Shift+s exec swaymsg 'output * power off'
 
