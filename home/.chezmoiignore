@@ -9,6 +9,7 @@
 
 {{- if not .wayland }}
 .config/sway
+.config/waybar
 {{- end }}
 
 {{- /* X11-only files on wayland hosts (GTK3 theming comes from xdg-desktop-portal). */}}
@@ -16,6 +17,7 @@
 .Xresources
 .config/colors.xres
 .config/gtk-3.0
+.config/systemd/user/mark.service
 .config/systemd/user/x11-session.target
 .config/xft.xres
 .xbindkeysrc
@@ -36,7 +38,9 @@ start-xephyr.sh
 
 {{- /* Managed out-of-band, not from this repo. */}}
 .config/systemd/user/camera-bridge-watcher*
-.config/systemd/user/*.target.wants/camera-bridge-watcher*
+{{- /* `systemctl --user enable/disable` owns the *.target.wants/ symlinks; */}}
+{{- /* chezmoi must never read, deploy, or remove anything under them.     */}}
+.config/systemd/user/*.target.wants
 
 {{- /* Built by run_onchange_after_10-build-i3blocks. */}}
 .local/share/blocks/bandwidth

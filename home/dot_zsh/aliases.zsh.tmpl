@@ -19,14 +19,13 @@ alias lr='l --recurse'     # Lists human readable sizes, recursively.
 alias lt='l --sort=newest' # Lists sorted by date, most recent last.
 
 # c: Copy to clipboard, v: Paste from clipboard
-# Prefer wl-clipboard on Wayland sessions, fall back to xclip on X11.
-if [[ -n "$WAYLAND_DISPLAY" ]] && (( $+commands[wl-copy] )); then
-    alias c='wl-copy'
-    alias v="wl-paste | sed -e '\$a\'"
-else
-    alias c="xclip -in -selection clipboard"
-    alias v="(xclip -o -selection clipboard || xclip -o) | sed -e '\$a\'"
-fi
+{{- if .wayland }}
+alias c='wl-copy'
+alias v="wl-paste | sed -e '\$a\'"
+{{- else if .xorg }}
+alias c="xclip -in -selection clipboard"
+alias v="(xclip -o -selection clipboard || xclip -o) | sed -e '\$a\'"
+{{- end }}
 
 # help
 unalias run-help
