@@ -1,6 +1,8 @@
 #!/bin/bash
 set -euo pipefail
 
+source "$(dirname "${BASH_SOURCE[0]}")/block_format.sh"
+
 case "${BLOCK_BUTTON:-}" in
 "1") # Left click
     xdg-terminal-exec sh -c 'echo SYSTEM-WIDE FAILED UNITS:; systemctl --failed; echo; echo USER FAILED UNITS:; systemctl --user --failed; echo; read -p "Press enter to close..."' &
@@ -21,13 +23,13 @@ function match() {
     fi
 }
 
-res1=$(match "$(systemctl --failed)") &&
-    res2=$(match "$(systemctl --user --failed)") ||
-    (echo failed to match && exit 33)
+res1=$(match "$(systemctl --failed)")
+res2=$(match "$(systemctl --user --failed)")
 res=$((res1 + res2))
 
 if [[ $res -gt 0 ]]; then
-    echo "systemctl --failed: $res"
-    echo "$res"
-    exit 33
+    block_output_emit_urgent \
+        "systemctl --failed: $res" \
+        "$res" \
+        "${BLOCK_COLOR_CRITICAL}"
 fi

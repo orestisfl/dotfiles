@@ -1,4 +1,7 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "$(dirname "${BASH_SOURCE[0]}")/block_format.sh"
 
 INSTANCE="${BLOCK_INSTANCE:-1}"
 
@@ -9,9 +12,9 @@ if [[ ${LOAD} != "" ]]; then
     LOAD_PERC=$(echo "scale=0; ${LOAD} * 100" | bc -l)
     LOAD_PERC=${LOAD_PERC%.*}
 
-    echo "${LOAD}"
-
     if [[ ${LOAD_PERC} -ge ${URGENT_VALUE} ]]; then
-        exit 33
+        block_output_emit_urgent "${LOAD}" "${LOAD}" "${BLOCK_COLOR_WARNING}"
+    else
+        block_output_emit "${LOAD}"
     fi
 fi

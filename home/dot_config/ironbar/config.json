@@ -1,0 +1,138 @@
+{
+    "position": "bottom",
+    "anchor_to_edges": true,
+    "height": 26,
+    "popup_gap": 2,
+    "start": [
+        {
+            "type": "workspaces",
+            "all_monitors": false,
+            "sort": "index",
+            "on_scroll_up": "~/.local/share/blocks/ws-step prev",
+            "on_scroll_down": "~/.local/share/blocks/ws-step next"
+        }
+    ],
+    "end": [
+        {
+            "type": "clock",
+            "format": "\uf073 %a %d %b %H:%M",
+            "format_popup": "%H:%M:%S",
+            "on_click_left": "gsimplecal"
+        }
+    ],
+    "monitors": {
+        "HDMI-A-1": {
+            "position": "bottom",
+            "anchor_to_edges": true,
+            "height": 26,
+            "popup_gap": 2,
+            "start": [
+                {
+                    "type": "workspaces",
+                    "all_monitors": false,
+                    "sort": "index",
+                    "on_scroll_up": "~/.local/share/blocks/ws-step prev",
+                    "on_scroll_down": "~/.local/share/blocks/ws-step next"
+                }
+            ],
+            "end": [
+                {
+                    "type": "script",
+                    "name": "playerctl",
+                    "cmd": "~/.local/share/blocks/playerctl",
+                    "mode": "poll",
+                    "interval": 5000,
+                    "show_if": "pgrep -x spotify >/dev/null",
+                    "on_click_left": "playerctl --player=spotify previous",
+                    "on_click_middle": "playerctl --player=spotify play-pause",
+                    "on_click_right": "playerctl --player=spotify next"
+                },
+                {
+                    "type": "label",
+                    "name": "ping",
+                    "label": "\uf0ac {{30000:~/.local/share/blocks/ping}}"
+                },
+                {
+                    "type": "label",
+                    "name": "pressure",
+                    "label": "{{10000:~/.local/share/blocks/pressure}}"
+                },
+                {
+                    "type": "label",
+                    "name": "bandwidth",
+                    "label": "\uf0e8 {{watch:CRIT_RX=10000000 CRIT_TX=1000000 ~/.local/share/blocks/bandwidth}}"
+                },
+                {
+                    "type": "label",
+                    "name": "network",
+                    "label": "\uf1eb {{10000:BLOCK_INSTANCE=nmcli ~/.local/share/blocks/network}}"
+                },
+                {
+                    "type": "volume",
+                    "format": "\uf028 {percentage}%",
+                    "mute_format": "\uf026 muted",
+                    "on_click_right": "pavucontrol"
+                },
+                {
+                    "type": "sys_info",
+                    "format": [
+                        "\uf2db {cpu_percent@mean: <1.0}%",
+                        "\uf538 {memory_percent: <1.0}%",
+                        "\uf0a0 {disk_free@/#G:.1}G"
+                    ],
+                    "interval": {
+                        "cpu": 2,
+                        "memory": 30,
+                        "disks": 30
+                    }
+                },
+                {
+                    "type": "battery",
+                    "format": "\uf240 {percentage}%",
+                    "show_icon": false,
+                    "icon_size": 1,
+                    "show_if": "[ -d /sys/class/power_supply/BAT0 ] || [ -d /sys/class/power_supply/BAT1 ]",
+                    "thresholds": {
+                        "warning": 20,
+                        "critical": 10
+                    }
+                },
+                {
+                    "type": "script",
+                    "name": "systemctl-failed",
+                    "cmd": "~/.local/share/blocks/systemctl-failed",
+                    "mode": "poll",
+                    "interval": 300000,
+                    "on_click_left": "BLOCK_BUTTON=1 ~/.local/share/blocks/systemctl-failed",
+                    "on_click_right": "BLOCK_BUTTON=3 ~/.local/share/blocks/systemctl-failed"
+                },
+                {
+                    "type": "label",
+                    "name": "packages",
+                    "label": "\uf019 {{300000:checkupdates 2>/dev/null | wc -l}}"
+                },
+                {
+                    "type": "label",
+                    "name": "weather",
+                    "label": "{{120000:BLOCK_INSTANCE=2867714 ~/.local/share/blocks/weather}}"
+                },
+                {
+                    "type": "clock",
+                    "format": "\uf073 %a %d %b %H:%M",
+                    "format_popup": "%H:%M:%S",
+                    "on_click_left": "gsimplecal"
+                },
+                {
+                    "type": "label",
+                    "name": "language",
+                    "label": "\u2328 {{watch:~/.local/share/blocks/keymap | awk '{print toupper($0); fflush()}'}}",
+                    "on_click_left": "swaymsg 'input type:keyboard xkb_switch_layout next'"
+                },
+                {
+                    "type": "tray",
+                    "icon_size": 16
+                }
+            ]
+        }
+    }
+}

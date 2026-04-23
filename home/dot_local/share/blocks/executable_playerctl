@@ -1,14 +1,15 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Based on https://aur.archlinux.org/packages/playerctl/
+set -euo pipefail
 
-INSTANCE="${BLOCK_INSTANCE}"
+source "$(dirname "${BASH_SOURCE[0]}")/block_format.sh"
 
-if [[ "${INSTANCE}" != "" ]]; then
+INSTANCE="${BLOCK_INSTANCE:-}"
+
+if [[ -n "${INSTANCE}" ]]; then
     ARGUMENTS="--player ${INSTANCE}"
-    ps -e | grep "${INSTANCE}" &>/dev/null
-fi
-if [ $? == 1 ]; then
-    exit 0
+else
+    ARGUMENTS=""
 fi
 
 ICON_PLAY="➤"
@@ -16,18 +17,25 @@ ICON_PAUSE="Ⅱ"
 ICON_STOP="≠"
 CUR_ICON=""
 
-if [[ "${BLOCK_BUTTON}" -eq 1 ]]; then
-    $(playerctl ${ARGUMENTS} previous)
-elif [[ "${BLOCK_BUTTON}" -eq 2 ]]; then
-    $(playerctl ${ARGUMENTS} play-pause)
-elif [[ "${BLOCK_BUTTON}" -eq 3 ]]; then
-    $(playerctl ${ARGUMENTS} next)
-fi
+case "${BLOCK_BUTTON:-}" in
+1)
+    playerctl ${ARGUMENTS} previous >/dev/null 2>&1 || true
+    ;;
+2)
+    playerctl ${ARGUMENTS} play-pause >/dev/null 2>&1 || true
+    ;;
+3)
+    playerctl ${ARGUMENTS} next >/dev/null 2>&1 || true
+    ;;
+esac
 
-PLAYER_STATUS=$(playerctl ${ARGUMENTS} status)
-INFO_TITLE=$(playerctl ${ARGUMENTS} metadata title)
-INFO_ALBUM=$(playerctl ${ARGUMENTS} metadata album)
-INFO_ARTIST=$(playerctl ${ARGUMENTS} metadata artist)
+PLAYER_STATUS=$(playerctl ${ARGUMENTS} status 2>/dev/null) || exit 0
+INFO_TITLE=$(playerctl ${ARGUMENTS} metadata title 2>/dev/null || true)
+INFO_ARTIST=$(playerctl ${ARGUMENTS} metadata artist 2>/dev/null || true)
+
+if [[ -z "${INFO_TITLE}" ]]; then
+    exit 0
+fi
 
 if [[ "${PLAYER_STATUS}" = "Paused" ]]; then
     CUR_ICON="${ICON_PAUSE}"
@@ -37,7 +45,10 @@ else
     CUR_ICON="${ICON_STOP}"
 fi
 
-if [[ "${INFO_TITLE}" != "" ]] && [[ "${INFO_ARTIST}" != "" ]]; then
-    echo "${INFO_ARTIST} - ${INFO_TITLE} ${CUR_ICON}"
-    echo "${CUR_ICON}"
+if [[ -n "${INFO_ARTIST}" ]]; then
+    output="${INFO_ARTIST} - ${INFO_TITLE} ${CUR_ICON}"
+else
+    output="${INFO_TITLE} ${CUR_ICON}"
 fi
+
+block_output_emit "${output}" "${CUR_ICON}"

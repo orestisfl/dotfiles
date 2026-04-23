@@ -17,5 +17,5 @@ bar {
     }
 }
 {{- else if .wayland -}}
-# Status bar is waybar; see ~/.config/waybar/.
+# Status bar is ironbar; see ~/.config/ironbar/.
 {{- end }}

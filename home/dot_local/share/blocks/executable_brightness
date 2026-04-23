@@ -1,15 +1,19 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "$(dirname "${BASH_SOURCE[0]}")/block_format.sh"
 
 # One of the following: xrandr, xbacklight, kernel
 METHOD="xbacklight"
 
-# Left click
-if [[ "${BLOCK_BUTTON}" -eq 1 ]]; then
+case "${BLOCK_BUTTON:-}" in
+1)
     xbacklight -inc 5
-# Right click
-elif [[ "${BLOCK_BUTTON}" -eq 3 ]]; then
+    ;;
+3)
     xbacklight -dec 5
-fi
+    ;;
+esac
 
 URGENT_VALUE=10
 
@@ -45,13 +49,11 @@ fi
 percent=${percent%.*}
 
 if [[ "${percent}" -le 0 ]]; then
-    exit
+    exit 0
 fi
 
-echo "${percent}%"
-echo "${percent}%"
-echo ""
-
 if [[ "${percent}" -le "${URGENT_VALUE}" ]]; then
-    exit 33
+    block_output_emit_urgent "${percent}%" "${percent}%" "${BLOCK_COLOR_WARNING}"
+else
+    block_output_emit "${percent}%"
 fi

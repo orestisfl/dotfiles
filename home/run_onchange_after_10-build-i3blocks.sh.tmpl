@@ -6,6 +6,7 @@
 {{- range (glob (joinPath .chezmoi.sourceDir "dot_local/share/blocks/*.c")) }}
 # {{ base . }}: {{ include (trimPrefix (printf "%s/" $.chezmoi.sourceDir) .) | sha256sum }}
 {{- end }}
+# block_output.h: {{ include "dot_local/share/blocks/block_output.h" | sha256sum }}
 # Makefile: {{ include "dot_local/share/blocks/Makefile" | sha256sum }}
 
 set -euo pipefail
@@ -20,4 +21,6 @@ if ! command -v make >/dev/null 2>&1; then
     exit 0
 fi
 
-make -j -C "${blocks_dir}"
+output_mode="{{ if .wayland }}BLOCK_OUTPUT_IRONBAR{{ else }}BLOCK_OUTPUT_I3BLOCKS{{ end }}"
+
+make -j -C "${blocks_dir}" EXTRA_CFLAGS="-DBLOCK_OUTPUT_MODE=${output_mode}"

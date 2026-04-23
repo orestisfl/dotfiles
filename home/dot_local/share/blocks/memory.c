@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "block_output.h"
+
 #define URGENT_MEM 90
 #define URGENT_SWAP 50
 
@@ -87,21 +89,20 @@ int main(void) {
 
     char out[32];
     if (strcmp(display, "perc") == 0) {
-        printf("%d%%\n", perc);
+        snprintf(out, sizeof(out), "%d%%", perc);
     } else if (strcmp(display, "used") == 0) {
         format_bytes(used, out, sizeof(out));
-        puts(out);
     } else if (strcmp(display, "total") == 0) {
         format_bytes(total, out, sizeof(out));
-        puts(out);
     } else { /* free */
         format_bytes(avail, out, sizeof(out));
-        puts(out);
     }
 
-    if (perc > urgent_value) {
-        return 33;
+    if (perc > urgent_value && !block_output_is_i3blocks()) {
+        block_output_print_markup(out, BLOCK_COLOR_CRITICAL);
+        return 0;
     }
 
-    return 0;
+    block_output_print_text(out);
+    return block_output_status(perc > urgent_value);
 }

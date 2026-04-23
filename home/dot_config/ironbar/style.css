@@ -1,0 +1,192 @@
+/* Ironbar theme. Mirrors the Tomorrow Night palette from the old waybar. */
+
+@define-color bg        #1d1f21;
+@define-color fg        #c5c8c6;
+@define-color muted     #969896;
+@define-color focus     #81a2be;
+@define-color active    #373b41;
+@define-color warning   #f0c674;
+@define-color critical  #cc6666;
+
+* {
+    font-family: "JetBrainsMono Nerd Font Propo", monospace;
+    font-size: 13px;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+/* Only collapse the bar containers and their top-level modules.
+   Descendants (including anything inside popovers) keep GTK's intrinsic sizes
+   so sliders, dropdowns, etc. render at a usable size. */
+#bar,
+#start, #center, #end,
+.widget,
+.widget > button,
+.widget > box {
+    min-height: 0;
+    min-width: 0;
+}
+
+#bar,
+window {
+    background-color: @bg;
+    color: @fg;
+}
+
+box, button, label {
+    background-color: transparent;
+    color: @fg;
+}
+
+/* Gap between modules in every section. Ironbar wraps each module in a
+   GtkRevealer before adding it to the section box, so the adjacent-sibling
+   selector needs to target the revealers (direct children), not `.widget`
+   (grandchildren). */
+#start > * + *,
+#center > * + *,
+#end > * + * {
+    margin-left: 10px;
+}
+
+/* Strip GTK's default button chrome across all states. The Default theme
+   paints button backgrounds via `background-image: linear-gradient(...)`,
+   so we must explicitly null `background-image` (the `background` shorthand
+   is not enough in GTK CSS) and kill the 200ms fade. */
+button.widget,
+.widget button,
+button.widget:hover,
+button.widget:focus,
+button.widget:active,
+button.widget:checked,
+.widget button:hover,
+.widget button:focus,
+.widget button:active,
+.widget button:checked {
+    padding: 0 4px;
+    background-color: transparent;
+    background-image: none;
+    border: none;
+    box-shadow: none;
+    outline: none;
+    transition: none;
+    -gtk-icon-filter: none;
+}
+
+/* --- workspaces --- */
+
+.workspaces button,
+.workspaces button:hover,
+.workspaces button:focus,
+.workspaces button:active,
+.workspaces button:checked {
+    padding: 0 6px;
+    color: @muted;
+    background-color: transparent;
+    background-image: none;
+    border: none;
+    box-shadow: none;
+    outline: none;
+    transition: none;
+    -gtk-icon-filter: none;
+}
+
+.workspaces button.visible,
+.workspaces button.visible:hover,
+.workspaces button.visible:focus,
+.workspaces button.visible:active,
+.workspaces button.visible:checked {
+    color: @fg;
+    background-color: @active;
+    background-image: none;
+}
+
+.workspaces button.focused,
+.workspaces button.focused:hover,
+.workspaces button.focused:focus,
+.workspaces button.focused:active,
+.workspaces button.focused:checked {
+    color: @bg;
+    background-color: @focus;
+    background-image: none;
+}
+
+.workspaces button.urgent,
+.workspaces button.urgent:hover,
+.workspaces button.urgent:focus,
+.workspaces button.urgent:active,
+.workspaces button.urgent:checked {
+    color: @fg;
+    background-color: @critical;
+    background-image: none;
+}
+
+/* --- battery --- */
+
+.battery.warning  .label { color: @warning; }
+.battery.critical .label { color: @critical; }
+
+/* --- tray --- */
+
+.tray button {
+    padding: 0 2px;
+}
+
+/* --- popups --- */
+
+popover > contents,
+popover > arrow {
+    background-color: @bg;
+    color: @fg;
+    border: 1px solid @active;
+}
+
+.popup {
+    padding: 10px;
+    background-color: @bg;
+    color: @fg;
+}
+
+/* Volume popup sliders. Retheme the Adwaita default to our palette. */
+.popup scale {
+    min-width: 220px;
+    padding: 8px 4px;
+}
+
+.popup scale trough {
+    background-color: @active;
+    border-radius: 4px;
+    min-height: 6px;
+}
+
+.popup scale trough highlight {
+    background-color: @focus;
+    border-radius: 4px;
+    min-height: 6px;
+}
+
+.popup scale slider {
+    background-color: @fg;
+    border: 2px solid @bg;
+    border-radius: 8px;
+    min-width: 14px;
+    min-height: 14px;
+    margin: -6px;
+}
+
+.popup scale slider:hover {
+    background-color: @focus;
+}
+
+.popup dropdown,
+.popup .device-selector {
+    min-width: 220px;
+}
+
+.popup button {
+    padding: 4px 8px;
+}
+
+.popup .sink-box,
+.popup .source-box {
+    margin-bottom: 4px;
+}

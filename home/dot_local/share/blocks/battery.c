@@ -14,6 +14,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "block_output.h"
+
 static int read_int(const char *path) {
     FILE *f = fopen(path, "r");
     if (!f)
@@ -60,6 +62,7 @@ int main(void) {
     const char *bat = "BAT0";
     const char *label = "";
     char *envvar;
+    char output[32];
 
     envvar = getenv("URGENT");
     if (envvar)
@@ -89,15 +92,20 @@ int main(void) {
     if (read_line(path, status, sizeof(status)) < 0)
         return 0;
 
-    if (strcmp(status, "Charging") == 0)
-        printf("%s%d%%+\n", label, pct);
-    else if (strcmp(status, "Discharging") == 0)
-        printf("%s%d%%-\n", label, pct);
-    else
-        printf("%s%d%%\n", label, pct);
+    if (strcmp(status, "Charging") == 0) {
+        snprintf(output, sizeof(output), "%s%d%%+", label, pct);
+    } else if (strcmp(status, "Discharging") == 0) {
+        snprintf(output, sizeof(output), "%s%d%%-", label, pct);
+    } else {
+        snprintf(output, sizeof(output), "%s%d%%", label, pct);
+    }
 
-    if (strcmp(status, "Discharging") == 0 && pct <= urgent)
-        return 33;
+    const int is_urgent = strcmp(status, "Discharging") == 0 && pct <= urgent;
+    if (is_urgent && !block_output_is_i3blocks()) {
+        block_output_print_markup(output, BLOCK_COLOR_CRITICAL);
+        return 0;
+    }
 
-    return 0;
+    block_output_print_text(output);
+    return block_output_status(is_urgent);
 }

@@ -3,6 +3,8 @@
 #include <string.h>
 #include <sys/statvfs.h>
 
+#include "block_output.h"
+
 #define URGENT_VALUE 90
 
 static void format_bytes(const unsigned long long bytes, char *out, size_t out_size) {
@@ -64,21 +66,20 @@ int main(void) {
 
     char out[32];
     if (strcmp(display, "perc") == 0) {
-        printf("%d%%\n", perc);
+        snprintf(out, sizeof(out), "%d%%", perc);
     } else if (strcmp(display, "used") == 0) {
         format_bytes(used, out, sizeof(out));
-        puts(out);
     } else if (strcmp(display, "max") == 0) {
         format_bytes(total, out, sizeof(out));
-        puts(out);
     } else { /* free */
         format_bytes(avail, out, sizeof(out));
-        puts(out);
     }
 
-    if (perc > URGENT_VALUE) {
-        return 33;
+    if (perc > URGENT_VALUE && !block_output_is_i3blocks()) {
+        block_output_print_markup(out, BLOCK_COLOR_CRITICAL);
+        return 0;
     }
 
-    return 0;
+    block_output_print_text(out);
+    return block_output_status(perc > URGENT_VALUE);
 }

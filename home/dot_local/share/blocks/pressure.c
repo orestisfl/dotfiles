@@ -1,5 +1,7 @@
 #include <stdio.h>
 
+#include "block_output.h"
+
 static const char *types[] = {"cpu", "memory", "io"};
 
 int main(void) {
@@ -37,7 +39,7 @@ int main(void) {
     }
 
     if (out[0]) {
-        printf(" %s\n %s\n", out + 1, out + 1);
+        block_output_print_full_short(out + 1, out + 1);
     }
 
     return 0;

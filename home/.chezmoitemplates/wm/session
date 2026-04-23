@@ -2,7 +2,7 @@
 
 # --- Autostart --------------------------------------------------------------
 
-exec --no-startup-id waybar
+exec --no-startup-id ironbar
 exec --no-startup-id /usr/lib/mate-polkit/polkit-mate-authentication-agent-1
 exec --no-startup-id nm-applet --indicator
 exec --no-startup-id cbatticon -l 15 -r 3
@@ -30,7 +30,7 @@ exec swayidle -w \
     timeout 600 '$lock' \
     timeout 620 'swaymsg "output * power off"' \
         resume  'swaymsg "output * power on"' \
-    timeout 4200 'systemctl suspend' \
+    timeout 36000 'systemctl suspend' \
     before-sleep '$lock'
 
 # --- Distro snippets --------------------------------------------------------

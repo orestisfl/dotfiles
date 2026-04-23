@@ -1,10 +1,15 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -euo pipefail
 
-if [ -n "$BLOCK_BUTTON" ]; then
+source "$(dirname "${BASH_SOURCE[0]}")/block_format.sh"
+
+if [[ -n "${BLOCK_BUTTON:-}" ]]; then
     gsimplecal &
 fi
 
-FORMAT="${BLOCK_INSTANCE:-%A, %d %B %Y | %H:%M}" # long
-echo $(date "+${FORMAT}")
-FORMAT='%a, %d %b %y | %H:%M' # short
-echo $(date "+${FORMAT}")
+long_format="${BLOCK_INSTANCE:-%A, %d %B %Y | %H:%M}"
+short_format='%a, %d %b %y | %H:%M'
+
+block_output_emit \
+    "$(date "+${long_format}")" \
+    "$(date "+${short_format}")"

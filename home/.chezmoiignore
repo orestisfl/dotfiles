@@ -9,7 +9,7 @@
 
 {{- if not .wayland }}
 .config/sway
-.config/waybar
+.config/ironbar
 {{- end }}
 
 {{- /* X11-only files on wayland hosts (GTK3 theming comes from xdg-desktop-portal). */}}

@@ -1,5 +1,7 @@
 #include <stdio.h>
 
+#include "block_output.h"
+
 #define STATE_FILE "/tmp/.cpu"
 #define URGENT_THRESHOLD 90
 
@@ -44,14 +46,19 @@ int main(void) {
 
         if (diff_total > 0) {
             const int usage = (int)((1000 * (diff_total - diff_idle) / diff_total + 5) / 10);
-            printf("%d%%\n", usage);
+            char output[16];
+            snprintf(output, sizeof(output), "%d%%", usage);
 
-            if (usage > URGENT_THRESHOLD) {
-                return 33;
+            if (usage > URGENT_THRESHOLD && !block_output_is_i3blocks()) {
+                block_output_print_markup(output, BLOCK_COLOR_CRITICAL);
+                return 0;
             }
+
+            block_output_print_text(output);
+            return block_output_status(usage > URGENT_THRESHOLD);
         }
     } else {
-        puts("?");
+        block_output_print_text("?");
     }
 
     return 0;

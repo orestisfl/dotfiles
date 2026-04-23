@@ -1,8 +1,13 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "$(dirname "${BASH_SOURCE[0]}")/block_format.sh"
+
 ping_average=$(ping -c 3 google.com | tail -1 | awk '{print $4}' | cut -d '/' -f 2)
 ping_average=${ping_average%.*}
 
-echo "$ping_average"
 if [ "$ping_average" -gt 150 ]; then
-    exit 33
+    block_output_emit_urgent "$ping_average" "$ping_average" "$BLOCK_COLOR_WARNING"
+else
+    block_output_emit "$ping_average"
 fi

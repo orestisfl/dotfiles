@@ -14,7 +14,7 @@ BINS = $(SRCS:.c=)
 
 all: $(BINS)
 
-%: %.c
+%: %.c block_output.h
 	$(CC) $(ALL_CFLAGS) -o $@ $<
 
 clean:

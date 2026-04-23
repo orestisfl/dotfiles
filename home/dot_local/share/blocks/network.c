@@ -16,6 +16,8 @@
 #include <string.h>
 #include <sys/stat.h>
 
+#include "block_output.h"
+
 #define URGENT_THRESHOLD 20
 
 static int get_nmcli_device(char *buf, size_t buflen) {
@@ -143,7 +145,7 @@ int main(void) {
     struct stat st;
     snprintf(path, sizeof(path), "/sys/class/net/%s/wireless", device);
     if (stat(path, &st) != 0) {
-        puts("on");
+        block_output_print_text("on");
         return 0;
     }
 
@@ -152,12 +154,18 @@ int main(void) {
         (void)parse_nmcli_signal(&quality);
 
     if (quality < 0) {
-        puts("W:?");
+        block_output_print_text("W:?");
         return 0;
     }
 
-    printf("%d%%\n", quality);
-    if (quality <= URGENT_THRESHOLD)
-        return 33;
-    return 0;
+    char output[16];
+    snprintf(output, sizeof(output), "%d%%", quality);
+
+    if (quality <= URGENT_THRESHOLD && !block_output_is_i3blocks()) {
+        block_output_print_markup(output, BLOCK_COLOR_WARNING);
+        return 0;
+    }
+
+    block_output_print_text(output);
+    return block_output_status(quality <= URGENT_THRESHOLD);
 }

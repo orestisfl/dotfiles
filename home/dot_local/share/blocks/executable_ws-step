@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# Switch to the next/prev workspace on the focused output, without wrapping.
+# Usage: ws-step prev|next
+set -euo pipefail
+
+dir=${1:?usage: $0 <prev|next>}
+
+state=$(swaymsg -t get_workspaces)
+out=$(jq -r '.[] | select(.focused) | .output' <<<"$state")
+cur=$(jq -r '.[] | select(.focused) | .num'    <<<"$state")
+
+# Numeric workspaces on the focused output, sorted ascending.
+nums=$(jq -r --arg out "$out" \
+  '[.[] | select(.output == $out and .num >= 0) | .num] | sort | .[]' \
+  <<<"$state")
+
+target=$(awk -v cur="$cur" -v dir="$dir" '
+  { a[NR] = $0 }
+  END {
+    for (i = 1; i <= NR; i++) if (a[i] == cur) ci = i
+    if (dir == "prev" && ci > 1)  print a[ci - 1]
+    else if (dir == "next" && ci < NR) print a[ci + 1]
+  }' <<<"$nums")
+
+[[ -z $target ]] && exit 0
+exec swaymsg "workspace number $target"

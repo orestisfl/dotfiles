@@ -1,10 +1,14 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Based on http://openweathermap.org/current
-set -e
+set -euo pipefail
+
+source "$(dirname "${BASH_SOURCE[0]}")/block_format.sh"
+
 API_KEY="ecf9f4fefedf777461f6d6935b6c3138"
 
 # Check on http://openweathermap.org/find
-CITY_ID="${BLOCK_INSTANCE}"
+CITY_ID="${BLOCK_INSTANCE:-}"
+[[ -n "${CITY_ID}" ]] || exit 0
 
 URGENT_LOWER=0
 URGENT_HIGHER=30
@@ -21,33 +25,28 @@ SYMBOL_CELSIUS="℃"
 WEATHER_URL="http://api.openweathermap.org/data/2.5/weather?id=${CITY_ID}&appid=${API_KEY}&units=metric"
 
 WEATHER_INFO=$(wget -qO- "${WEATHER_URL}")
-WEATHER_MAIN=$(echo "${WEATHER_INFO}" | jq -r '.weather[0].main')
-WEATHER_TEMP=$(echo "${WEATHER_INFO}" | jq -r '.main.temp' | cut -d '.' -f 1)
+WEATHER_MAIN=$(jq -r '.weather[0].main // empty' <<<"${WEATHER_INFO}")
+WEATHER_TEMP=$(jq -r '.main.temp // empty' <<<"${WEATHER_INFO}" | cut -d '.' -f 1)
+[[ -n "${WEATHER_MAIN}" && -n "${WEATHER_TEMP}" ]] || exit 0
 
 if [[ "${WEATHER_MAIN}" = *Snow* ]]; then
-    echo "${ICON_SNOW} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
-    echo "${ICON_SNOW} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
+    output="${ICON_SNOW} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
 elif [[ "${WEATHER_MAIN}" = *Rain* ]] || [[ "${WEATHER_MAIN}" = *Drizzle* ]]; then
-    echo "${ICON_RAINY} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
-    echo "${ICON_RAINY} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
+    output="${ICON_RAINY} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
 elif [[ "${WEATHER_MAIN}" = *Thunderstorm* ]]; then
-    echo "${ICON_STORM} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
-    echo "${ICON_STORM} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
+    output="${ICON_STORM} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
 elif [[ "${WEATHER_MAIN}" = *Cloud* ]]; then
-    echo "${ICON_CLOUDY} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
-    echo "${ICON_CLOUDY} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
+    output="${ICON_CLOUDY} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
 elif [[ "${WEATHER_MAIN}" = *Clear* ]]; then
-    echo "${ICON_SUNNY} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
-    echo "${ICON_SUNNY} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
+    output="${ICON_SUNNY} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
 elif [[ "${WEATHER_MAIN}" = *Fog* ]] || [[ "${WEATHER_MAIN}" = *Mist* ]]; then
-    echo "${ICON_FOG} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
-    echo "${ICON_FOG} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
+    output="${ICON_FOG} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
 else
-    echo "${WEATHER_MAIN} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
-    echo "${WEATHER_MAIN} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
+    output="${WEATHER_MAIN} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
 fi
-echo ""
 
 if [[ "${WEATHER_TEMP}" -lt "${URGENT_LOWER}" ]] || [[ "${WEATHER_TEMP}" -gt "${URGENT_HIGHER}" ]]; then
-    exit 33
+    block_output_emit_urgent "${output}" "${output}" "${BLOCK_COLOR_WARNING}"
+else
+    block_output_emit "${output}"
 fi
