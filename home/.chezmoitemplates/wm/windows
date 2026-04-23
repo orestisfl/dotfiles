@@ -27,6 +27,7 @@ assign [app_id="(?i)slack"] workspace 10
 for_window [app_id="(?i)spotify"] move to workspace number 14
 
 for_window [app_id="ripdrag"] floating enable, sticky enable
+for_window [app_id="gsimplecal"] floating enable, move position cursor
 
 for_window [app_id="jetbrains-goland"]  mark g
 for_window [app_id="jetbrains-idea"]    mark j
