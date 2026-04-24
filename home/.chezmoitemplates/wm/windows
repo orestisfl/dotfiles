@@ -8,6 +8,7 @@ for_window [window_role=GtkFileChooserDialog] floating disable
 for_window [title=Guake]                      floating enable
 for_window [title="Xephyr on :50.0"]          floating disable
 for_window [class="ripdrag"]                  floating enable, sticky enable
+for_window [class="(?i)yad"]                  floating enable
 for_window [class=Gsimplecal]                 move position mouse
 
 for_window [class=Slack window_type=normal]           mark s
@@ -25,6 +26,7 @@ assign [app_id="(?i)slack"] workspace 10
 for_window [app_id="(?i)spotify"] move to workspace number 14
 
 for_window [app_id="ripdrag"] floating enable, sticky enable
+for_window [app_id="yad"] floating enable
 for_window [app_id="gsimplecal"] floating enable, move position cursor
 
 for_window [app_id="jetbrains-goland"]  mark g

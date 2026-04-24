@@ -44,7 +44,7 @@ switch_monitor_to_pc() {
 export -f switch_monitor_to_pc
 
 ddcutil_brightness() {
-    value="$(zenity --entry --entry-text="$(ddcutil --model 'LG HDR 4K' getvcp 10 --brief | cut -d ' ' -f 4)")"
+    value="$(yad --entry --entry-text="$(ddcutil --model 'LG HDR 4K' getvcp 10 --brief | cut -d ' ' -f 4)")"
     [[ -n "$value" ]] || return 0
 
     (light -S "$value" || true) &
@@ -186,4 +186,4 @@ selection="$(
 action="${options[$selection]:-}"
 [[ -n "$action" ]] || exit 0
 
-out="$(run_action "$action" 2>&1)" || zenity --error --text="Command failed: $out" --no-markup
+out="$(run_action "$action" 2>&1)" || yad --error --text="Command failed: $out" --no-markup

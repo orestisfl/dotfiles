@@ -16,7 +16,7 @@ def main() -> None:
     print(f"Renaming workspace {workspace.name!r} (num={workspace.num})")
 
     result = subprocess.run(
-        ["zenity", "--entry", f"--entry-text={focused.name}"],
+        ["yad", "--entry", f"--entry-text={focused.name}"],
         capture_output=True,
         text=True,
         check=True,
