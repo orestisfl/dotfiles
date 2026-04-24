@@ -36,6 +36,11 @@ start-xephyr.sh
 **/README.md
 **/compile_commands.json
 
+{{- /* firejail zoom profile only makes sense where zoom is installed. */}}
+{{- if not .elastic }}
+.config/firejail/zoom.local
+{{- end }}
+
 {{- /* Managed out-of-band, not from this repo. */}}
 .config/systemd/user/camera-bridge-watcher*
 {{- /* `systemctl --user enable/disable` owns the *.target.wants/ symlinks; */}}

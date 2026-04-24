@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# manifest hash: {{ include "../pkgsync/packages.txt.tmpl" | sha256sum }}
+set -euo pipefail
+
+src="{{ .chezmoi.sourceDir }}/../pkgsync"
+
+python3 "${src}/sync.py" gui
