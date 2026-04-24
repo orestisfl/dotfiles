@@ -4,7 +4,6 @@ alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias grep='grep --color=auto'
 alias mdcat=glow
-alias rename=perl-rename
 alias rg="rg --hyperlink-format=default --hidden --glob '!.git'"
 alias vi=vim
 alias vim=nvim
@@ -33,6 +32,7 @@ alias help='autoload -Uz run-help && run-help'
 
 # Shortcuts
 alias autoremove='sudo pacman -Rns $(pacman -Qdtq)'
+alias doas=pkexec
 alias drm='docker run -it --rm'
 alias drmv='docker run -it --rm -v "$PWD:/workdir" --workdir /workdir'
 alias entrr='entr -rnc'
