@@ -41,7 +41,7 @@ end, { desc = "Close buffer" })
 -- Autocmds
 -- Enable treesitter highlighting for languages with locally-installed parsers
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = { "go" },
+  pattern = { "go", "rust" },
   callback = function() pcall(vim.treesitter.start) end,
 })
 -- Restore cursor to last known position when reopening a file
@@ -84,7 +84,7 @@ require("lazy").setup({
         end,
       })
       vim.lsp.inlay_hint.enable(true)
-      vim.lsp.enable({ "clangd", "pyright", "gopls" })
+      vim.lsp.enable({ "clangd", "pyright", "gopls", "rust_analyzer" })
     end,
   },
 
