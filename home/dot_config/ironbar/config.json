@@ -16,8 +16,7 @@
         {
             "type": "clock",
             "format": "\uf073 %a %d %b %H:%M",
-            "format_popup": "%H:%M:%S",
-            "on_click_left": "gsimplecal"
+            "format_popup": "%H:%M:%S"
         }
     ],
     "monitors": {
@@ -119,8 +118,7 @@
                 {
                     "type": "clock",
                     "format": "\uf073 %a %d %b %H:%M",
-                    "format_popup": "%H:%M:%S",
-                    "on_click_left": "gsimplecal"
+                    "format_popup": "%H:%M:%S"
                 },
                 {
                     "type": "label",
