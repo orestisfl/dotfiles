@@ -5,7 +5,9 @@
 exec --no-startup-id ironbar
 exec --no-startup-id /usr/lib/mate-polkit/polkit-mate-authentication-agent-1
 exec --no-startup-id nm-applet --indicator
+{{ if .xorg -}}
 exec --no-startup-id cbatticon -l 15 -r 3
+{{ end -}}
 exec --no-startup-id keepassxc
 exec --no-startup-id trash-empty -f 30
 
