@@ -10,6 +10,7 @@
  *   URGENT    urgent threshold % (default: 10)
  *   LABEL     prefix label       (default: "")
  */
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -58,15 +59,13 @@ static int read_ratio_pct(const char *bat, const char *now_key,
 }
 
 int main(void) {
-    int urgent = 10;
+    int urgent_threshold = 10;
     const char *bat = "BAT0";
     const char *label = "";
-    char *envvar;
-    char output[32];
 
-    envvar = getenv("URGENT");
+    const char *envvar = getenv("URGENT");
     if (envvar)
-        urgent = atoi(envvar);
+        urgent_threshold = atoi(envvar);
     envvar = getenv("BAT");
     if (envvar && *envvar)
         bat = envvar;
@@ -92,6 +91,7 @@ int main(void) {
     if (read_line(path, status, sizeof(status)) < 0)
         return 0;
 
+    char output[32];
     if (strcmp(status, "Charging") == 0) {
         snprintf(output, sizeof(output), "%s%d%%+", label, pct);
     } else if (strcmp(status, "Discharging") == 0) {
@@ -100,12 +100,6 @@ int main(void) {
         snprintf(output, sizeof(output), "%s%d%%", label, pct);
     }
 
-    const int is_urgent = strcmp(status, "Discharging") == 0 && pct <= urgent;
-    if (is_urgent && !block_output_is_i3blocks()) {
-        block_output_print_markup(output, BLOCK_COLOR_CRITICAL);
-        return 0;
-    }
-
-    block_output_print_text(output);
-    return block_output_status(is_urgent);
+    const bool urgent = strcmp(status, "Discharging") == 0 && pct <= urgent_threshold;
+    return block_output_emit(output, urgent, BLOCK_COLOR_CRITICAL);
 }

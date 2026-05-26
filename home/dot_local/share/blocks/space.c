@@ -5,7 +5,7 @@
 
 #include "block_output.h"
 
-#define URGENT_VALUE 90
+#define URGENT_THRESHOLD 90
 
 static void format_bytes(const unsigned long long bytes, char *out, size_t out_size) {
     if (bytes >= 1099511627776ULL) {
@@ -43,7 +43,9 @@ int main(void) {
                 strncpy(display, sep + 1, sizeof(display) - 1);
             }
         } else {
+            /* strncpy may not nul-terminate if instance fills the buffer */
             strncpy(path, instance, sizeof(path) - 1);
+            path[sizeof(path) - 1] = '\0';
         }
     }
 
@@ -61,25 +63,19 @@ int main(void) {
         return 0;
     }
 
-    /* Match df behavior: perc = used / (used + avail) */
-    const int perc = used + avail > 0 ? (int)(used * 100 / (used + avail)) : 0;
+    /* Match df behavior: pct = used / (used + avail) */
+    const int usage_pct = used + avail > 0 ? (int)(used * 100 / (used + avail)) : 0;
 
-    char out[32];
+    char output[32];
     if (strcmp(display, "perc") == 0) {
-        snprintf(out, sizeof(out), "%d%%", perc);
+        snprintf(output, sizeof(output), "%d%%", usage_pct);
     } else if (strcmp(display, "used") == 0) {
-        format_bytes(used, out, sizeof(out));
+        format_bytes(used, output, sizeof(output));
     } else if (strcmp(display, "max") == 0) {
-        format_bytes(total, out, sizeof(out));
+        format_bytes(total, output, sizeof(output));
     } else { /* free */
-        format_bytes(avail, out, sizeof(out));
+        format_bytes(avail, output, sizeof(output));
     }
 
-    if (perc > URGENT_VALUE && !block_output_is_i3blocks()) {
-        block_output_print_markup(out, BLOCK_COLOR_CRITICAL);
-        return 0;
-    }
-
-    block_output_print_text(out);
-    return block_output_status(perc > URGENT_VALUE);
+    return block_output_emit(output, usage_pct > URGENT_THRESHOLD, BLOCK_COLOR_CRITICAL);
 }

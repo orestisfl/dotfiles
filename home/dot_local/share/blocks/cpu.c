@@ -6,7 +6,6 @@
 #define URGENT_THRESHOLD 90
 
 int main(void) {
-    unsigned long long user, nice, system, idle;
     unsigned long long prev_total = 0, prev_idle = 0;
 
     /* Read previous state (two lines: total, idle) */
@@ -24,6 +23,7 @@ int main(void) {
         return 1;
     }
 
+    unsigned long long user, nice, system, idle;
     if (fscanf(f, "cpu %llu %llu %llu %llu", &user, &nice, &system, &idle) != 4) {
         fclose(f);
         return 1;
@@ -39,27 +39,19 @@ int main(void) {
         fclose(f);
     }
 
-    /* Calculate and display usage */
-    if (prev_total > 0) {
-        const unsigned long long diff_total = total - prev_total;
-        const unsigned long long diff_idle = idle - prev_idle;
-
-        if (diff_total > 0) {
-            const int usage = (int)((1000 * (diff_total - diff_idle) / diff_total + 5) / 10);
-            char output[16];
-            snprintf(output, sizeof(output), "%d%%", usage);
-
-            if (usage > URGENT_THRESHOLD && !block_output_is_i3blocks()) {
-                block_output_print_markup(output, BLOCK_COLOR_CRITICAL);
-                return 0;
-            }
-
-            block_output_print_text(output);
-            return block_output_status(usage > URGENT_THRESHOLD);
-        }
-    } else {
+    if (prev_total == 0) {
         block_output_print_text("?");
+        return 0;
     }
 
-    return 0;
+    const unsigned long long diff_total = total - prev_total;
+    const unsigned long long diff_idle = idle - prev_idle;
+    if (diff_total == 0) {
+        return 0;
+    }
+
+    const int usage_pct = (int)((1000 * (diff_total - diff_idle) / diff_total + 5) / 10);
+    char output[16];
+    snprintf(output, sizeof(output), "%d%%", usage_pct);
+    return block_output_emit(output, usage_pct > URGENT_THRESHOLD, BLOCK_COLOR_CRITICAL);
 }

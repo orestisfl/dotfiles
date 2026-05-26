@@ -11,6 +11,7 @@
  *   down/missing  -> no output
  * Exit 33 (urgent) when wireless quality <= URGENT_THRESHOLD.
  */
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -69,15 +70,15 @@ static int dbm_to_quality(int dbm) {
     return (int)q;
 }
 
-static int parse_iw_signal(const char *device, int *quality) {
+static bool parse_iw_signal(const char *device, int *quality) {
     char cmd[256];
     snprintf(cmd, sizeof(cmd), "iw dev %s link 2>/dev/null", device);
     FILE *p = popen(cmd, "r");
     if (!p)
-        return -1;
+        return false;
 
     char line[256];
-    int found = 0;
+    bool found = false;
     while (fgets(line, sizeof(line), p)) {
         const char *s = strstr(line, "signal:");
         if (!s)
@@ -85,21 +86,21 @@ static int parse_iw_signal(const char *device, int *quality) {
         int dbm;
         if (sscanf(s + 7, "%d", &dbm) == 1) {
             *quality = dbm_to_quality(dbm);
-            found = 1;
+            found = true;
             break;
         }
     }
     pclose(p);
-    return found ? 0 : -1;
+    return found;
 }
 
-static int parse_nmcli_signal(int *quality) {
+static bool parse_nmcli_signal(int *quality) {
     FILE *p = popen("nmcli -t -f ACTIVE,SIGNAL dev wifi 2>/dev/null", "r");
     if (!p)
-        return -1;
+        return false;
 
     char line[128];
-    int found = 0;
+    bool found = false;
     while (fgets(line, sizeof(line), p)) {
         if (strncmp(line, "yes:", 4) != 0)
             continue;
@@ -110,12 +111,12 @@ static int parse_nmcli_signal(int *quality) {
             if (q > 100)
                 q = 100;
             *quality = q;
-            found = 1;
+            found = true;
             break;
         }
     }
     pclose(p);
-    return found ? 0 : -1;
+    return found;
 }
 
 int main(void) {
@@ -150,7 +151,7 @@ int main(void) {
     }
 
     int quality = -1;
-    if (parse_iw_signal(device, &quality) != 0)
+    if (!parse_iw_signal(device, &quality))
         (void)parse_nmcli_signal(&quality);
 
     if (quality < 0) {
@@ -160,12 +161,5 @@ int main(void) {
 
     char output[16];
     snprintf(output, sizeof(output), "%d%%", quality);
-
-    if (quality <= URGENT_THRESHOLD && !block_output_is_i3blocks()) {
-        block_output_print_markup(output, BLOCK_COLOR_WARNING);
-        return 0;
-    }
-
-    block_output_print_text(output);
-    return block_output_status(quality <= URGENT_THRESHOLD);
+    return block_output_emit(output, quality <= URGENT_THRESHOLD, BLOCK_COLOR_WARNING);
 }

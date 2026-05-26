@@ -39,7 +39,7 @@ int main(void) {
     }
 
     if (out[0]) {
-        block_output_print_full_short(out + 1, out + 1);
+        block_output_print_full_short(out + 1, NULL);
     }
 
     return 0;

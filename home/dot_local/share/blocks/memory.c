@@ -5,8 +5,8 @@
 
 #include "block_output.h"
 
-#define URGENT_MEM 90
-#define URGENT_SWAP 50
+#define URGENT_THRESHOLD_MEM 90
+#define URGENT_THRESHOLD_SWAP 50
 
 static void format_bytes(const unsigned long long kb, char *out, const size_t out_size) {
     const double bytes = (double)kb * 1024.0;
@@ -44,8 +44,8 @@ int main(void) {
         strncpy(source, instance, sizeof(source) - 1);
     }
 
-    const int urgent_value = strcmp(source, "swap") == 0 ? URGENT_SWAP : URGENT_MEM;
     const bool is_swap = strcmp(source, "swap") == 0;
+    const int urgent_threshold = is_swap ? URGENT_THRESHOLD_SWAP : URGENT_THRESHOLD_MEM;
 
     /* Read /proc/meminfo */
     FILE *f = fopen("/proc/meminfo", "r");
@@ -71,38 +71,25 @@ int main(void) {
     }
     fclose(f);
 
-    unsigned long long total, avail;
-    if (is_swap) {
-        total = swap_total;
-        avail = swap_free;
-    } else {
-        total = mem_total;
-        avail = mem_available;
-    }
-
+    const unsigned long long total = is_swap ? swap_total : mem_total;
+    const unsigned long long avail = is_swap ? swap_free : mem_available;
     if (total == 0) {
         return 0;
     }
 
     const unsigned long long used = total - avail;
-    const int perc = (int)(used * 100 / total);
+    const int usage_pct = (int)(used * 100 / total);
 
-    char out[32];
+    char output[32];
     if (strcmp(display, "perc") == 0) {
-        snprintf(out, sizeof(out), "%d%%", perc);
+        snprintf(output, sizeof(output), "%d%%", usage_pct);
     } else if (strcmp(display, "used") == 0) {
-        format_bytes(used, out, sizeof(out));
+        format_bytes(used, output, sizeof(output));
     } else if (strcmp(display, "total") == 0) {
-        format_bytes(total, out, sizeof(out));
+        format_bytes(total, output, sizeof(output));
     } else { /* free */
-        format_bytes(avail, out, sizeof(out));
+        format_bytes(avail, output, sizeof(output));
     }
 
-    if (perc > urgent_value && !block_output_is_i3blocks()) {
-        block_output_print_markup(out, BLOCK_COLOR_CRITICAL);
-        return 0;
-    }
-
-    block_output_print_text(out);
-    return block_output_status(perc > urgent_value);
+    return block_output_emit(output, usage_pct > urgent_threshold, BLOCK_COLOR_CRITICAL);
 }
