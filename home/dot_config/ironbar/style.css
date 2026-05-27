@@ -1,12 +1,12 @@
-/* Ironbar theme. Mirrors the Tomorrow Night palette from the old waybar. */
-
 @define-color bg        #1d1f21;
 @define-color fg        #c5c8c6;
 @define-color muted     #969896;
 @define-color focus     #81a2be;
 @define-color active    #373b41;
+@define-color inactive  #282a2e;
 @define-color warning   #f0c674;
 @define-color critical  #cc6666;
+@define-color bright    #ffffff;
 
 * {
     font-family: "JetBrainsMono Nerd Font Propo", monospace;
@@ -53,15 +53,15 @@ box, button, label {
    so we must explicitly null `background-image` (the `background` shorthand
    is not enough in GTK CSS) and kill the 200ms fade. */
 button.widget,
-.widget button,
+.widget > button,
 button.widget:hover,
 button.widget:focus,
 button.widget:active,
 button.widget:checked,
-.widget button:hover,
-.widget button:focus,
-.widget button:active,
-.widget button:checked {
+.widget > button:hover,
+.widget > button:focus,
+.widget > button:active,
+.widget > button:checked {
     padding: 0 4px;
     background-color: transparent;
     background-image: none;
@@ -81,7 +81,7 @@ button.widget:checked,
 .workspaces button:checked {
     padding: 0 6px;
     color: @muted;
-    background-color: transparent;
+    background-color: @inactive;
     background-image: none;
     border: none;
     box-shadow: none;
@@ -95,9 +95,8 @@ button.widget:checked,
 .workspaces button.visible:focus,
 .workspaces button.visible:active,
 .workspaces button.visible:checked {
-    color: @fg;
+    color: @bright;
     background-color: @active;
-    background-image: none;
 }
 
 .workspaces button.focused,
@@ -107,7 +106,6 @@ button.widget:checked,
 .workspaces button.focused:checked {
     color: @bg;
     background-color: @focus;
-    background-image: none;
 }
 
 .workspaces button.urgent,
@@ -115,9 +113,8 @@ button.widget:checked,
 .workspaces button.urgent:focus,
 .workspaces button.urgent:active,
 .workspaces button.urgent:checked {
-    color: @fg;
+    color: @bright;
     background-color: @critical;
-    background-image: none;
 }
 
 /* --- battery --- */
