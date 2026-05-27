@@ -2,7 +2,7 @@
 
 #include "block_output.h"
 
-static const char *types[] = {"cpu", "memory", "io"};
+static const char *types[] = {"cpu", "memory"};
 
 int main(void) {
     char path[64];
@@ -11,7 +11,7 @@ int main(void) {
     char *p = out;
     double avg10, avg60;
 
-    for (int i = 0; i < 3; i++) {
+    for (size_t i = 0; i < sizeof(types) / sizeof(types[0]); i++) {
         snprintf(path, sizeof(path), "/sys/fs/cgroup/user.slice/%s.pressure", types[i]);
         FILE *f = fopen(path, "r");
         if (!f) {
