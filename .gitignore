@@ -201,10 +201,6 @@ Temporary Items
 ### Custom ###
 tags
 
-# systemd user units: allow-list. Most of this dir is mutated at runtime by
-# `systemctl --user enable/disable` (symlinks under *.target.wants/) or is
-# managed out-of-band (camera-bridge-watcher, gh-notifications-filter,
-# cleanup.service, ...). Track only the units we explicitly author here.
 home/dot_config/systemd/user/*
 !home/dot_config/systemd/user/backup.service
 !home/dot_config/systemd/user/daily@.timer

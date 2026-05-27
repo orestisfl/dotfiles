@@ -35,7 +35,6 @@ start-xephyr.sh
 **/README.md
 **/compile_commands.json
 
-{{- /* firejail zoom profile only makes sense where zoom is installed. */}}
 {{- if not .elastic }}
 .config/firejail/zoom.local
 {{- end }}

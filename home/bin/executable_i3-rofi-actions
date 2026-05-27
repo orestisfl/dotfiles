@@ -130,7 +130,7 @@ run_action() {
 
 # Fill options.
 have gcalcli && ! pidof zoom >/dev/null 2>&1 && add_option "Join zoom meeting" "$HOME/bin/join-zoom.sh"
-pidof zoom >/dev/null 2>&1 && add_option "Kill zoom" "killall zoom & killall aomhost & wait"
+pidof zoom >/dev/null 2>&1 && add_option_if_file "Kill zoom" "$HOME/.local/share/i3-rofi-actions.ignored.sh"
 
 add_option_if_file "Rename workspace" "$HOME/bin/i3-workspace-rename.py"
 have bluetoothctl &&
