@@ -31,4 +31,8 @@ for_window [app_id="yad"] floating enable
 for_window [app_id="jetbrains-goland"]  mark g
 for_window [app_id="jetbrains-idea"]    mark j
 for_window [app_id="jetbrains-toolbox"] floating disable, border normal
+
+for_window [app_id="Zoom" title="meeting bottombar popup"] floating enable, move position cursor, move up 50 px
+for_window [app_id="Zoom" title="Leave meeting panel"] floating enable
+for_window [app_id="Zoom" title="annotate_toolbar"] floating enable
 {{- end }}
