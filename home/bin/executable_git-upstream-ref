@@ -1,0 +1,77 @@
+#!/bin/bash
+# Print the canonical "upstream" ref as <remote>/<default-branch>.
+#
+# The remote is picked via these signals, in priority order, none of which
+# rely on a fixed remote name like "upstream":
+#
+#   1. remote.<r>.gh-resolved=base  (the parent set by `gh repo set-default`)
+#   2. branch.<x>.remote != branch.<x>.pushRemote — the fetch side of an
+#      explicit fork workflow is the upstream by construction.
+#   3. The repo has exactly one remote.
+#
+# The branch is read from refs/remotes/<r>/HEAD (the remote's advertised
+# default branch), populated via `git remote set-head -a` if missing.
+set -euo pipefail
+
+die() {
+	echo "git-upstream-ref: $*" >&2
+	exit 1
+}
+
+pick_remote() {
+	# 1. gh's recorded parent.
+	local r
+	while IFS= read -r r; do
+		[[ -n "$r" ]] || continue
+		r="${r#remote.}"
+		r="${r%.gh-resolved}"
+		echo "$r"
+		return
+	done < <(git config --get-regexp '^remote\..*\.gh-resolved$' 'base' | awk '{print $1}')
+
+	# 2. Any branch where fetch-remote != push-remote → fetch side is upstream.
+	# Prefer the current branch, then HEAD's branch, then any branch.
+	local current
+	current=$(git symbolic-ref --quiet --short HEAD || true)
+	local -a branches=()
+	[[ -n "$current" ]] && branches+=("$current")
+	while IFS= read -r b; do
+		[[ -n "$b" && "$b" != "$current" ]] && branches+=("$b")
+	done < <(git for-each-ref --format='%(refname:short)' refs/heads/)
+
+	for b in "${branches[@]}"; do
+		local fetch push
+		fetch=$(git config --get "branch.$b.remote" || true)
+		push=$(git config --get "branch.$b.pushRemote" || true)
+		if [[ -n "$fetch" && -n "$push" && "$fetch" != "$push" ]]; then
+			# Only meaningful if it's an actual configured remote (not a URL).
+			if git remote get-url "$fetch" >/dev/null 2>&1; then
+				echo "$fetch"
+				return
+			fi
+		fi
+	done
+
+	# 3. Sole remote.
+	local -a remotes=()
+	while IFS= read -r r; do
+		[[ -n "$r" ]] && remotes+=("$r")
+	done < <(git remote)
+	case ${#remotes[@]} in
+	0) die "no remotes configured" ;;
+	1)
+		echo "${remotes[0]}"
+		return
+		;;
+	*) die "cannot pick upstream among multiple remotes (${remotes[*]}); set one as gh default or configure branch.<x>.pushRemote" ;;
+	esac
+}
+
+remote=$(pick_remote)
+
+if ! git symbolic-ref --quiet "refs/remotes/$remote/HEAD" >/dev/null; then
+	git remote set-head -a "$remote" >/dev/null \
+		|| die "could not determine default branch for '$remote'"
+fi
+
+git symbolic-ref --short "refs/remotes/$remote/HEAD"

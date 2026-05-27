@@ -1,0 +1,263 @@
+#!/bin/bash
+# Rewire a freshly-cloned GitHub repo for fork-based development:
+#   origin   -> https://github.com/$user/$repo  (where you push)
+#   upstream -> original repo                   (where you pull from)
+# If no fork exists yet, upstream is kept as the only remote and its push URL
+# is set to no_push to prevent accidents. The script still configures branch
+# tracking and the gh default repo, then exits with code 3 as a warning.
+# Pass --fork to create the fork via `gh repo fork` when it's missing.
+# Idempotent: each setting is checked and fixed independently.
+set -euo pipefail
+
+WARN_EXIT=3
+
+usage() {
+    echo "usage: $(basename "$0") [--fork] [<github-user>]" >&2
+    exit 2
+}
+
+do_fork=false
+user=""
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+    --fork)
+        do_fork=true
+        shift
+        ;;
+    -h | --help)
+        echo "usage: $(basename "$0") [--fork] [<github-user>]"
+        exit 0
+        ;;
+    --)
+        shift
+        break
+        ;;
+    -*)
+        echo "unknown flag: $1" >&2
+        usage
+        ;;
+    *)
+        [[ -z "$user" ]] || usage
+        user="$1"
+        shift
+        ;;
+    esac
+done
+
+user="${user:-${GITHUB_USER:-}}"
+if [[ -z "$user" ]] && command -v gh >/dev/null 2>&1; then
+    user=$(gh api user --jq .login 2>/dev/null || true)
+fi
+[[ -n "$user" ]] || usage
+
+# Parse owner/repo from a github https or ssh URL into parsed_owner/parsed_repo.
+parse_owner_repo() {
+    local url="${1%/}"
+    if [[ "$url" =~ ^(https://github\.com/|git@github\.com:)([^/]+)/([^/]+)$ ]]; then
+        parsed_owner="${BASH_REMATCH[2]}"
+        parsed_repo="${BASH_REMATCH[3]%.git}"
+        return 0
+    fi
+    return 1
+}
+
+origin_url=$(git remote get-url origin 2>/dev/null || true)
+upstream_url=$(git remote get-url upstream 2>/dev/null || true)
+
+# Determine canonical $repo from whichever github remote we already have.
+origin_owner=""
+repo=""
+if [[ -n "$origin_url" ]]; then
+    if parse_owner_repo "$origin_url"; then
+        origin_owner="$parsed_owner"
+        repo="$parsed_repo"
+    else
+        echo "origin is not on github: $origin_url" >&2
+        exit 1
+    fi
+fi
+if [[ -z "$repo" && -n "$upstream_url" ]]; then
+    if parse_owner_repo "$upstream_url"; then
+        repo="$parsed_repo"
+    else
+        echo "upstream is not on github: $upstream_url" >&2
+        exit 1
+    fi
+fi
+if [[ -z "$repo" ]]; then
+    # No remotes: ask gh about $user/<dirname>. gh writes the error body
+    # to stdout on 404 and bypasses --jq, so validate the result too.
+    command -v gh >/dev/null 2>&1 || {
+        echo "no remotes set and gh not installed" >&2
+        exit 1
+    }
+    dirname=$(basename "$(pwd)")
+    guess_slug=$(gh api "repos/$user/$dirname" --jq '.full_name' 2>/dev/null) || guess_slug=""
+    if [[ ! "$guess_slug" =~ ^[A-Za-z0-9._-]+/[A-Za-z0-9._-]+$ ]]; then
+        echo "no remotes set and gh could not find $user/$dirname" >&2
+        exit 1
+    fi
+    repo="${guess_slug##*/}"
+    echo "no remotes; inferred $guess_slug via gh"
+fi
+
+# Does $user/$repo exist on GitHub?
+fork_exists=false
+if [[ -n "$origin_url" && "$origin_owner" == "$user" ]]; then
+    fork_exists=true
+elif command -v gh >/dev/null 2>&1 &&
+    gh api "repos/$user/$repo" --jq '.full_name' >/dev/null 2>&1; then
+    fork_exists=true
+fi
+
+# Optional: create the fork on GitHub. Only ever runs when --fork is passed
+# AND the fork is genuinely missing.
+if ! $fork_exists && $do_fork; then
+    command -v gh >/dev/null 2>&1 || {
+        echo "--fork requires gh to be installed" >&2
+        exit 1
+    }
+    source_url=""
+    if [[ -n "$origin_url" && "$origin_owner" != "$user" ]]; then
+        source_url="$origin_url"
+    elif [[ -n "$upstream_url" ]]; then
+        source_url="$upstream_url"
+    fi
+    if ! parse_owner_repo "$source_url"; then
+        echo "--fork: no upstream/origin to fork from" >&2
+        exit 1
+    fi
+    source_slug="$parsed_owner/$parsed_repo"
+    if [[ "$parsed_owner" == "$user" ]]; then
+        echo "--fork: $source_slug is already owned by $user" >&2
+        exit 1
+    fi
+    echo "creating fork $source_slug -> $user/$repo via gh"
+    gh repo fork "$source_slug" --clone=false --remote=false
+    fork_exists=true
+fi
+
+# 1. origin
+if $fork_exists; then
+    if [[ -n "$origin_url" && "$origin_owner" == "$user" ]]; then
+        echo "origin already points to $user/$repo"
+    else
+        if [[ -n "$origin_url" ]]; then
+            if [[ -z "$upstream_url" ]]; then
+                echo "renaming origin -> upstream ($origin_url)"
+                git remote rename origin upstream
+                upstream_url="$origin_url"
+            else
+                echo "origin ($origin_url) is not your fork; replacing (upstream kept)"
+                git remote remove origin
+            fi
+        fi
+        fork_url="https://github.com/$user/$repo"
+        echo "adding origin -> $fork_url"
+        git remote add origin "$fork_url"
+    fi
+elif [[ -n "$origin_url" ]]; then
+    # No fork yet: move origin out of the way so upstream is canonical.
+    if [[ -z "$upstream_url" ]]; then
+        echo "no fork at $user/$repo; renaming origin -> upstream ($origin_url)"
+        git remote rename origin upstream
+        upstream_url="$origin_url"
+    else
+        echo "no fork at $user/$repo; removing origin ($origin_url), upstream kept"
+        git remote remove origin
+    fi
+fi
+
+# 2. upstream
+if [[ -z "$upstream_url" ]]; then
+    command -v gh >/dev/null 2>&1 || {
+        echo "no upstream remote and gh not installed; cannot find parent" >&2
+        exit 1
+    }
+    parent_url=$(gh api "repos/$user/$repo" --jq '.parent.clone_url // empty' 2>/dev/null || true)
+    [[ -n "$parent_url" ]] || {
+        echo "could not find parent of $user/$repo via gh (not a fork?)" >&2
+        exit 1
+    }
+    echo "adding upstream -> $parent_url"
+    git remote add upstream "$parent_url"
+    upstream_url="$parent_url"
+else
+    echo "upstream already set ($upstream_url)"
+fi
+
+# 3. Upstream push URL: disable when no fork, re-enable once one shows up.
+upstream_push=$(git remote get-url --push upstream 2>/dev/null || true)
+if ! $fork_exists; then
+    if [[ "$upstream_push" == "no_push" ]]; then
+        echo "upstream push already disabled (no_push)"
+    else
+        echo "no fork yet; disabling upstream push (--push no_push)"
+        git remote set-url --push upstream no_push
+    fi
+elif [[ "$upstream_push" == "no_push" ]]; then
+    echo "fork exists; re-enabling upstream push"
+    git config --unset remote.upstream.pushurl || true
+fi
+
+# 4. branch: fetch from upstream; push to origin (only when a fork exists).
+if git show-ref --verify --quiet refs/heads/main; then
+    branch=main
+elif git show-ref --verify --quiet refs/heads/master; then
+    branch=master
+else
+    echo "no main or master branch found" >&2
+    exit 1
+fi
+
+cur_remote=$(git config "branch.$branch.remote" 2>/dev/null || true)
+cur_merge=$(git config "branch.$branch.merge" 2>/dev/null || true)
+cur_push=$(git config "branch.$branch.pushRemote" 2>/dev/null || true)
+if $fork_exists; then
+    if [[ "$cur_remote" == "upstream" && "$cur_merge" == "refs/heads/$branch" && "$cur_push" == "origin" ]]; then
+        echo "branch.$branch already configured (remote=upstream, pushRemote=origin)"
+    else
+        echo "configuring branch.$branch: remote=upstream, pushRemote=origin"
+        git config "branch.$branch.remote" upstream
+        git config "branch.$branch.merge" "refs/heads/$branch"
+        git config "branch.$branch.pushRemote" origin
+    fi
+else
+    if [[ "$cur_remote" == "upstream" && "$cur_merge" == "refs/heads/$branch" && -z "$cur_push" ]]; then
+        echo "branch.$branch already configured (remote=upstream, no pushRemote)"
+    else
+        echo "configuring branch.$branch: remote=upstream (no pushRemote)"
+        git config "branch.$branch.remote" upstream
+        git config "branch.$branch.merge" "refs/heads/$branch"
+        git config --unset "branch.$branch.pushRemote" 2>/dev/null || true
+    fi
+fi
+
+# 5. gh default repo -> upstream (so `gh pr create` etc. target the parent).
+if command -v gh >/dev/null 2>&1; then
+    if parse_owner_repo "$upstream_url"; then
+        default_slug="$parsed_owner/$parsed_repo"
+        cur_default=$(gh repo set-default --view 2>/dev/null || true)
+        if [[ "$cur_default" == "$default_slug" ]]; then
+            echo "gh default repo already $default_slug"
+        else
+            echo "setting gh default repo -> $default_slug"
+            gh repo set-default "$default_slug"
+        fi
+    else
+        echo "upstream url not parseable for gh default: $upstream_url" >&2
+    fi
+fi
+
+if ! $fork_exists; then
+    cat >&2 <<EOF
+
+WARNING: no fork found at github.com/$user/$repo.
+  - upstream is the only remote (push disabled via no_push)
+  - branch.$branch tracks upstream with no pushRemote
+
+To create the fork and finish setup, re-run with --fork:
+  $(basename "$0") --fork $user
+EOF
+    exit "$WARN_EXIT"
+fi
