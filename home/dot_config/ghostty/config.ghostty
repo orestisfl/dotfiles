@@ -1,0 +1,13 @@
+# https://monaspace.githubnext.com/
+font-family = "MonaspiceNe Nerd Font Mono"
+font-size   = 10
+
+resize-overlay = never
+confirm-close-surface = false
+
+# Wayland compositors already enforce vsync at presentation time; letting
+# ghostty also sync its render loop adds a frame of input-to-photon latency.
+window-vsync = false
+
+keybind = ctrl+enter=text:\x1b\r
+keybind = shift+enter=text:\x1b\r

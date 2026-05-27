@@ -19,7 +19,7 @@ exec --no-startup-id systemd-run --user --unit=cursor-agent-notify \
 # Propagate the ~/.profile env (ly runs `/bin/sh -l` before `exec sway`) into
 # the systemd user instance so dbus-activated services see GTK_THEME etc.
 exec --no-startup-id systemctl --user import-environment \
-    TERMINAL VISUAL EDITOR GTK_THEME GTK_OVERLAY_SCROLLING SSH_AUTH_SOCK \
+    PATH TERMINAL VISUAL EDITOR GTK_THEME GTK_OVERLAY_SCROLLING SSH_AUTH_SOCK \
     DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP
 exec --no-startup-id systemctl --user start --no-block graphical-session.target
 

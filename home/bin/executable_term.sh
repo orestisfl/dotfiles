@@ -1,14 +1,12 @@
 #!/bin/bash
 set -euo pipefail
-[[ "${ALACRITTY_SH_DEBUG:-0}" == "1" ]] && set -x
+[[ "${TERM_SH_DEBUG:-0}" == "1" ]] && set -x
 
-# Populate wm_class, wm_name, parent_pid, focused_marks (Wayland) and win_id (X11)
-# for the currently focused window.
+# Populate wm_class, wm_name, parent_pid, focused_marks for the currently focused window.
 probe_focused_window() {
     wm_class=""
     wm_name=""
     parent_pid=""
-    win_id=""
     focused_marks=""
 
     if [[ -n "${SWAYSOCK:-}" ]]; then
@@ -19,17 +17,24 @@ probe_focused_window() {
         wm_name=$(jq -r '.name // empty' <<<"$focused")
         parent_pid=$(jq -r '.pid // empty' <<<"$focused")
         focused_marks=$(jq -r '.marks[]? // empty' <<<"$focused")
-    else
-        win_id="$(xdotool getactivewindow)"
-        wm_class=$(xprop -id "$win_id" WM_CLASS | sed -e 's/.*"\(.*\)"/\1/')
-        wm_name=$(xprop -id "$win_id" _NET_WM_NAME 2>/dev/null | sed -e 's/.*"\(.*\)"/\1/' || xprop -id "$win_id" WM_NAME | sed -e 's/.*"\(.*\)"/\1/')
-        local xprop_output
-        xprop_output=$(xprop -id "$win_id" _NET_WM_PID 2>/dev/null || true)
-        [[ "$xprop_output" =~ _NET_WM_PID\(CARDINAL\)\ =\ ([0-9]+) ]] && parent_pid="${BASH_REMATCH[1]}"
+    elif command -v i3-msg >/dev/null 2>&1; then
+        local tree win_id focused
+        tree=$(i3-msg -t get_tree)
+        win_id="$(xdotool getactivewindow 2>/dev/null || true)"
+        if [[ -n "$win_id" ]]; then
+            focused=$(jq -c --argjson w "$win_id" \
+                'first(.. | objects | select(.window? == $w)) // {}' <<<"$tree")
+        else
+            focused=$(jq -c '[.. | objects | select(.focused? == true)] | first // {}' <<<"$tree")
+        fi
+        wm_class=$(jq -r '.window_properties.class // empty' <<<"$focused")
+        wm_name=$(jq -r '.name // empty' <<<"$focused")
+        parent_pid=$(jq -r '.pid // empty' <<<"$focused")
+        focused_marks=$(jq -r '.marks[]? // empty' <<<"$focused")
     fi
 }
 
-alacritty_cwd() {
+ghostty_cwd() {
     if [[ "$wm_name" == "Yazi: "* ]]; then
         local yazi_path yazi_dir
         yazi_path=${wm_name#Yazi: }
@@ -38,32 +43,19 @@ alacritty_cwd() {
         [[ -d "$yazi_dir" ]] && echo "$yazi_dir" && return 0
     fi
 
-    # Wayland: alacritty-sway.zsh marks each window `_<ALACRITTY_WINDOW_ID>`
-    # and writes the shell's cwd to a file keyed by the same id.
-    if [[ -n "${SWAYSOCK:-}" && -n "$focused_marks" ]]; then
+    # ghostty-wm.zsh marks each window `_<id>` and writes the shell's cwd to a file keyed by the same id.
+    if [[ -n "$focused_marks" ]]; then
         local mark id cwd_file cwd
         while IFS= read -r mark; do
-            [[ "$mark" =~ ^_([0-9]+)$ ]] || continue
+            [[ "$mark" =~ ^_(.+)$ ]] || continue
             id="${BASH_REMATCH[1]}"
-            cwd_file="${XDG_RUNTIME_DIR:-/tmp}/alacritty-cwd/$id"
+            cwd_file="${XDG_RUNTIME_DIR:-/tmp}/ghostty-cwd/$id"
             [[ -f "$cwd_file" ]] || continue
             IFS= read -r cwd <"$cwd_file" || continue
             [[ -d "$cwd" ]] && echo "$cwd" && return 0
         done <<<"$focused_marks"
     fi
 
-    [[ -n "$parent_pid" ]] || return 1
-
-    # X11: narrow by ALACRITTY_WINDOW_ID. Wayland fallback when the mark/cwd
-    # file is missing: first shell under the alacritty process.
-    for pid in $(pgrep -P "$parent_pid"); do
-        if [[ -n "$win_id" ]]; then
-            ps e -p "$pid" 2>/dev/null | grep -q "ALACRITTY_WINDOW_ID=$win_id" || continue
-        fi
-        local shell_pwd
-        shell_pwd=$(readlink -f "/proc/$pid/cwd" 2>/dev/null || true)
-        [[ -d "$shell_pwd" ]] && echo "$shell_pwd" && return 0
-    done
     return 1
 }
 
@@ -114,7 +106,7 @@ generic_cwd() {
 get_working_directory() {
     probe_focused_window
     case "$wm_class" in
-    "Alacritty") alacritty_cwd ;;
+    "com.mitchellh.ghostty") ghostty_cwd ;;
     "jetbrains-goland") goland_cwd ;;
     "Cursor" | "cursor") cursor_cwd ;;
     *) generic_cwd ;;
@@ -123,12 +115,13 @@ get_working_directory() {
 
 working_dir=$(get_working_directory) && [[ -d "$working_dir" ]] || working_dir="$HOME"
 
-cmd="${1:-alacritty}"
-if [[ "$cmd" == "alacritty" ]]; then
-    alacritty msg create-window --working-directory "$working_dir" || exec alacritty --working-directory "$working_dir"
+cmd="${1:-ghostty}"
+if [[ "$cmd" == "ghostty" ]]; then
+    ghostty +new-window --working-directory="$working_dir" ||
+        exec ghostty --working-directory="$working_dir"
 elif [[ "$cmd" == "yazi" ]]; then
-    alacritty msg create-window --working-directory "$working_dir" --command "$SHELL" -c "zsh -is run_yazi" ||
-        exec alacritty --working-directory "$working_dir" -e "$SHELL" -c "zsh -is run_yazi"
+    ghostty +new-window --working-directory="$working_dir" -e "$SHELL" -is run_yazi ||
+        exec ghostty --working-directory="$working_dir" -e "$SHELL" -is run_yazi
 else
     read -r -a cmd_array <<<"$cmd"
     cd "$working_dir" && exec "${cmd_array[@]}"

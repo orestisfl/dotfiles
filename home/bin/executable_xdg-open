@@ -1,0 +1,8 @@
+#!/bin/sh
+# Prefer `gio open` over the system xdg-open: the latter falls into a
+# generic code path on sway/wlroots that ignores `Terminal=true` desktop
+# entries, so things like clicking a file:// URL with nvim as the default
+# editor launch detached without a TTY. Sits earlier in PATH than
+# /usr/bin/xdg-open, so callers (ghostty link handler, swaync, etc.) get
+# this one.
+exec gio open "$@"

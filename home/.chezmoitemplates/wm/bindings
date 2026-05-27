@@ -2,7 +2,7 @@
 floating_modifier $mod
 
 bindsym $mod+Return       exec --no-startup-id $term
-bindsym $mod+Shift+Return exec --no-startup-id alacritty msg create-window || exec alacritty
+bindsym $mod+Shift+Return exec --no-startup-id ghostty +new-window --working-directory=$HOME || exec ghostty
 bindsym Control+$alt+e    exec --no-startup-id "$term yazi"
 bindsym $mod+d            exec $menu
 bindsym $mod+Shift+d      exec rofi -show run

@@ -1,6 +1,6 @@
 #!/bin/sh
 export VISUAL=nvim
-export TERMINAL=alacritty
+export TERMINAL=ghostty
 export DESKTOP_SESSION=gnome
 export XDG_SESSION_TYPE=x11
 # export QT_STYLE_OVERRIDE=GTK+  # Tell Qt to use GTK style
@@ -59,7 +59,7 @@ alttab -mk Super_L -kk grave -w 1 -d 1 &
 trash-empty -f 30&
 
 # Start graphical-session.target (via x11-session.target) for X11 services
-systemctl --user import-environment DISPLAY XAUTHORITY
+systemctl --user import-environment PATH DISPLAY XAUTHORITY
 systemctl --user start --no-block x11-session.target
 
 exec i3

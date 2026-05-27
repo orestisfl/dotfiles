@@ -2,8 +2,8 @@
 set $mod Mod4
 set $alt Mod1
 
-# `alacritty.sh` inherits the focused window's cwd.
-set $term ~/bin/alacritty.sh
+# `term.sh` inherits the focused window's cwd.
+set $term ~/bin/term.sh
 set $menu rofi -modes combi -show combi -combi-modes window#drun
 {{- if .xorg }}
 set $lock i3lock

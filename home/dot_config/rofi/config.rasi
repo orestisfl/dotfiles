@@ -11,7 +11,7 @@ configuration {
     kb-select-8: "";
     kb-select-9: "";
     kb-select-10: "";
-    terminal: "alacritty";
+    terminal: "ghostty";
 
     dpi: 1;
 }

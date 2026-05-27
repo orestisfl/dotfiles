@@ -11,7 +11,7 @@ source ~/.zsh/history.zsh
 source ~/.zsh/prompt.zsh
 source ~/.zsh/aliases.zsh
 source ~/.zsh/functions.zsh
-source ~/.zsh/alacritty-sway.zsh
+source ~/.zsh/ghostty-wm.zsh
 
 # https://github.com/t413/zsh-background-notify.git
 source ~/.zsh/bgnotify.plugin.zsh
