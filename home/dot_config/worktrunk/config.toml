@@ -1,2 +1,4 @@
+worktree-path = "~/.local/state/worktrees/{{ repo }}/{{ branch | sanitize }}"
+
 [post-start]
 copy = "wt step copy-ignored"
