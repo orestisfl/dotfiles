@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# Pin the one GNOME interface setting libadwaita actually reads:
+# color-scheme=prefer-dark. This makes libadwaita apps render dark and
+# signals dark-mode preference through xdg-desktop-portal to Electron /
+# Firefox / vanilla GTK4 apps -- without us picking a theme name on their
+# behalf. GTK4 / libadwaita styling stays whatever GTK ships.
+#
+# GTK3 theming is handled in ~/.config/gtk-3.0/settings.ini (gtk3-only
+# file), not via gsettings -- gsettings gtk-theme would also affect
+# vanilla GTK4 apps, which we want to leave at their defaults.
+set -euo pipefail
+
+command -v gsettings >/dev/null || exit 0
+# gsettings needs a session bus; skip silently in chroot / image builds.
+[[ -n "${DBUS_SESSION_BUS_ADDRESS:-}" ]] || exit 0
+
+gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'

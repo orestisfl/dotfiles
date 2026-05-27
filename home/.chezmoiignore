@@ -12,11 +12,10 @@
 .config/ironbar
 {{- end }}
 
-{{- /* X11-only files on wayland hosts (GTK3 theming comes from xdg-desktop-portal). */}}
+{{- /* X11-only files on wayland hosts. */}}
 {{- if .wayland }}
 .Xresources
 .config/colors.xres
-.config/gtk-3.0
 .config/systemd/user/mark.service
 .config/systemd/user/x11-session.target
 .config/xft.xres

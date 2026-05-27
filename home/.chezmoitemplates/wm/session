@@ -16,10 +16,9 @@ exec --no-startup-id systemd-run --user --unit=cursor-agent-notify \
     --property=Restart=on-failure --property=RestartSec=3 \
     $HOME/Documents/software/work/agent-tools/cursor-agent-notify.py
 
-# Propagate the ~/.profile env (ly runs `/bin/sh -l` before `exec sway`) into
-# the systemd user instance so dbus-activated services see GTK_THEME etc.
+# Push session-dynamic vars into the systemd user instance. Static env
+# (PATH, EDITOR, TERMINAL, ...) is already there via environment.d.
 exec --no-startup-id systemctl --user import-environment \
-    PATH TERMINAL VISUAL EDITOR GTK_THEME GTK_OVERLAY_SCROLLING SSH_AUTH_SOCK \
     DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP
 exec --no-startup-id systemctl --user start --no-block graphical-session.target
 

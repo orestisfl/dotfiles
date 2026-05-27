@@ -1,12 +1,11 @@
 #!/bin/sh
-export VISUAL=nvim
-export TERMINAL=ghostty
+# Static env (PATH, EDITOR, TERMINAL, ...) comes from systemd's environment.d,
+# which .zlogin already sourced before exec'ing startx. Only xorg-session
+# specifics live here.
 export DESKTOP_SESSION=gnome
 export XDG_SESSION_TYPE=x11
 # export QT_STYLE_OVERRIDE=GTK+  # Tell Qt to use GTK style
-export GTK_OVERLAY_SCROLLING=0
 #export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dawt.useSystemAAFontSettings=gasp -Dsun.java2d.xrender=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
-export GTK_THEME='Materia-dark-compact'
 
 userresources=$HOME/.Xresources
 usermodmap=$HOME/.Xmodmap
@@ -58,8 +57,10 @@ setxkbmap -layout us,gr -option 'grp:alt_shift_toggle' -option 'compose:ralt' -o
 alttab -mk Super_L -kk grave -w 1 -d 1 &
 trash-empty -f 30&
 
-# Start graphical-session.target (via x11-session.target) for X11 services
-systemctl --user import-environment PATH DISPLAY XAUTHORITY
+# Start graphical-session.target (via x11-session.target) for X11 services.
+# DISPLAY/XAUTHORITY are session-dynamic; the static env is already in the
+# systemd user instance via environment.d.
+systemctl --user import-environment DISPLAY XAUTHORITY
 systemctl --user start --no-block x11-session.target
 
 exec i3

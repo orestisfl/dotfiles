@@ -1,20 +1,12 @@
 # POSIX-sh profile. ly runs `/bin/sh -l` before `exec sway`, so this is the
-# earliest place to set env for the GUI session. Keep portable: no zsh-isms.
+# earliest place to set env for the GUI session. Source the same env.d files
+# the systemd user instance loaded -- they're shell-compatible KEY=VALUE
+# with $VAR expansion -- so sway and everything it spawns sees the same
+# static env (PATH, EDITOR, ...) without needing per-file duplication.
 
-export TERMINAL=ghostty
-export VISUAL=nvim
-export EDITOR=nvim
-
-# Mirror the PATH from .zlogin so things sourced here -- ly's `sh -l` before
-# sway, in particular -- pick up ~/.local/bin and friends. Without this, the
-# systemd user instance imports a stripped PATH and dbus-activated apps like
-# ghostty can't find user-installed binaries (cursor `agent`, npm globals).
-export PATH="$HOME/.local/bin:$HOME/bin:$PATH:$HOME/go/bin:/usr/bin/core_perl:$HOME/.local/share/npm-global/bin"
-
-# Mirrored in environment.d for dbus-activated services.
-export GTK_THEME=Materia-dark-compact
-export GTK_OVERLAY_SCROLLING=0
-
-if [ -n "${XDG_RUNTIME_DIR:-}" ]; then
-    export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/gcr/ssh"
-fi
+set -a
+for _f in "$HOME"/.config/environment.d/*.conf; do
+    [ -r "$_f" ] && . "$_f"
+done
+set +a
+unset _f

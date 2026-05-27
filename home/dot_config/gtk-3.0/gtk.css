@@ -14,17 +14,7 @@
   box-shadow: none;
 }
 
-.header-bar {
-  background-image: none;
-  background-color: #ededed;
-  box-shadow: none;
-}
-
-GtkLabel.title {
-    opacity: 0;
-}
-
-/* shrink headebars */
+/* shrink headerbars */
 headerbar {
     min-height: 0;
     padding-left: 2px; /* same as childrens vertical margins for nicer proportions */

@@ -1,13 +1,17 @@
 # Executes commands at login post-zshrc.
 
-export EDITOR=nvim
-export VISUAL=nvim
-export SYSTEMD_EDITOR=nvim
+# Static env (PATH, editors, ...) lives in ~/.config/environment.d so systemd
+# user services see it. Source the same files here for zsh-login -> startx
+# on xorg hosts, so i3 inherits identical values.
+set -a
+for _f in "$HOME"/.config/environment.d/*.conf; do
+    [ -r "$_f" ] && . "$_f"
+done
+set +a
+unset _f
 
-export GOPATH=$HOME/go
-export PATH=$HOME/.local/bin:$HOME/bin:$PATH:$HOME/go/bin:/usr/bin/core_perl:$HOME/.local/share/npm-global/bin
-# Unset manpath so we can inherit from /etc/manpath via the `manpath` command
-unset MANPATH # delete if you already modified MANPATH elsewhere in your configuration
+# Inherit from /etc/manpath via the `manpath` command.
+unset MANPATH
 
 # git ls-files: all tracked files, even if starting with dot
 # fd --type f: all non-ignored files, even if in submodule
@@ -37,4 +41,3 @@ elastic-package completion zsh 2>/dev/null >> /tmp/completions.zsh
 # stay text. Promote manually with `exec sway` or `exec startx`.
 {{- end }}
 export TERM=linux
-export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/gcr/ssh"
