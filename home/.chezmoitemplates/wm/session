@@ -7,6 +7,7 @@ exec --no-startup-id /usr/lib/mate-polkit/polkit-mate-authentication-agent-1
 exec --no-startup-id nm-applet --indicator
 exec --no-startup-id keepassxc
 exec --no-startup-id trash-empty -f 30
+exec --no-startup-id wlsunset -l 48.137 -L 11.575 -t 3500 -T 6500
 
 exec --no-startup-id systemd-run --user --unit=cursor-agent-notify \
     --description="Cursor agent notification watcher" \
