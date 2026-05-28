@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# packages hash: {{ include "../sync/packages.txt.tmpl" | sha256sum }}
+# units hash:    {{ include "../sync/units.txt.tmpl"    | sha256sum }}
+# sync.py hash:  {{ include "../sync/sync.py"           | sha256sum }}
+{{- range (glob (joinPath .chezmoi.sourceDir "dot_local/share/root-staging/**/*.tmpl")) }}
+# etc hash:      {{ include . | sha256sum }} {{ base . }}
+{{- end }}
+set -euo pipefail
+
+# Single entry point: plans packages + etc + units for this host and pops
+# one yad to confirm the chained shell command. Manifest syntax errors abort
+# the apply; an empty plan is a silent no-op.
+python3 "{{ .chezmoi.sourceDir }}/../sync/sync.py" gui

@@ -1,0 +1,39 @@
+# Systemd unit manifest. Same conventions as sync/packages.txt.tmpl:
+#
+#   +unit                ensure enabled (system scope)
+#   +unit:user           ensure enabled (--user scope)
+#   -unit  / -unit:user  ensure disabled
+#   # ...                comment
+
++ananicy-cpp.service
++fstrim.timer                      # weekly SSD TRIM
++lm_sensors.service                # no-op until sensors-detect is run
++paccache.timer                    # trims /var/cache/pacman
++pkgfile-update.timer
++systemd-boot-update.service       # reinstalls systemd-boot on EFI updates
++systemd-resolved.service          # caching DNS; NM integrates automatically
++systemd-timesyncd.service
+-avahi-daemon.service
+
+# Bluetooth is on-demand only
+-bluetooth.service
++bluetooth-rfkill-block.service    # local unit; rfkill block at boot
+
+{{ if .laptop -}}
++tlp.service
++ufw.service                       # firewall for untrusted networks
++ly@tty2.service                   # display manager
+{{- end }}
+
+{{ if eq .chezmoi.hostname "gili" -}}
++thermald.service
++intel_lpmd.service                # gili-only: carbon's DYTC covers this
+{{- end }}
+
++docker.socket
++gnome-keyring-daemon.socket:user
++xdg-user-dirs.service:user
+
+{{ if .elastic -}}
++monthly@cleanup.timer:user
+{{- end }}

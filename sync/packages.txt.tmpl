@@ -1,4 +1,4 @@
-# pkgsync dependencies
+# sync dependencies
 chezmoi
 paru
 python
@@ -54,8 +54,7 @@ tree
 wget
 yt-dlp
 zoxide
-# hostname
-inetutils
+inetutils  # hostname
 
 # Archives
 7zip
@@ -68,6 +67,7 @@ bear
 ccache
 clang
 cmake
+docker
 npm
 typescript
 
@@ -84,7 +84,6 @@ adw-gtk-theme
 blueman
 bluez
 bluez-utils
-brightnessctl
 ddcutil
 gnome-keyring
 libnotify
@@ -96,6 +95,7 @@ pavucontrol
 pipewire-pulse
 playerctl
 seahorse
+wireless-regdb
 
 # Apps
 ghostty
@@ -116,6 +116,7 @@ ripdrag-git
 
 # Replaced or unused
 -colordiff
+-cbatticon
 -materia-gtk-theme
 -neofetch
 -net-tools
@@ -129,10 +130,31 @@ restic
 worktrunk
 {{- end }}
 
+{{ if .laptop -}}
+brightnessctl:explicit
+tlp
+ufw
+upower
+{{ if eq .chezmoi.hostname "gili" -}}
+thermald
+{{- end }}
+{{ if eq .chezmoi.hostname "carbon" -}}
+-thermald  # ThinkPad DYTC/EC handles thermals; thermald refuses to start anyway.
+{{- end }}
+{{- end }}
+
+{{ if not .laptop -}}
+-thermald
+-tlp
+-ufw
+-upower
+-light
+-brightnessctl
+{{- end }}
+
 {{ if .xorg -}}
 alttab
 asciidoc
-cbatticon
 cpanminus
 dunst
 gsimplecal
@@ -140,7 +162,6 @@ hacksaw
 i3-git
 i3blocks-gaps-git
 i3lock
-light
 numlockx
 perl-anyevent
 shotgun
@@ -157,6 +178,8 @@ xorg-xinit
 xorg-xprop
 xorg-xrandr
 xorg-xrdb
+
+-ly
 {{- end }}
 
 {{ if .wayland -}}
@@ -179,7 +202,6 @@ wl-clipboard
 
 -alttab
 -asciidoc
--cbatticon
 -cpanminus
 -gsimplecal
 -hacksaw

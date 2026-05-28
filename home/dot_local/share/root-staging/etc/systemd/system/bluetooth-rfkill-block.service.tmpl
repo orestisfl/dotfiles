@@ -1,0 +1,18 @@
+# Managed by chezmoi: ~/.local/share/root-staging → /etc/systemd/system/
+#
+# Block the BT radio at boot so on-demand activation (via i3-rofi-actions
+# `Bluetooth on`) is the only thing that powers it up. rfkill state would
+# otherwise persist whatever it was at last shutdown via systemd-rfkill.
+
+[Unit]
+Description=Block bluetooth via rfkill (on-demand activation only)
+After=systemd-rfkill.service
+Wants=systemd-rfkill.service
+ConditionPathExists=/usr/bin/rfkill
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/rfkill block bluetooth
+
+[Install]
+WantedBy=multi-user.target

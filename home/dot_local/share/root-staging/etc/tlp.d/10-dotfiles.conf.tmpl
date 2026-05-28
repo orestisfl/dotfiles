@@ -1,0 +1,6 @@
+{{- if eq .chezmoi.hostname "carbon" -}}
+# Managed by chezmoi: ~/.local/share/root-staging → /etc/tlp.d/10-dotfiles.conf
+
+CPU_ENERGY_PERF_POLICY_ON_AC=performance
+CPU_HWP_DYN_BOOST_ON_AC=1
+{{- end }}
