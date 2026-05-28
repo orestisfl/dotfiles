@@ -60,11 +60,11 @@ bluetooth_on() {
         timeout 5s bluetoothctl "$@"
     }
 
+    # bluetooth.service drop-in modprobes btusb in ExecStartPre.
     systemctl is-active bluetooth >/dev/null 2>&1 || systemctl start bluetooth >/dev/null 2>&1 || true
 
     local powered=false
     for i in {0..4}; do
-        rfkill unblock bluetooth
         if btctl power on 2>&1 | grep -q "Changing power on\|succeeded"; then
             powered=true
             break
@@ -106,7 +106,7 @@ bluetooth_off() {
     done
 
     btctl power off || true
-    rfkill block bluetooth || true
+    # bluetooth.service drop-in unloads btusb in ExecStopPost.
     systemctl stop bluetooth.service >/dev/null 2>&1 || true
     killall blueman-applet blueman-tray blueman-manager || true
 }

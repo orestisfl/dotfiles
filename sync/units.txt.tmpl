@@ -15,9 +15,8 @@
 +systemd-timesyncd.service
 -avahi-daemon.service
 
-# Bluetooth is on-demand only
--bluetooth.service
-+bluetooth-rfkill-block.service    # local unit; rfkill block at boot
+-bluetooth.service                 # on-demand: btusb blacklist + bluetooth.service drop-in
+-bluetooth-rfkill-block.service    # superseded by btusb blacklist + drop-in
 
 {{ if .laptop -}}
 +tlp.service
