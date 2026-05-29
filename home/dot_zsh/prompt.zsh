@@ -36,7 +36,7 @@ function virtualenv_info {
 
 function PR_DIR {
     echo -n ${PR_BOLD_YELLOW}
-    echo -n $(pwd | sed -e "s,^$HOME,~,")
+    echo -n "${PWD/#$HOME/~}"
     echo -n %{$reset_color%}
 }
 

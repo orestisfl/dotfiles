@@ -1,11 +1,13 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 import i3ipc
 
 
-def main(args):
+def main():
     i3 = i3ipc.Connection()
     focused = i3.get_tree().find_focused()
+    if focused is None:
+        return 1
     if focused.sticky and focused.floating.endswith("on"):
         focused.command("border normal, floating disable")
     else:
@@ -16,4 +18,4 @@ def main(args):
 if __name__ == "__main__":
     import sys
 
-    sys.exit(main(sys.argv))
+    sys.exit(main())

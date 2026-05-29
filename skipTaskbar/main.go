@@ -2,7 +2,6 @@ package main
 
 import (
 	"errors"
-	"fmt"
 	"log"
 
 	"github.com/jezek/xgb"
@@ -124,9 +123,6 @@ func main() {
 
 		switch event := eventReceiver.Event().(type) {
 		case *i3.WindowEvent:
-			if event.Change == "focus" {
-				fmt.Println("Focus window:", event.Container.WindowProperties.Class)
-			}
 			target = event.Container.WindowProperties.Class
 		case *i3.WorkspaceEvent:
 			node := t.Root.FindFocused(func(node *i3.Node) bool {

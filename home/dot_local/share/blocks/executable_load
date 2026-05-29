@@ -9,8 +9,8 @@ URGENT_VALUE=90
 
 LOAD=$(cat /proc/loadavg | awk -F ' ' '{print $'"${INSTANCE}"'}')
 if [[ ${LOAD} != "" ]]; then
-    LOAD_PERC=$(echo "scale=0; ${LOAD} * 100" | bc -l)
-    LOAD_PERC=${LOAD_PERC%.*}
+    # loadavg always has two decimals, so dropping the dot yields load*100.
+    LOAD_PERC=$((10#${LOAD/./}))
 
     if [[ ${LOAD_PERC} -ge ${URGENT_VALUE} ]]; then
         block_output_emit_urgent "${LOAD}" "${LOAD}" "${BLOCK_COLOR_WARNING}"

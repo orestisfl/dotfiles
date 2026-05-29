@@ -3,7 +3,7 @@ set -euo pipefail
 
 source "$(dirname "${BASH_SOURCE[0]}")/block_format.sh"
 
-ping_average=$(ping -c 3 google.com | tail -1 | awk '{print $4}' | cut -d '/' -f 2)
+ping_average=$(ping -c 3 -W 1 google.com | tail -1 | awk '{print $4}' | cut -d '/' -f 2)
 ping_average=${ping_average%.*}
 
 if [ "$ping_average" -gt 150 ]; then

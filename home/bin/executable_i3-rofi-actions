@@ -54,12 +54,13 @@ ddcutil_brightness() {
 }
 export -f ddcutil_brightness
 
-bluetooth_on() {
-    # Avoid hanging rofi if bluetoothd/controller isn't ready.
-    btctl() {
-        timeout 5s bluetoothctl "$@"
-    }
+# Wrap bluetoothctl so a stuck bluetoothd/controller can't hang rofi.
+btctl() {
+    timeout 5s bluetoothctl "$@"
+}
+export -f btctl
 
+bluetooth_on() {
     # bluetooth.service drop-in modprobes btusb in ExecStartPre.
     systemctl is-active bluetooth >/dev/null 2>&1 || systemctl start bluetooth >/dev/null 2>&1 || true
 
@@ -95,10 +96,6 @@ bluetooth_on() {
 export -f bluetooth_on
 
 bluetooth_off() {
-    btctl() {
-        timeout 5s bluetoothctl "$@"
-    }
-
     mapfile -t connected_ids < <(btctl devices Connected | awk '{print $2}')
     for id in "${connected_ids[@]}"; do
         [[ -n "$id" ]] || continue

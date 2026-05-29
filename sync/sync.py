@@ -332,12 +332,11 @@ def compute_plan() -> Plan:
 
     to_remove = sorted(removing)
     skipped_remove = sorted((n, sorted(b)) for n, b in skipped.items())
-    removed = removing  # alias for satisfied()
 
     def satisfied(name: str) -> bool:
-        if name in installed and name not in removed:
+        if name in installed and name not in removing:
             return True
-        return bool(providers.get(name, set()) - removed)
+        return bool(providers.get(name, set()) - removing)
 
     missing = {n for n in required if not satisfied(n)}
     to_install_default = sorted(n for n in missing if required[n] is None)
@@ -572,7 +571,7 @@ def _run_gui(domain: str, plan: ReconcilePlan) -> int:
             f.write('echo\nread -n1 -r -s -p "Press any key to close…"\n')
             f.write('exit "$rc"\n')
         os.chmod(edit_path, 0o755)
-    except Exception:
+    except OSError:
         if os.path.exists(edit_path):
             os.unlink(edit_path)
         raise
