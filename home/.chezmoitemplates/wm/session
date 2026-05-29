@@ -26,11 +26,11 @@ exec --no-startup-id systemctl --user start --no-block graphical-session.target
 exec swayidle -w \
     timeout 580 'light -S 30 2>/dev/null || brightnessctl set 30%' \
         resume 'light -S 100 2>/dev/null || brightnessctl set 100%' \
-    timeout 600 '$lock' \
+    timeout 600 '$HOME/bin/sway-idle lock' \
     timeout 620 'swaymsg "output * power off"' \
         resume  'swaymsg "output * power on"' \
     timeout 36000 'systemctl suspend' \
-    before-sleep '$lock'
+    before-sleep '$HOME/bin/sway-idle lock'
 
 # --- Distro snippets --------------------------------------------------------
 

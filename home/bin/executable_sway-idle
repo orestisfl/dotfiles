@@ -1,0 +1,56 @@
+#!/bin/bash
+# sway-idle - control swayidle behaviour for the current session.
+#
+# Wayland has no global DPMS, so idle power management lives in swayidle
+# (launched once per session from the sway config). This wraps it with:
+#   * a per-session "relaxed" flag that suppresses the auto-lock (and the
+#     before-sleep lock) while keeping dim / screen-off / suspend;
+#   * a one-shot "monitors off now" that locks first (unless relaxed) and
+#     wakes on the next input event.
+# The flag lives in $XDG_RUNTIME_DIR, which is wiped on logout, so every fresh
+# session starts secure with no reset code.
+set -euo pipefail
+
+flag="${XDG_RUNTIME_DIR:-/tmp}/sway-idle-relaxed"
+
+# Session locker. gtklock -d daemonizes, so swayidle -w doesn't block on it.
+# PAM handles fingerprint auth; keep the locker visually minimal.
+locker=(gtklock -d -g Adwaita-dark -s "$HOME/.config/gtklock/style.css")
+
+# Lock unless we're in relaxed (no auto-lock) mode.
+lock_if_secure() {
+    [[ -e "$flag" ]] && return 0
+    "${locker[@]}"
+}
+
+case "${1:-}" in
+relax)
+    : >"$flag"
+    ;;
+secure)
+    rm -f "$flag"
+    ;;
+relaxed)
+    # Exit status reports the mode: 0 = relaxed (no auto-lock), 1 = secure.
+    [[ -e "$flag" ]]
+    ;;
+lock)
+    lock_if_secure
+    ;;
+off-now)
+    # Lock (unless relaxed), then power every output off and wake them at the
+    # next input event.
+    lock_if_secure
+    swaymsg 'output * power off'
+    # kill $PPID targets swayidle: the resume command runs as its sh child.
+    # shellcheck disable=SC2016  # $PPID must expand there, not here.
+    setsid -f swayidle -w \
+        timeout 1 'swaymsg "output * power off"' \
+        resume 'swaymsg "output * power on"; kill $PPID' \
+        >/dev/null 2>&1
+    ;;
+*)
+    echo "usage: ${0##*/} {relax|secure|relaxed|lock|off-now}" >&2
+    exit 2
+    ;;
+esac

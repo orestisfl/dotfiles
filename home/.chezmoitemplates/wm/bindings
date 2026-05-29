@@ -98,8 +98,6 @@ bindsym Print        exec grimshot copy anything
 bindsym $mod+Shift+p exec grimshot copy anything
 bindsym $mod+Print   exec grimshot save anything
 
-bindsym $mod+Shift+s exec swaymsg 'output * power off'
-
 # i3blocks subscribes to the "input" IPC events to track the active layout.
 bindsym $mod+space input type:keyboard xkb_switch_layout next
 

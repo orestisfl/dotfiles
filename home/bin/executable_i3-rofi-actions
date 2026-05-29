@@ -138,7 +138,12 @@ have bluetoothctl &&
     add_option "Bluetooth off" "bluetooth_off"
 
 if [[ -n "${SWAYSOCK:-}" ]]; then
-    add_option "Sleep monitor" "swaymsg 'output * power off'"
+    if "$HOME/bin/sway-idle" relaxed; then
+        add_option "Enable auto-lock" "$HOME/bin/sway-idle secure"
+    else
+        add_option "Disable auto-lock" "$HOME/bin/sway-idle relax"
+    fi
+    add_option "Sleep monitor" "$HOME/bin/sway-idle off-now"
     add_option "Exit" "swaymsg exit"
 else
     add_option "Sleep monitor" "xset dpms force suspend; sleep 0.1; xset dpms force suspend"
