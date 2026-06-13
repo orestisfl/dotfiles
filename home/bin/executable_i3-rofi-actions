@@ -137,6 +137,15 @@ have bluetoothctl &&
 # networkmanager_dmenu spawns its own rofi; works under sway and i3 alike.
 have networkmanager_dmenu && add_option "Wi-Fi / network" "networkmanager_dmenu"
 
+# Airplane mode (laptops): reversible battery-saving profile + networking off.
+if have tlp; then
+    if "$HOME/bin/airplane-mode" status >/dev/null 2>&1; then
+        add_option "Airplane mode off" "$HOME/bin/airplane-mode off"
+    else
+        add_option "Airplane mode on" "$HOME/bin/airplane-mode on"
+    fi
+fi
+
 if [[ -n "${SWAYSOCK:-}" ]]; then
     if "$HOME/bin/sway-idle" relaxed; then
         add_option "Enable auto-lock" "$HOME/bin/sway-idle secure"
