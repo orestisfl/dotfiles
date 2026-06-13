@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 # packages hash: {{ include "../sync/packages.txt.tmpl" | sha256sum }}
 # units hash:    {{ include "../sync/units.txt.tmpl"    | sha256sum }}
-# sync.py hash:  {{ include "../sync/sync.py"           | sha256sum }}
+{{- range (glob (joinPath .chezmoi.sourceDir ".." "sync" "**" "*.py")) }}
+# sync code:     {{ include . | sha256sum }} {{ base . }}
+{{- end }}
 {{- range (glob (joinPath .chezmoi.sourceDir "dot_local/share/root-staging/**/*.tmpl")) }}
 # etc hash:      {{ include . | sha256sum }} {{ base . }}
 {{- end }}
