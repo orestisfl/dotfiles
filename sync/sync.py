@@ -11,6 +11,7 @@ with no packaging or PYTHONPATH:
     packages  paru install/remove/reason-flip
     etc       root-owned files staged under ~/.local/share/root-staging
     units     systemctl enable/disable (system + --user)
+    defaults  XDG default applications
 
 Each domain module exposes `compute_*_plan()` and `check()`; this file binds
 them into a `Domain` registry that drives both the argparse CLI and the
@@ -24,6 +25,7 @@ import sys
 from dataclasses import dataclass
 from typing import Callable
 
+import defaults
 import etc
 import packages
 import units
@@ -45,7 +47,8 @@ class Domain:
 
 # Order matters: install packages first (so e.g. ufw exists), then drop
 # root-owned files (so unit files are in /etc/systemd/system), then
-# enable/disable units.
+# enable/disable units. Defaults come last so the apps they point at
+# (firefox, mpv, ...) are already installed and their .desktop present.
 DOMAINS: tuple[Domain, ...] = (
     Domain(
         name="packages",
@@ -73,6 +76,15 @@ DOMAINS: tuple[Domain, ...] = (
         check_help="validate units manifest syntax",
         plan_help="print the effective unit plan",
         apply_help="enable/disable units inline (polkit prompt via agent)",
+    ),
+    Domain(
+        name="defaults",
+        help="declarative XDG default applications",
+        compute=defaults.compute_defaults_plan,
+        check=defaults.check,
+        check_help="validate defaults manifest syntax",
+        plan_help="print the effective defaults plan",
+        apply_help="set mime/scheme/terminal/browser defaults inline ($HOME only)",
     ),
 )
 
@@ -108,14 +120,14 @@ _ALL_VERBS: dict[str, _Verb] = {
 
 
 DESCRIPTION = (
-    "Declarative reconciler for Arch dotfiles. Three subcomponents run in "
+    "Declarative reconciler for Arch dotfiles. Four subcomponents run in "
     "dependency order on `sync gui` / `sync apply`: packages (paru), etc "
     "(root-owned files staged under ~/.local/share/root-staging), units "
-    "(systemctl, system + --user)."
+    "(systemctl, system + --user), defaults (XDG default applications)."
 )
 
 EPILOG = """\
-Top-level (run all three in dependency order: packages → etc → units):
+Top-level (run all four in dependency order: packages → etc → units → defaults):
 
   sync check        validate manifests + report staging state
   sync plan         print combined plan for this host
@@ -128,6 +140,7 @@ Per-domain subcommands take the same {check, plan, apply, gui} verbs:
   sync packages …   pacman/paru install/remove/reason-flip (packages.txt.tmpl)
   sync etc …        install root-owned files from ~/.local/share/root-staging
   sync units …      systemctl enable/disable, system + --user (units.txt.tmpl)
+  sync defaults …   XDG default apps: mime/scheme/terminal/browser (defaults.txt.tmpl)
 
 Packages manifest syntax (one entry per line; blanks and '#' comments ignored):
 
@@ -142,6 +155,14 @@ Units manifest syntax:
   +unit.svc:user     ensure enabled (--user scope)
   -unit.svc          ensure disabled (system)
   -unit.svc:user     ensure disabled (--user)
+
+Defaults manifest syntax (one `selector = app.desktop` per line; last wins):
+
+  text/html       = app.desktop   MIME type (files of that type)
+  ext:.md         = app.desktop   extension → MIME via shared-mime-info
+  scheme:slack    = app.desktop   URL scheme → x-scheme-handler/slack
+  terminal        = app.desktop   default terminal (xdg-terminals.list)
+  browser         = app.desktop   xdg-settings default-web-browser bundle
 """
 
 
@@ -175,7 +196,7 @@ def main() -> int:
         metavar="{" + ",".join(("check", "plan", "apply", "gui", *DOMAIN_NAMES)) + "}",
     )
 
-    # Top-level verbs run all three subcomponents in order.
+    # Top-level verbs run all four subcomponents in order.
     _add_verbs(
         top,
         _ALL_VERBS,
@@ -197,8 +218,8 @@ def main() -> int:
 
     args = p.parse_args()
     # Defaults:
-    #   sync                     → sync gui  (chezmoi hook entry point)
-    #   sync <packages|etc|units> → that domain's plan
+    #   sync                              → sync gui  (chezmoi hook entry point)
+    #   sync <packages|etc|units|defaults> → that domain's plan
     if not args.top:
         args = p.parse_args(["gui"])
     elif args.top in DOMAIN_NAMES and not getattr(args, "cmd", None):

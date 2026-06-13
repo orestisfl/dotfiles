@@ -1,0 +1,64 @@
+# Default-application manifest. Reconciled by sync/sync.py into the XDG
+# backends that actually decide "what opens this":
+#
+#   mimeapps.list [Default Applications]   files + URL schemes
+#   xdg-terminals.list                     the terminal xdg-terminal-exec spawns
+#   xdg-settings default-web-browser       the browser bundle apps query
+#
+# Syntax (one `selector = app.desktop` per line; '#' comments and blanks
+# ignored; last matching line wins, so a host-conditional block below can
+# override a common entry above it):
+#
+#   text/html       = app.desktop   bare MIME type → files of that type
+#   ext:.md         = app.desktop   extension → MIME via shared-mime-info
+#   scheme:slack    = app.desktop   URL scheme → x-scheme-handler/slack
+#   terminal        = app.desktop   default terminal (xdg-terminals.list)
+#   browser         = app.desktop   xdg-settings default-web-browser bundle
+#
+# Only [Default Applications] is asserted -- it outranks the [Added
+# Associations] that apps append on their own, which is what makes a default
+# "drift" (e.g. chromium re-registering text/html). Entries whose .desktop is
+# not installed are reported as skipped rather than written as dangling
+# defaults that silently fall back to whatever declares the MIME in its cache.
+
+# --- the two big ones --------------------------------------------------
+browser            = firefox.desktop
+terminal           = com.mitchellh.ghostty.desktop
+
+# --- web / documents ---------------------------------------------------
+text/html          = firefox.desktop
+application/pdf    = org.gnome.Evince.desktop
+
+# --- media (gThumb was set but isn't installed -> imv, which is) -------
+image/jpeg         = imv.desktop
+image/png          = imv.desktop
+image/gif          = imv.desktop
+video/mp4          = mpv.desktop
+audio/mpeg         = mpv.desktop
+audio/flac         = mpv.desktop
+
+# --- text / code -------------------------------------------------------
+text/plain         = nvim.desktop
+text/markdown      = nvim.desktop
+application/json   = nvim.desktop
+application/xml    = nvim.desktop
+
+# --- files / links -----------------------------------------------------
+inode/directory    = yazi.desktop
+scheme:mailto      = firefox.desktop
+scheme:slack       = slack.desktop
+scheme:jetbrains   = jetbrainsd.desktop
+scheme:claude-cli  = claude-code-url-handler.desktop
+
+# file:// is intentionally left unset: with no handler, xdg-open strips the
+# scheme and resolves by the file's MIME type (so file:///x.pdf opens Evince,
+# not a file manager). Uncomment only if you want every file:// to open one
+# app regardless of type:
+#   scheme:file      = yazi.desktop
+
+# Zoom family -- Zoom.desktop is what's installed; point these at a firejail
+# wrapper .desktop instead if you ship one.
+scheme:zoommtg     = Zoom.desktop
+scheme:zoomus      = Zoom.desktop
+scheme:tel         = Zoom.desktop
+scheme:callto      = Zoom.desktop
