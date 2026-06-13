@@ -134,6 +134,9 @@ have bluetoothctl &&
     add_option "Bluetooth on" "bluetooth_on" &&
     add_option "Bluetooth off" "bluetooth_off"
 
+# networkmanager_dmenu spawns its own rofi; works under sway and i3 alike.
+have networkmanager_dmenu && add_option "Wi-Fi / network" "networkmanager_dmenu"
+
 if [[ -n "${SWAYSOCK:-}" ]]; then
     if "$HOME/bin/sway-idle" relaxed; then
         add_option "Enable auto-lock" "$HOME/bin/sway-idle secure"
