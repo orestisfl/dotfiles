@@ -207,6 +207,7 @@ home/dot_config/systemd/user/*
 !home/dot_config/systemd/user/mark.service
 !home/dot_config/systemd/user/monthly@.timer
 !home/dot_config/systemd/user/x11-session.target
+!home/dot_config/systemd/user/xsettingsd.service
 
 # Mutable Xresources overrides (e.g. toggle_dpi)
 home/dot_config/xft.local.xres

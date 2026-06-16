@@ -1,17 +1,22 @@
 #!/usr/bin/env bash
-# Pin the one GNOME interface setting libadwaita actually reads:
-# color-scheme=prefer-dark. This makes libadwaita apps render dark and
-# signals dark-mode preference through xdg-desktop-portal to Electron /
-# Firefox / vanilla GTK4 apps -- without us picking a theme name on their
-# behalf. GTK4 / libadwaita styling stays whatever GTK ships.
+# org.gnome.desktop.* drives GTK look-and-feel on Wayland (sway): the settings
+# portal serves these keys to apps, overriding ~/.config/gtk-3.0. color-scheme
+# also reaches GTK4/libadwaita/Electron via the portal on X11, so this runs on
+# every host. Native theming for X11 apps comes from xsettingsd instead (see
+# .config/xsettingsd/), since GDK-X11 reads XSettings, not these keys.
 #
-# GTK3 theming is handled in ~/.config/gtk-3.0/settings.ini (gtk3-only
-# file), not via gsettings -- gsettings gtk-theme would also affect
-# vanilla GTK4 apps, which we want to leave at their defaults.
+# Values come from .chezmoidata.toml, shared with the xsettingsd config.
+# libadwaita GTK4 apps ignore gtk-theme; vanilla GTK4 has no adw-gtk3 gtk-4.0
+# css so it falls back to default Adwaita, which honors color-scheme.
 set -euo pipefail
 
 command -v gsettings >/dev/null || exit 0
 # gsettings needs a session bus; skip silently in chroot / image builds.
 [[ -n "${DBUS_SESSION_BUS_ADDRESS:-}" ]] || exit 0
 
-gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+gsettings set org.gnome.desktop.interface color-scheme {{ .gtk.colorScheme | quote }}
+gsettings set org.gnome.desktop.interface gtk-theme {{ .gtk.theme | quote }}
+gsettings set org.gnome.desktop.interface icon-theme {{ .gtk.iconTheme | quote }}
+gsettings set org.gnome.desktop.interface cursor-theme {{ .gtk.cursorTheme | quote }}
+gsettings set org.gnome.desktop.interface cursor-size {{ .gtk.cursorSize }}
+gsettings set org.gnome.desktop.wm.preferences button-layout {{ .gtk.buttonLayout | quote }}

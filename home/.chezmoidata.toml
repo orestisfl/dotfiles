@@ -1,0 +1,14 @@
+# Host-independent GTK look-and-feel. Single source of truth for both the
+# gsettings hook (authoritative on portal/Wayland sessions: sway) and the
+# xsettingsd config (authoritative for native apps on X11: i3). Keep them in
+# sync by templating both from here.
+[gtk]
+theme       = "adw-gtk3-dark"
+iconTheme   = "Adwaita"
+cursorTheme = "Adwaita"
+cursorSize  = 24
+colorScheme = "prefer-dark"
+# App menu only, no min/max/close (pointless under a tiling WM). Two formats
+# for the same intent: gsettings wm.preferences vs gtk/XSettings layout.
+buttonLayout     = "appmenu:"   # gsettings org.gnome.desktop.wm.preferences
+decorationLayout = "menu"       # XSettings Gtk/DecorationLayout

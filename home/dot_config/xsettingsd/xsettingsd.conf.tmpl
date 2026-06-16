@@ -1,0 +1,12 @@
+# XSettings for native GTK (and GTK2) apps on X11/i3. This is the X11
+# equivalent of the gsettings hook: GDK-X11 reads theme/icons/cursor from the
+# XSettings manager (xsettingsd) in preference to ~/.config/gtk-3.0. Values
+# templated from .chezmoidata.toml so X11 and Wayland stay in sync.
+#
+# Dark mode for GTK4/libadwaita/Electron comes from color-scheme via the
+# settings portal (set in the gsettings hook), not from here.
+Net/ThemeName "{{ .gtk.theme }}"
+Net/IconThemeName "{{ .gtk.iconTheme }}"
+Gtk/CursorThemeName "{{ .gtk.cursorTheme }}"
+Gtk/CursorThemeSize {{ .gtk.cursorSize }}
+Gtk/DecorationLayout "{{ .gtk.decorationLayout }}"

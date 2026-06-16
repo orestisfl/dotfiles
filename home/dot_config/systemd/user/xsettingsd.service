@@ -1,0 +1,13 @@
+[Unit]
+Description=XSettings daemon (GTK theme for X11 apps)
+After=graphical-session.target
+Requires=graphical-session.target
+
+[Service]
+ExecStart=/usr/bin/xsettingsd -c %h/.config/xsettingsd/xsettingsd.conf
+ExecReload=/bin/kill -HUP $MAINPID
+Restart=on-failure
+RestartSec=2
+
+[Install]
+WantedBy=graphical-session.target

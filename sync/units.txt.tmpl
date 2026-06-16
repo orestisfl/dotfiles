@@ -33,6 +33,10 @@
 +gnome-keyring-daemon.socket:user
 +xdg-user-dirs.service:user
 
+{{ if .xorg -}}
++xsettingsd.service:user           # XSettings: GTK theme for X11 apps
+{{- end }}
+
 {{ if .elastic -}}
 +monthly@cleanup.timer:user
 {{- end }}
