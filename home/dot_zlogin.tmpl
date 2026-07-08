@@ -13,6 +13,8 @@ unset _f
 # Inherit from /etc/manpath via the `manpath` command.
 unset MANPATH
 
+[[ -t 0 ]] || alias rg='rg </dev/null'
+
 # git ls-files: all tracked files, even if starting with dot
 # fd --type f: all non-ignored files, even if in submodule
 # sed: fd prepends `./` when used in pipe to prevent vulnerability with filenames starting with dash, e.g. `-rf`

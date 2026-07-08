@@ -9,7 +9,7 @@ source ~/.zsh/colors.zsh
 source ~/.zsh/setopt.zsh
 source ~/.zsh/history.zsh
 source ~/.zsh/prompt.zsh
-source ~/.zsh/aliases.zsh
+[[ -t 0 ]] && source ~/.zsh/aliases.zsh
 source ~/.zsh/functions.zsh
 source ~/.zsh/ghostty-wm.zsh
 
