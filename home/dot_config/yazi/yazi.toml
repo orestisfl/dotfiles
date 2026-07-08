@@ -12,6 +12,10 @@ group = "git"
 
 # Opener definitions
 [opener]
+open = [
+	{ run = "xdg-open %s1", desc = "Open", orphan = true, for = "linux" },
+]
+
 baobab = [
 	{ run = 'baobab "$1"', desc = "Baobab", orphan = true, for = "linux" },
 ]
