@@ -48,4 +48,10 @@ source ~/.zsh/bindkeys.zsh
 # automatically remove duplicates from these arrays
 typeset -U path cdpath fpath manpath
 
-if command -v wt >/dev/null 2>&1; then eval "$(command wt config shell init zsh)"; fi
+if command -v wt >/dev/null 2>&1; then
+  wt() {
+    unset -f wt
+    eval "$(command wt config shell init zsh)"
+    wt "$@"
+  }
+fi
