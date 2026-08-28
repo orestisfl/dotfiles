@@ -2,3 +2,9 @@ worktree-path = "~/.local/state/worktrees/{{ repo }}/{{ branch | sanitize }}"
 
 [post-start]
 copy = "wt step copy-ignored"
+
+[pre-start]
+prune = "git worktree prune"
+
+[list]
+json-schema = 2
