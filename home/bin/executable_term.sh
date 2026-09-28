@@ -56,6 +56,13 @@ ghostty_cwd() {
         done <<<"$focused_marks"
     fi
 
+    # No mark (e.g. `ghostty -e zsh -c ...`, which ghostty-wm.zsh skips). A
+    # ghostty process owning a single child is one window: use that child's cwd.
+    [[ -n "$parent_pid" ]] || return 1
+    local children cwd
+    children=$(pgrep -P "$parent_pid") || return 1
+    [[ "$children" == *$'\n'* ]] && return 1
+    cwd=$(realpath "/proc/$children/cwd" 2>/dev/null) && [[ -d "$cwd" ]] && echo "$cwd" && return 0
     return 1
 }
 
