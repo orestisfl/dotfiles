@@ -256,9 +256,12 @@ require("lazy").setup({
       vim.keymap.set("n", "<Leader>f", fzf.files, { desc = "Find files" })
       vim.keymap.set("n", "<Leader>b", fzf.buffers, { desc = "Find buffers" })
       vim.keymap.set("n", "<Leader>rg", fzf.live_grep, { desc = "Live grep" })
-      -- LSP pickers: multi-result navigation with preview, jump directly when unique
-      vim.keymap.set("n", "grr", fzf.lsp_references, { desc = "References" })
-      vim.keymap.set("n", "gri", fzf.lsp_implementations, { desc = "Implementations" })
+      local lsplocs = require("lsplocs")
+      vim.keymap.set("n", "grr", function() lsplocs.find("textDocument/references") end, { desc = "References" })
+      vim.keymap.set("n", "gri", function() lsplocs.find("textDocument/implementation") end, {
+        desc = "Implementations",
+      })
+      vim.keymap.set("n", "gr'", lsplocs.open, { desc = "Open last LSP lookup" })
       vim.keymap.set("n", "gO", fzf.lsp_document_symbols, { desc = "Document symbols" })
       vim.keymap.set("n", "<Leader>s", fzf.lsp_live_workspace_symbols, { desc = "Workspace symbols" })
       -- Git pickers
