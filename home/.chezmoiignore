@@ -35,6 +35,7 @@ start-xephyr.sh
 **/*.gz
 **/LICENSE
 **/README.md
+**/__pycache__
 **/compile_commands.json
 
 {{- if not .elastic }}
