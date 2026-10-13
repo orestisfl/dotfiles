@@ -211,25 +211,30 @@ require("lazy").setup({
       current_line_blame_opts = { delay = 0 },
       on_attach = function(bufnr)
         local gs = require("gitsigns")
-        local function map(mode, l, r, desc)
-          vim.keymap.set(mode, l, r, { buffer = bufnr, desc = desc })
+        local function map(l, r, desc)
+          vim.keymap.set("n", l, r, { buffer = bufnr, desc = desc })
         end
-        local function nav(dir)
-          return function()
-            if vim.wo.diff then
-              vim.cmd.normal({ dir == "next" and "]c" or "[c", bang = true })
-            else
-              gs.nav_hunk(dir)
-            end
-          end
-        end
-        map("n", "]c", nav("next"), "Next hunk")
-        map("n", "[c", nav("prev"), "Previous hunk")
-        map("n", "<Leader>gp", gs.preview_hunk, "Preview hunk")
-        map("n", "<Leader>gb", function() gs.blame_line({ full = true }) end, "Blame line")
-        map("n", "<Leader>gB", gs.blame, "Blame buffer")
+        map("<Leader>gp", gs.preview_hunk, "Preview hunk")
+        map("<Leader>gb", function() gs.blame_line({ full = true }) end, "Blame line")
+        map("<Leader>gB", gs.blame, "Blame buffer")
       end,
     },
+    init = function()
+      -- Hunk nav is global, not buffer-local: codediff claims buffer-local ]c/[c
+      -- on the panes it opens, and a real file buffer there would otherwise get
+      -- whichever mapping landed last (gitsigns attaches asynchronously).
+      local function nav(dir)
+        return function()
+          if vim.wo.diff then
+            vim.cmd.normal({ dir == "next" and "]c" or "[c", bang = true })
+          else
+            require("gitsigns").nav_hunk(dir)
+          end
+        end
+      end
+      vim.keymap.set("n", "]c", nav("next"), { desc = "Next hunk" })
+      vim.keymap.set("n", "[c", nav("prev"), { desc = "Previous hunk" })
+    end,
   },
 
   {
