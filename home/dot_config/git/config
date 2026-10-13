@@ -65,7 +65,6 @@
 	process = git-lfs filter-process
 	required = true
 [core]
-	excludesFile = ~/.config/git/gitignore_global
 	pager = delta
 	attributesfile = ~/.config/git/gitattributes
 [interactive]
