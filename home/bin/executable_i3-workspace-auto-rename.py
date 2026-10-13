@@ -79,7 +79,8 @@ def jetbrains_with_icon(icon: str) -> Callable[[i3ipc.Con], str]:
     return f
 
 
-def evince_pdf(con: i3ipc.Con) -> str:
+def papers_doc(con: i3ipc.Con) -> str:
+    # Title is "<doc title> – <file>" or just "<file>".
     name = first_chunk(con)
     return re.sub(r"\.pdf$", "", name, flags=re.IGNORECASE)
 
@@ -226,7 +227,7 @@ RULES: list[Rule] = [
         cursor_agent,
     ),
     Rule("claude", title_re(r"\bclaude\b"), claude_agent),
-    Rule("evince", app_in("evince"), evince_pdf),
+    Rule("papers", app_in("papers"), papers_doc),
     # Lowest priority: a bare ghostty workspace gets named after its cwd
     # (unless the shell sits in $HOME, in which case we leave it unlabelled).
     Rule("ghostty", app_in("com.mitchellh.ghostty"), ghostty_label),
@@ -244,7 +245,7 @@ def workspace_label(ws: i3ipc.Con) -> str | None:
         matches = [c for c in leaves if rule.matches(c)]
         if not matches:
             continue
-        # Tie-break ties on the focused window (e.g. two Evince windows).
+        # Tie-break ties on the focused window (e.g. two Papers windows).
         winner = next((c for c in matches if c.focused), matches[0])
         label = rule.label(winner)
         # `None` means the rule explicitly declines to label this window;

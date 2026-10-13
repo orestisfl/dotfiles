@@ -27,7 +27,7 @@ terminal           = com.mitchellh.ghostty.desktop
 
 # --- web / documents ---------------------------------------------------
 text/html          = firefox.desktop
-application/pdf    = org.gnome.Evince.desktop
+application/pdf    = org.gnome.Papers.desktop
 
 # --- media (gThumb was set but isn't installed -> imv, which is) -------
 image/jpeg         = imv.desktop
@@ -51,7 +51,7 @@ scheme:jetbrains   = jetbrainsd.desktop
 scheme:claude-cli  = claude-code-url-handler.desktop
 
 # file:// is intentionally left unset: with no handler, xdg-open strips the
-# scheme and resolves by the file's MIME type (so file:///x.pdf opens Evince,
+# scheme and resolves by the file's MIME type (so file:///x.pdf opens Papers,
 # not a file manager). Uncomment only if you want every file:// to open one
 # app regardless of type:
 #   scheme:file      = yazi.desktop
