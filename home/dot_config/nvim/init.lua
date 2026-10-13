@@ -198,6 +198,8 @@ require("lazy").setup({
         end,
         desc = "Review branch vs default branch",
       },
+      -- Unlike codediff's gf (previous tab), targets the next non-diff tab
+      { "<Leader>go", function() require("difftab").open() end, desc = "Open diff location in next tab" },
     },
     opts = {},
   },
