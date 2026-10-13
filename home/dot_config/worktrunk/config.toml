@@ -1,4 +1,5 @@
 worktree-path = "~/.local/state/worktrees/{{ repo }}/{{ branch | sanitize }}"
+skip-shell-integration-prompt = true
 
 [post-start]
 copy = "wt step copy-ignored"
@@ -8,3 +9,35 @@ prune = "git worktree prune"
 
 [list]
 json-schema = 2
+
+# A submodule can only be checked out in one place per gitdir. Instead of `git
+# submodule update --init`, each agent worktree gets a beats worktree at
+# <agent-worktree>/beats, so all checkouts share one object store.
+[projects."github.com/elastic/elastic-agent".pre-start]
+beats = """
+set -eu
+wt={{ worktree_path }}
+if [ -e "$wt/beats/.git" ]; then exit 0; fi
+# Prefer the standalone beats clone
+repo={{ repo_path }}/../beats
+[ -d "$repo/.git" ] || repo={{ repo_path }}/.git/modules/beats
+git -C "$repo" worktree prune
+sha=$(git -C "$wt" rev-parse HEAD:beats)
+git -C "$repo" cat-file -e "$sha^{commit}" 2>/dev/null || git -C "$repo" fetch --all
+git -C "$repo" worktree add --detach "$wt/beats" "$sha"
+"""
+
+# Give the beats worktree back before wt removes the agent worktree
+[projects."github.com/elastic/elastic-agent".pre-remove]
+beats = """
+set -eu
+wt={{ worktree_path }}
+if [ ! -e "$wt/beats/.git" ]; then exit 0; fi
+repo=$(git -C "$wt/beats" rev-parse --path-format=absolute --git-common-dir)
+git -C "$repo" worktree remove "$wt/beats"
+mkdir -p "$wt/beats"
+"""
+
+[projects."github.com/elastic/elastic-agent".aliases]
+# Turn the detached beats checkout into a branch when a change needs beats too.
+beats-branch = "git -C {{ worktree_path }}/beats switch -c {{ branch }}"
