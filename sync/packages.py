@@ -77,6 +77,9 @@ class Plan:
 
     def shell_command(self) -> str:
         parts: list[str] = []
+        # Flip to explicit first so -Rns can't cascade-remove a wanted dep.
+        if self.to_flip_asexplicit:
+            parts.append(f"paru -D --asexplicit {shlex.join(self.to_flip_asexplicit)}")
         if self.to_remove:
             parts.append(f"paru -Rns --noconfirm {shlex.join(self.to_remove)}")
         if self.to_install_default:
@@ -93,8 +96,6 @@ class Plan:
             )
         if self.to_flip_asdeps:
             parts.append(f"paru -D --asdeps {shlex.join(self.to_flip_asdeps)}")
-        if self.to_flip_asexplicit:
-            parts.append(f"paru -D --asexplicit {shlex.join(self.to_flip_asexplicit)}")
         return " \\\n  && ".join(parts)
 
     def human_summary(self) -> str:
