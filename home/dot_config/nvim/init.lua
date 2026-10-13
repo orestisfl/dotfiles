@@ -267,6 +267,9 @@ require("lazy").setup({
       -- Git pickers
       vim.keymap.set("n", "<Leader>gl", fzf.git_bcommits, { desc = "File commit log" })
       vim.keymap.set("n", "<Leader>gL", fzf.git_commits, { desc = "Repo commit log" })
+      vim.keymap.set("n", "<Leader>gw", function() require("worktree").pick() end, {
+        desc = "Open buffers in other worktrees",
+      })
       vim.keymap.set("n", "<Leader>ch", fzf.command_history, { desc = "Command history" })
       vim.keymap.set("n", "<Leader>km", fzf.keymaps, { desc = "Search keymaps" })
       vim.keymap.set("n", "<Leader>'", fzf.resume, { desc = "Resume last picker" })
