@@ -165,6 +165,23 @@ def systemctl_state(name: str, scope: str) -> str:
     return proc.stdout.strip() or "not-found"
 
 
+def missing_triggers(name: str, scope: str) -> list[str]:
+    """Units a timer/socket/path `name` would start that aren't installed.
+
+    Enabling such a unit works, but `--now` fails and aborts the rest of the
+    plan, so it's skipped until the target unit exists.
+    """
+    scope_args = ["--user"] if scope == "user" else []
+
+    def show(unit: str, prop: str) -> str:
+        cmd = ["systemctl", *scope_args, "show", "-p", prop, "--value", unit]
+        return subprocess.run(cmd, capture_output=True, text=True).stdout.strip()
+
+    return [
+        t for t in show(name, "Triggers").split() if show(t, "LoadState") == "not-found"
+    ]
+
+
 def compute_units_plan() -> UnitPlan:
     entries, errs = _load_units()
     if errs:
@@ -182,6 +199,10 @@ def compute_units_plan() -> UnitPlan:
             if state in _ENABLE_OK_STATES:
                 continue
             if state in _ENABLEABLE_STATES:
+                if missing := missing_triggers(name, scope):
+                    reason = f"triggers missing {', '.join(missing)}"
+                    plan.skipped.append((name, scope, reason))
+                    continue
                 (
                     plan.to_enable_user if scope == "user" else plan.to_enable_system
                 ).append(name)
