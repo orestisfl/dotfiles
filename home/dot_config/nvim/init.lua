@@ -120,9 +120,7 @@ require("lazy").setup({
           vim.lsp.completion.enable(true, client.id, bufnr, { autotrigger = true })
         end,
       })
-      vim.lsp.config("gopls", {
-        settings = { gopls = { buildFlags = { "-tags=" .. gotest.build_tags } } },
-      })
+      require("gotags").setup()
       vim.lsp.inlay_hint.enable(true)
       vim.lsp.enable({ "clangd", "pyright", "gopls", "rust_analyzer" })
     end,
