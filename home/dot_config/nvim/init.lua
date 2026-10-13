@@ -245,6 +245,10 @@ require("lazy").setup({
         fzf_opts = {
           ["--bind"] = "alt-a:select-all,alt-d:deselect-all",
         },
+        actions = {
+          -- `true` keeps the other defaults; quickfix stays on alt-q.
+          files = { true, ["enter"] = require("fzf-lua.actions").file_edit },
+        },
         grep = {
           rg_opts = "--column --line-number --no-heading --color=always --smart-case --hidden --glob '!.git'",
         },
