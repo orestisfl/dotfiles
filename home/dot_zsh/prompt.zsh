@@ -165,7 +165,7 @@ function precmd() {
     async &!
     ASYNC_PROC=$!
     # Terminal title.
-    print -n '\e]0;zsh\a'
+    printf '\e]0;%s\a' "${TERM_TITLE:-zsh}"
 }
 
 function TRAPUSR1() {

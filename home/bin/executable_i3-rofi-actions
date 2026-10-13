@@ -125,7 +125,11 @@ run_action() {
     bash -lc "$action"
 }
 
-# Fill options.
+wt_clipboard="$HOME/bin/wt-clipboard.py"
+if [[ -x "$wt_clipboard" ]] && wt_label="$("$wt_clipboard" --check 2>/dev/null)" && [[ -n "$wt_label" ]]; then
+    add_option "$wt_label" "$wt_clipboard"
+fi
+
 have gcalcli && ! pidof zoom >/dev/null 2>&1 && add_option "Join zoom meeting" "$HOME/bin/join-zoom.sh"
 pidof zoom >/dev/null 2>&1 && add_option_if_file "Kill zoom" "$HOME/.local/share/i3-rofi-actions.ignored.sh"
 

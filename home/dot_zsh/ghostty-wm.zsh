@@ -13,7 +13,8 @@
 # under $XDG_RUNTIME_DIR/ghostty-cwd/<id>. The IPC round-trips are deferred
 # off the prompt's critical path via zsh-defer.
 
-if [[ "$TERM_PROGRAM" == "ghostty" && -t 1 ]] && (( $+commands[jq] )); then
+if [[ "$TERM_PROGRAM" == "ghostty" && -t 1 && -z "$ZSH_EXECUTION_STRING" ]] \
+    && (( $+commands[jq] )); then
     if [[ -n "$SWAYSOCK" ]] && (( $+commands[swaymsg] )); then
         _ghostty_wm_msg=swaymsg
     elif [[ "$XDG_SESSION_TYPE" == "x11" ]] && (( $+commands[i3-msg] )); then
@@ -42,7 +43,7 @@ if [[ -n "${_ghostty_wm_msg:-}" ]]; then
         done
         [[ -n "$id" ]] && $_ghostty_wm_msg -q -- "[con_id=$id] mark --add $_ghostty_wm_mark" 2>/dev/null
         # Keep in sync with precmd in prompt.zsh.
-        print -n '\e]0;zsh\a' >/dev/tty 2>/dev/null
+        printf '\e]0;%s\a' "${TERM_TITLE:-zsh}" >/dev/tty 2>/dev/null
     }
 
     # The WM mark dies with the container; only the cwd file needs cleanup.
