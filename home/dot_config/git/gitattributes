@@ -1,2 +1,4 @@
 go.mod merge=union
 go.sum merge=union
+*.md diff=markdown
+*.mdx diff=markdown
