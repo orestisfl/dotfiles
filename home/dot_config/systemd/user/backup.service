@@ -4,7 +4,7 @@ StartLimitIntervalSec=3600
 StartLimitBurst=5
 
 [Service]
-ExecStart=/bin/bash %h/bin/backup.sh
+ExecStart=/bin/bash %h/.local/bin/backup.sh
 Restart=on-failure
 RestartSec=600
 

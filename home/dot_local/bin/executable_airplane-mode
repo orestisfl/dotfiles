@@ -1,7 +1,5 @@
 #!/bin/bash
-# airplane-mode - one-off maximal battery-saving power profile + radios off.
-# Transient: pushed onto the running TLP via `tlp start -- PARAM=value`, so a
-# reboot or `airplane-mode off` reverts it. State flag in $XDG_RUNTIME_DIR.
+# one-off maximal battery-saving power profile + radios off.
 set -euo pipefail
 
 flag="${XDG_RUNTIME_DIR:-/tmp}/airplane-mode"

@@ -12,9 +12,7 @@ for_window [class="(?i)yad"]                  floating enable
 for_window [class=Gsimplecal]                 move position mouse
 
 for_window [class=Slack window_type=normal]           mark s
-for_window [class=jetbrains-goland window_type=normal] mark g
 for_window [class=jetbrains-idea window_type=normal]   mark j
-for_window [class="jetbrains-toolbox"]                 floating disable, border normal
 
 for_window [title="Meeting" class="zoom"]             floating disable, border normal, move to workspace 10, mark z
 for_window [title="(?i)zoom workplace" class="zoom"]  move to workspace zoom
@@ -28,9 +26,7 @@ for_window [app_id="(?i)spotify"] move to workspace number 14
 for_window [app_id="ripdrag"] floating enable, sticky enable
 for_window [app_id="yad"] floating enable
 
-for_window [app_id="jetbrains-goland"]  mark g
 for_window [app_id="jetbrains-idea"]    mark j
-for_window [app_id="jetbrains-toolbox"] floating disable, border normal
 
 for_window [app_id="Zoom" title="meeting bottombar popup"] floating enable, move position cursor, move up 50 px
 for_window [app_id="Zoom" title="Leave meeting panel"] floating enable

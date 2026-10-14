@@ -16,14 +16,12 @@
 {{- if .wayland }}
 .Xresources
 .config/colors.xres
-.config/systemd/user/mark.service
 .config/systemd/user/x11-session.target
 .config/systemd/user/xsettingsd.service
 .config/xft.xres
 .config/xsettingsd
 .xbindkeysrc
 .xinitrc
-bin/draw-resize.sh
 start-xephyr.sh
 {{- end }}
 

@@ -12,9 +12,9 @@ bindsym XF86Calculator exec speedcrunch
 bindsym XF86HomePage   exec firefox
 bindsym XF86WWW        exec firefox
 
-bindsym XF86AudioRaiseVolume exec --no-startup-id "pamixer -i 5 && ~/bin/notify-volume.sh"
-bindsym XF86AudioLowerVolume exec --no-startup-id "pamixer -d 5 && ~/bin/notify-volume.sh"
-bindsym XF86AudioMute        exec --no-startup-id "pamixer -t   && ~/bin/notify-volume.sh"
+bindsym XF86AudioRaiseVolume exec --no-startup-id "pamixer -i 5 && ~/.local/bin/notify-volume.sh"
+bindsym XF86AudioLowerVolume exec --no-startup-id "pamixer -d 5 && ~/.local/bin/notify-volume.sh"
+bindsym XF86AudioMute        exec --no-startup-id "pamixer -t   && ~/.local/bin/notify-volume.sh"
 bindsym XF86AudioPlay        exec --no-startup-id playerctl play-pause
 bindsym XF86AudioPause       exec --no-startup-id playerctl play-pause
 bindsym XF86AudioNext        exec --no-startup-id playerctl next
@@ -54,7 +54,7 @@ bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
 
 bindsym $mod+Shift+space    floating toggle
-bindsym $mod+Control+space  exec --no-startup-id ~/bin/toggle-sticky.py
+bindsym $mod+Control+space  exec --no-startup-id ~/.local/bin/toggle-sticky.py
 
 bindsym $mod+a       focus parent
 bindsym $mod+Shift+a focus child
@@ -72,11 +72,11 @@ bindsym $mod+minus       scratchpad show
 bindsym $mod+Shift+M bar mode toggle
 
 bindsym $mod+Shift+c reload
-bindsym $mod+Shift+e exec $HOME/bin/i3-rofi-actions
+bindsym $mod+Shift+e exec $HOME/.local/bin/i3-rofi-actions
 
 {{- $msg := "swaymsg" }}{{ if .xorg }}{{ $msg = "i3-msg" }}{{ end }}
-bindsym $mod+o       exec --no-startup-id "{{ $msg }} workspace number $($HOME/bin/i3-next-available-workspace.py)"
-bindsym $mod+Shift+o exec --no-startup-id "ws=$($HOME/bin/i3-next-available-workspace.py); {{ $msg }} move window to workspace $ws && {{ $msg }} workspace number $ws"
+bindsym $mod+o       exec --no-startup-id "{{ $msg }} workspace number $($HOME/.local/bin/i3-next-available-workspace.py)"
+bindsym $mod+Shift+o exec --no-startup-id "ws=$($HOME/.local/bin/i3-next-available-workspace.py); {{ $msg }} move window to workspace $ws && {{ $msg }} workspace number $ws"
 
 {{ if .xorg -}}
 # Restart in-place (preserves layout).

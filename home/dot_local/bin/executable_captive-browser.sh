@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# CAPTIVE_URL: portal URL if you already know it. Keep it http://, never https://.
-# CAPTIVE_TLS12=1: cap TLS at 1.2 when the gateway mangles TLS 1.3 handshakes.
-START_URL=${CAPTIVE_URL:-http://neverssl.com/}
+START_URL=${START_URL:-http://neverssl.com/}
 
 PROFILE_DIR=$(mktemp -d /tmp/captive-portal-firefox.XXXXXX)
 trap 'rm -rf "$PROFILE_DIR"' EXIT

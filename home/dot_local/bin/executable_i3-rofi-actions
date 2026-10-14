@@ -125,15 +125,15 @@ run_action() {
     bash -lc "$action"
 }
 
-wt_clipboard="$HOME/bin/wt-clipboard.py"
+wt_clipboard="$HOME/.local/bin/wt-clipboard.py"
 if [[ -x "$wt_clipboard" ]] && wt_label="$("$wt_clipboard" --check 2>/dev/null)" && [[ -n "$wt_label" ]]; then
     add_option "$wt_label" "$wt_clipboard"
 fi
 
-have gcalcli && ! pidof zoom >/dev/null 2>&1 && add_option "Join zoom meeting" "$HOME/bin/join-zoom.sh"
+have gcalcli && ! pidof zoom >/dev/null 2>&1 && add_option "Join zoom meeting" "$HOME/.local/bin/join-zoom.sh"
 pidof zoom >/dev/null 2>&1 && add_option_if_file "Kill zoom" "$HOME/.local/share/i3-rofi-actions.ignored.sh"
 
-add_option_if_file "Rename workspace" "$HOME/bin/i3-workspace-rename.py"
+add_option_if_file "Rename workspace" "$HOME/.local/bin/i3-workspace-rename.py"
 have bluetoothctl &&
     add_option "Bluetooth on" "bluetooth_on" &&
     add_option "Bluetooth off" "bluetooth_off"
@@ -143,20 +143,20 @@ have networkmanager_dmenu && add_option "Wi-Fi / network" "networkmanager_dmenu"
 
 # Airplane mode (laptops): reversible battery-saving profile + networking off.
 if have tlp; then
-    if "$HOME/bin/airplane-mode" status >/dev/null 2>&1; then
-        add_option "Airplane mode off" "$HOME/bin/airplane-mode off"
+    if "$HOME/.local/bin/airplane-mode" status >/dev/null 2>&1; then
+        add_option "Airplane mode off" "$HOME/.local/bin/airplane-mode off"
     else
-        add_option "Airplane mode on" "$HOME/bin/airplane-mode on"
+        add_option "Airplane mode on" "$HOME/.local/bin/airplane-mode on"
     fi
 fi
 
 if [[ -n "${SWAYSOCK:-}" ]]; then
-    if "$HOME/bin/sway-idle" relaxed; then
-        add_option "Enable auto-lock" "$HOME/bin/sway-idle secure"
+    if "$HOME/.local/bin/sway-idle" relaxed; then
+        add_option "Enable auto-lock" "$HOME/.local/bin/sway-idle secure"
     else
-        add_option "Disable auto-lock" "$HOME/bin/sway-idle relax"
+        add_option "Disable auto-lock" "$HOME/.local/bin/sway-idle relax"
     fi
-    add_option "Sleep monitor" "$HOME/bin/sway-idle off-now"
+    add_option "Sleep monitor" "$HOME/.local/bin/sway-idle off-now"
     add_option "Exit" "swaymsg exit"
 else
     add_option "Sleep monitor" "xset dpms force suspend; sleep 0.1; xset dpms force suspend"

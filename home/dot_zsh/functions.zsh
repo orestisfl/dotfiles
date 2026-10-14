@@ -85,8 +85,6 @@ function pdfa4(){
 function venv() {
     [[ $2 ]] && echo 'This function takes one argument at most' && return 1
 
-    [[ -z ${1:-} ]] && [[ -f bin/activate-hermit ]] && source bin/activate-hermit && return 0
-
     if [[ -z ${1:-} ]]; then
         # Search for .venv or venv directories recursively up to /home or /
         local search_dir="$PWD"
