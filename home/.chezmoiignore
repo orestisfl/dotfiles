@@ -46,6 +46,11 @@ start-xephyr.sh
 {{- /* chezmoi must never read, deploy, or remove anything under them.     */}}
 .config/systemd/user/*.target.wants
 
+{{- /* Installed by run_onchange_after_60-yazi-plugins from package.toml; */}}
+{{- /* only local (non-package) plugins live in the source.               */}}
+.config/yazi/plugins/*
+!.config/yazi/plugins/smart-switch.yazi
+
 {{- /* Built by run_onchange_after_10-build-i3blocks. */}}
 .local/share/blocks/bandwidth
 .local/share/blocks/battery

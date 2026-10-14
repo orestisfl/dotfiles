@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# Install the yazi plugins pinned in package.toml (fetched from GitHub, so
+# needs network). ya aborts if a deployed plugin was edited locally.
+#
+# package.toml: {{ include "dot_config/yazi/package.toml" | sha256sum }}
+# ya: {{ lookPath "ya" }}
+# ^ rehashes once yazi gets installed, so a skipped first run retries.
+
+set -euo pipefail
+
+if ! command -v ya >/dev/null 2>&1; then
+    echo "yazi: ya not found, skipping plugin install" >&2
+    exit 0
+fi
+
+ya pkg install
