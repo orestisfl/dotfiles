@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+# i3ipc sets Con/CommandReply attributes dynamically.
+# pyright: reportAttributeAccessIssue=false
 
 import subprocess
 
@@ -19,17 +21,27 @@ def main() -> None:
         ["yad", "--entry", f"--entry-text={focused.name}"],
         capture_output=True,
         text=True,
-        check=True,
     )
+    if result.returncode != 0:  # cancel / escape
+        return
 
+    # "4: name" (or "4") renumbers the workspace as well; empty keeps
+    # just the number.
     new_name = result.stdout.strip()
-    assert new_name, "empty workspace name"
+    num = workspace.num
+    prefix, _, rest = new_name.partition(":")
+    if prefix.strip().isdecimal():
+        num, new_name = int(prefix), rest.strip()
 
-    if workspace.num > 0:
-        target = f"{workspace.num}:{new_name}"
-    else:
+    if num > 0:
+        target = f"{num}:{new_name}" if new_name else str(num)
+    elif new_name:
         target = new_name
-    i3.command(f'rename workspace to "{target}"')
+    else:
+        raise SystemExit("empty name for unnumbered workspace")
+    for reply in i3.command(f'rename workspace to "{target}"'):
+        if not reply.success:
+            raise SystemExit(f"rename to {target!r} failed: {reply.error}")
 
 
 if __name__ == "__main__":
