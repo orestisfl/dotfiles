@@ -27,13 +27,24 @@ export FZF_CTRL_T_OPTS="--preview 'bat -n --color=always {}' --bind 'ctrl-/:chan
 export FZF_ALT_C_COMMAND='fd --type d'
 export FZF_ALT_C_OPTS="--preview 'tree -C {}'"
 
-# Completions
-register-python-argcomplete --shell zsh pipx register-python-argcomplete > /tmp/completions.zsh
-zoxide init zsh >> /tmp/completions.zsh
-atuin init zsh --disable-up-arrow >> /tmp/completions.zsh
-{{- if .elastic -}}
-elastic-package completion zsh 2>/dev/null >> /tmp/completions.zsh
-{{- end -}}
+# Completions.
+_c=/tmp/completions.zsh
+[[ -s $_c ]] && _stale=0 || _stale=1
+for _f in ~/.zlogin $commands[register-python-argcomplete] $commands[zoxide] $commands[atuin] $commands[elastic-package]; do
+    [[ $_f -nt $_c ]] && _stale=1
+done
+if (( _stale )); then
+    {
+        register-python-argcomplete --shell zsh pipx register-python-argcomplete
+        zoxide init zsh
+        atuin init zsh --disable-up-arrow
+        if (( $+commands[elastic-package] )); then
+            elastic-package completion zsh 2>/dev/null
+        fi
+    } > $_c.$$
+    mv -f $_c.$$ $_c
+fi
+unset _c _f _stale
 
 {{- if .xorg }}
 # xorg hosts: auto-start X on the primary tty.
