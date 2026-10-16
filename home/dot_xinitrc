@@ -60,7 +60,7 @@ trash-empty -f 30&
 # Start graphical-session.target (via x11-session.target) for X11 services.
 # DISPLAY/XAUTHORITY are session-dynamic; the static env is already in the
 # systemd user instance via environment.d.
-systemctl --user import-environment DISPLAY XAUTHORITY
+systemctl --user import-environment DISPLAY XAUTHORITY XDG_SESSION_TYPE
 systemctl --user start --no-block x11-session.target
 
 exec i3

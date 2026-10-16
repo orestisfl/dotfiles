@@ -17,7 +17,7 @@ if [[ "$TERM_PROGRAM" == "ghostty" && -t 1 && -z "$ZSH_EXECUTION_STRING" ]] \
     && (( $+commands[jq] )); then
     if [[ -n "$SWAYSOCK" ]] && (( $+commands[swaymsg] )); then
         _ghostty_wm_msg=swaymsg
-    elif [[ "$XDG_SESSION_TYPE" == "x11" ]] && (( $+commands[i3-msg] )); then
+    elif [[ -n "$DISPLAY" ]] && (( $+commands[i3-msg] )); then
         _ghostty_wm_msg=i3-msg
     fi
 fi
