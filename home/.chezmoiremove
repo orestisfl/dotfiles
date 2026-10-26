@@ -29,3 +29,4 @@ bin/jb-toolbox-xwayland
 .local/lib/lua-language-server
 .local/share/applications/goland-projects.desktop
 .local/share/applications/jetbrains-toolbox-xwayland.desktop
+.ideavimrc

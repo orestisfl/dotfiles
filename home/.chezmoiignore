@@ -30,7 +30,6 @@ start-xephyr.sh
 **/.clang-format
 **/.git
 **/.gitignore
-**/.idea
 **/*.gz
 **/LICENSE
 **/README.md

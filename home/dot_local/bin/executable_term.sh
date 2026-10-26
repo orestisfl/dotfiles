@@ -50,23 +50,6 @@ ghostty_cwd() {
     realpath "/proc/$children/cwd" 2>/dev/null
 }
 
-goland_cwd() {
-    [[ "$wm_name" == *" – "* ]] || return 1
-    local project_name=${wm_name%% – *}
-    [[ -n "$project_name" ]] || return 1
-
-    local goland_dir recent_projects_file path
-    goland_dir=$(find ~/.config/JetBrains -maxdepth 1 -type d -name "GoLand*" | sort -V | tail -n 1)
-    recent_projects_file="$goland_dir/options/recentProjects.xml"
-    [[ -f "$recent_projects_file" ]] || return 1
-
-    while IFS= read -r path; do
-        path=${path/\$USER_HOME\$/"$HOME"}
-        [[ "${path##*/}" == "$project_name" && -d "$path" ]] && echo "$path" && return 0
-    done < <(grep -oP 'key="\K[^"]*' "$recent_projects_file")
-    return 1
-}
-
 generic_cwd() {
     [[ -n "$parent_pid" ]] && realpath "/proc/$parent_pid/cwd" 2>/dev/null
 }
@@ -75,7 +58,6 @@ get_working_directory() {
     probe_focused_window
     case "$wm_class" in
     "com.mitchellh.ghostty") ghostty_cwd ;;
-    "jetbrains-goland") goland_cwd ;;
     *) generic_cwd ;;
     esac
 }

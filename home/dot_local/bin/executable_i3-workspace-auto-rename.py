@@ -67,18 +67,6 @@ def first_chunk(con: i3ipc.Con) -> str:
     return parts[0] if parts else app(con)
 
 
-def jetbrains_project(con: i3ipc.Con) -> str:
-    # Title is "<project> – <file>" (en dash) on modern JetBrains IDEs.
-    return first_chunk(con)
-
-
-def jetbrains_with_icon(icon: str) -> Callable[[i3ipc.Con], str]:
-    def f(con: i3ipc.Con) -> str:
-        return f"{icon} {jetbrains_project(con)}"
-
-    return f
-
-
 def papers_doc(con: i3ipc.Con) -> str:
     # Title is "<doc title> – <file>" or just "<file>".
     name = first_chunk(con)
@@ -206,8 +194,6 @@ class Rule:
 RULES: list[Rule] = [
     Rule("zoom", app_in("zoom"), constant("zoom")),
     Rule("slack", app_in("slack"), constant("slack")),
-    Rule("goland", app_in("goland"), jetbrains_with_icon("🐹")),
-    Rule("rustrover", app_in("rustrover"), jetbrains_with_icon("🦀")),
     Rule("firefox", app_in("firefox"), constant("🌐")),
     Rule("chromium", app_in("chromium"), constant("🌐")),
     Rule("btop", title_re(r"\bbtop\b"), constant("btop")),

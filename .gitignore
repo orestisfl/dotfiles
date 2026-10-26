@@ -219,8 +219,7 @@ home/dot_config/xft.local.xres
 # Local git identity (per-host, not tracked)
 home/dot_config/git/local
 
-# IntelliJ / JetBrains project metadata dropped into blocks/
-home/dot_local/share/blocks/.idea/
+# Editor / build metadata dropped into blocks/
 home/dot_local/share/blocks/.clang-format
 home/dot_local/share/blocks/compile_commands.json
 home/dot_local/share/blocks/.cache/
