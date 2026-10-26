@@ -85,15 +85,6 @@ def papers_doc(con: i3ipc.Con) -> str:
     return re.sub(r"\.pdf$", "", name, flags=re.IGNORECASE)
 
 
-# Cursor agent terminal titles look like "<task> - ⏳ Working ···" /
-# "<task> - ✅ Ready" / "<task> - ❌ Error". Strip the status suffix.
-_CURSOR_STATUS = re.compile(r"\s*-\s*[⏳✅❌▶️⏸️].*$")
-
-
-def cursor_agent(con: i3ipc.Con) -> str:
-    return _CURSOR_STATUS.sub("", title(con)).strip() or "cursor"
-
-
 def claude_agent(con: i3ipc.Con) -> str:
     t = title(con)
     t = re.sub(r"^\s*claude\s*[:\-]\s*", "", t, flags=re.IGNORECASE)
@@ -221,11 +212,6 @@ RULES: list[Rule] = [
     Rule("chromium", app_in("chromium"), constant("🌐")),
     Rule("btop", title_re(r"\bbtop\b"), constant("btop")),
     Rule("htop", title_re(r"\bhtop\b"), constant("htop")),
-    Rule(
-        "cursor",
-        lambda c: app_in("cursor")(c) or _CURSOR_STATUS.search(title(c)) is not None,
-        cursor_agent,
-    ),
     Rule("claude", title_re(r"\bclaude\b"), claude_agent),
     Rule("papers", app_in("papers"), papers_doc),
     # Lowest priority: a bare ghostty workspace gets named after its cwd

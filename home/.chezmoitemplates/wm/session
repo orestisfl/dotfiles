@@ -7,11 +7,6 @@ exec --no-startup-id keepassxc
 exec --no-startup-id trash-empty -f 30
 exec --no-startup-id wlsunset -l 48.137 -L 11.575 -t 3500 -T 6500
 
-exec --no-startup-id systemd-run --user --unit=cursor-agent-notify \
-    --description="Cursor agent notification watcher" \
-    --property=Restart=on-failure --property=RestartSec=3 \
-    $HOME/Documents/software/work/agent-tools/cursor-agent-notify.py
-
 # Only session-dynamic vars: static env (PATH, EDITOR, TERMINAL, ...) is
 # already there via environment.d.
 exec --no-startup-id sh -c 'systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP && systemctl --user start --no-block sway-session.target'

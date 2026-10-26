@@ -67,20 +67,6 @@ goland_cwd() {
     return 1
 }
 
-cursor_cwd() {
-    [[ "$wm_name" == *"- Cursor"* ]] || return 1
-    local base_name=${wm_name% - Cursor}
-    local project_name=${base_name##* - }
-    [[ -n "$project_name" ]] || return 1
-
-    local db_file="$HOME/.config/Cursor/User/globalStorage/state.vscdb"
-    [[ -f "$db_file" ]] || return 1
-
-    sqlite3 "$db_file" "SELECT value FROM ItemTable WHERE key = 'history.recentlyOpenedPathsList'" 2>/dev/null |
-        jq -r --arg p "/$project_name" \
-            'first(.entries[].folderUri // empty | sub("^file://"; "") | select(endswith($p)))'
-}
-
 generic_cwd() {
     [[ -n "$parent_pid" ]] && realpath "/proc/$parent_pid/cwd" 2>/dev/null
 }
@@ -90,7 +76,6 @@ get_working_directory() {
     case "$wm_class" in
     "com.mitchellh.ghostty") ghostty_cwd ;;
     "jetbrains-goland") goland_cwd ;;
-    "Cursor" | "cursor") cursor_cwd ;;
     *) generic_cwd ;;
     esac
 }
