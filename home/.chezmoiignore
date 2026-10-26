@@ -42,9 +42,8 @@ start-xephyr.sh
 {{- end }}
 
 {{- /* Managed out-of-band, not from this repo. */}}
-.config/systemd/user/camera-bridge-watcher*
+.config/systemd/user/gh-notifications-filter*
 {{- /* `systemctl --user enable/disable` owns the *.target.wants/ symlinks; */}}
-{{- /* chezmoi must never read, deploy, or remove anything under them.     */}}
 .config/systemd/user/*.target.wants
 
 {{- /* Installed by run_onchange_after_60-yazi-plugins from package.toml; */}}
