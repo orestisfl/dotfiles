@@ -1,5 +1,5 @@
 [Unit]
-Description=Monthly Timer for %i service
+Description=Daily timer for %i service
 
 [Timer]
 OnCalendar=daily
