@@ -20,6 +20,7 @@
 .config/systemd/user/xsettingsd.service
 .config/xft.xres
 .config/xsettingsd
+.local/bin/i3-get-window-criteria.sh
 .xbindkeysrc
 .xinitrc
 start-xephyr.sh
