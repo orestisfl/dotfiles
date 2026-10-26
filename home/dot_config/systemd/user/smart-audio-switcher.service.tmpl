@@ -1,0 +1,14 @@
+{{- if eq .chezmoi.hostname "carbon" -}}
+[Unit]
+Description=Route audio by device priority (Bluetooth > HDMI monitor > speakers)
+After=pipewire-pulse.service wireplumber.service
+
+[Service]
+ExecStart=%h/.local/bin/smart-audio-switcher.sh
+# `pactl subscribe` exits whenever pipewire-pulse restarts.
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=default.target
+{{- end -}}

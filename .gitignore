@@ -205,6 +205,7 @@ home/dot_config/systemd/user/*
 !home/dot_config/systemd/user/backup.service
 !home/dot_config/systemd/user/daily@.timer
 !home/dot_config/systemd/user/monthly@.timer
+!home/dot_config/systemd/user/smart-audio-switcher.service.tmpl
 !home/dot_config/systemd/user/x11-session.target
 !home/dot_config/systemd/user/xsettingsd.service
 

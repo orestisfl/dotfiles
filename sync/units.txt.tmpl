@@ -29,6 +29,10 @@
 +intel_lpmd.service                # gili-only: carbon's DYTC covers this
 {{- end }}
 
+{{ if eq .chezmoi.hostname "carbon" -}}
++smart-audio-switcher.service:user # routes audio for carbon's sound card
+{{- end }}
+
 +docker.socket
 +gnome-keyring-daemon.socket:user
 +xdg-user-dirs.service:user

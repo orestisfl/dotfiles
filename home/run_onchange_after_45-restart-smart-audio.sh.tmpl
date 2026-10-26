@@ -1,0 +1,10 @@
+{{- if eq .chezmoi.hostname "carbon" -}}
+#!/usr/bin/env bash
+# The switcher is long-running: restart it when its script or unit changes.
+# script: {{ include "dot_local/bin/executable_smart-audio-switcher.sh.tmpl" | sha256sum }}
+# unit:   {{ include "dot_config/systemd/user/smart-audio-switcher.service.tmpl" | sha256sum }}
+
+# No user bus (TTY apply): the next login starts the new version anyway.
+systemctl --user daemon-reload || exit 0
+systemctl --user try-restart smart-audio-switcher.service
+{{ end -}}
