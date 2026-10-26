@@ -3,33 +3,9 @@
 BLOCK_COLOR_WARNING=${BLOCK_COLOR_WARNING:-#f0c674}
 BLOCK_COLOR_CRITICAL=${BLOCK_COLOR_CRITICAL:-#cc6666}
 
-block_output_mode() {
-    if [[ -n "${_BLOCK_OUTPUT_MODE_CACHE:-}" ]]; then
-        printf '%s\n' "${_BLOCK_OUTPUT_MODE_CACHE}"
-        return 0
-    fi
-
-    case "${BLOCK_OUTPUT_MODE:-}" in
-    i3blocks | xorg)
-        _BLOCK_OUTPUT_MODE_CACHE=i3blocks
-        ;;
-    ironbar | plain | wayland)
-        _BLOCK_OUTPUT_MODE_CACHE=ironbar
-        ;;
-    *)
-        if [[ -n "${BLOCK_NAME:-}" ]]; then
-            _BLOCK_OUTPUT_MODE_CACHE=i3blocks
-        else
-            _BLOCK_OUTPUT_MODE_CACHE=ironbar
-        fi
-        ;;
-    esac
-
-    printf '%s\n' "${_BLOCK_OUTPUT_MODE_CACHE}"
-}
-
+# i3blocks sets BLOCK_NAME; ironbar doesn't.
 block_output_is_i3blocks() {
-    [[ "$(block_output_mode)" == "i3blocks" ]]
+    [[ -n "${BLOCK_NAME:-}" ]]
 }
 
 block_escape_markup() {
