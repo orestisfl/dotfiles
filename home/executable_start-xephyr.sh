@@ -12,10 +12,6 @@ finish() {
     exit 0
 }
 
-handle_SIGINT() {
-    finish &>/dev/null
-}
-
 set -m
 
 Xephyr -name "Xephyr_$D" -terminate -br -ac -noreset -screen 2000x900 :$D &
@@ -27,19 +23,11 @@ inotifywait --timeout 1 /tmp/.X11-unix/ || {
     exit 1
 }
 
-userresources=$HOME/.Xresources
-sysresources=/etc/X11/xinit/.Xresources
+for f in /etc/X11/xinit/.Xresources "$HOME/.Xresources"; do
+    [[ -f $f ]] && xrdb -merge "$f"
+done
 
-# merge in defaults and keymaps
-if [ -f $sysresources ]; then
-    xrdb -merge $sysresources
-fi
-
-if [ -f "$userresources" ]; then
-    xrdb -merge "$userresources"
-fi
-
-trap handle_SIGINT INT
+trap 'finish &>/dev/null' INT
 echo "Passing args '$*' to i3"
 if [[ -n "$ISSUE_I3" ]]; then
     (i3 --moreversion 2>&- || i3 --version) >/tmp/version
