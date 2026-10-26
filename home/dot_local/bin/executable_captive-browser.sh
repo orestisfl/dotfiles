@@ -57,4 +57,4 @@ fi
 
 echo "Launching captive portal browser (profile: $PROFILE_DIR)"
 echo "Profile will be deleted on exit."
-exec firefox --no-remote --profile "$PROFILE_DIR" "$START_URL"
+firefox --no-remote --profile "$PROFILE_DIR" "$START_URL"
