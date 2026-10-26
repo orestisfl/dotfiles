@@ -4,7 +4,6 @@ set -euo pipefail
 
 history_repo_dir="$HOME/Documents/history-backup"
 backup_exclude_file="$HOME/Documents/backup-exclude"
-restic_host="$HOSTNAME"
 
 # Optional lightweight history snapshot.
 if [[ -d "$history_repo_dir/.git" ]]; then
@@ -18,38 +17,40 @@ if [[ -d "$history_repo_dir/.git" ]]; then
     )
 fi
 
-# Skip backup on metered connections (values: "yes", "no", "unknown").
-if command -v nmcli >/dev/null; then
-    connection_uuid="$(nmcli -t -m multiline -f UUID connection show --active | head -n1 | cut -c 6- || true)"
-    if [[ -n "$connection_uuid" ]]; then
-        metered="$(nmcli -t -m multiline -f connection.metered connection show "$connection_uuid" | cut -c 20- || true)"
-        [[ "$metered" != "yes" ]]
-    fi
+# Skip backup on metered connections. NM's global state follows the primary
+# connection and includes guesses ("yes (guessed)" for phone hotspots).
+if command -v nmcli >/dev/null && [[ $(nmcli -g METERED general) == yes* ]]; then
+    echo 'metered connection, skipping backup'
+    exit 1
 fi
 
-rclone serve restic --addr localhost:8123 -v gdrive:backup &
+# Fail fast if the secret is locked or another backup is running.
+if [[ $(secret-tool search backup restic 2>&1 >/dev/null) == *'Cannot get secret of a locked object'* ]]; then
+    echo 'keyring locked'
+    exit 1
+fi
+if pidof restic >/dev/null; then
+    echo 'restic already running'
+    exit 1
+fi
+
+port=8123
+rclone serve restic --addr "localhost:$port" -v gdrive:backup &
 rclone_pid="$!"
-cleanup() {
-    kill "$rclone_pid" 2>/dev/null || true
-}
-trap cleanup EXIT
+trap 'kill "$rclone_pid" 2>/dev/null || true' EXIT
 
 for _ in {1..30}; do
-    nc -z localhost 8123 && break
+    nc -z localhost "$port" && break
     sleep 1
 done
-nc -z localhost 8123
+nc -z localhost "$port"
 
-# Fail fast if the secret is locked.
-if command -v secret-tool >/dev/null; then
-    secret-tool search backup restic 2>&1 1>/dev/null | grep -q 'Cannot get secret of a locked object' && exit 1 || true
-fi
-
-export RESTIC_REPOSITORY="rest:http://localhost:8123/"
+export RESTIC_REPOSITORY="rest:http://localhost:$port/"
 export RESTIC_PASSWORD_COMMAND='secret-tool lookup backup restic'
 
-pidof restic >/dev/null && echo 'restic already running' && exit 1 || restic unlock
+restic unlock
 
+# Exit code 3: snapshot saved, but some files could not be read.
 restic backup \
     --verbose \
     --one-file-system \
@@ -58,7 +59,7 @@ restic backup \
     ~ /etc || [[ $? -eq 3 ]]
 
 # Print changed files (best-effort).
-restic diff $(restic --json snapshots --host "$restic_host" | jq -r '.[-2:][].id') || true
+restic diff $(restic --json snapshots --host "$HOSTNAME" | jq -r '.[-2:][].id') || true
 
 restic forget --prune \
     --keep-within-hourly  2d  \
