@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# Install the repo's git hooks. pre-commit usually arrives via sync after the
+# first apply, so its path is hashed: the next apply after it appears retries.
+# pre-commit: {{ lookPath "pre-commit" }}
+
+command -v pre-commit >/dev/null || exit 0
+cd "{{ .chezmoi.sourceDir }}/.." && pre-commit install

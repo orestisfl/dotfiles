@@ -1,6 +1,6 @@
 #!/bin/bash
-# Bootstrap dotfiles: render ~/.config/chezmoi/chezmoi.toml, install
-# pre-commit hooks, then `chezmoi apply`.
+# Bootstrap dotfiles: render ~/.config/chezmoi/chezmoi.toml, then `chezmoi
+# apply` (run_onchange_after_70-pre-commit installs the git hooks).
 
 set -euo pipefail
 
@@ -16,9 +16,5 @@ fi
 
 # Re-run this after editing home/.chezmoi.toml.tmpl to refresh role flags.
 chezmoi init --source="${dotfiles_dir}"
-
-if command -v pre-commit >/dev/null 2>&1; then
-    (cd "${dotfiles_dir}" && pre-commit install --install-hooks) || true
-fi
 
 chezmoi apply --verbose "$@"
