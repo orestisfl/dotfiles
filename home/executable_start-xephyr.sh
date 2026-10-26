@@ -18,7 +18,7 @@ handle_SIGINT() {
 
 set -m
 
-Xephyr -name "$(Xephyr_$D)" -terminate -br -ac -noreset -screen 2000x900 :$D &
+Xephyr -name "Xephyr_$D" -terminate -br -ac -noreset -screen 2000x900 :$D &
 xephyr_pid=$!
 export DISPLAY=:$D
 echo "Ran Xephyr with :display $DISPLAY"
