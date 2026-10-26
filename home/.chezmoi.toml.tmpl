@@ -5,3 +5,5 @@ sourceDir = {{ .chezmoi.sourceDir | dir | quote }}
     wayland = {{ or (eq .chezmoi.hostname "carbon") (eq .chezmoi.hostname "gili") }}
     laptop  = {{ not (eq .chezmoi.hostname "giraffe") }}
     elastic = {{ eq .chezmoi.hostname "carbon" }}
+    # Tracked backup script (../backup/<name>.sh); a private one there wins.
+    backup  = {{ eq .chezmoi.hostname "carbon" | ternary "restic" "" | quote }}

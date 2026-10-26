@@ -1,0 +1,17 @@
+{{- /*
+  Path of this host's backup script, or nothing. A private script in backup/
+  (any *.sh gitignored there, see .gitignore) wins; otherwise .backup names a
+  tracked one.
+*/ -}}
+{{- $dir := joinPath .chezmoi.sourceDir ".." "backup" -}}
+{{- $private := list -}}
+{{- range glob (joinPath $dir "*.sh") -}}
+{{-   if ne (base .) "restic.sh" }}{{ $private = append $private . }}{{ end -}}
+{{- end -}}
+{{- if gt (len $private) 1 -}}
+{{-   fail (printf "backup/: one private script expected, found %s" (join ", " $private)) -}}
+{{- else if $private -}}
+{{-   first $private -}}
+{{- else if .backup -}}
+{{-   joinPath $dir (printf "%s.sh" .backup) -}}
+{{- end -}}

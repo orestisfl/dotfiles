@@ -44,3 +44,9 @@
 {{ if .elastic -}}
 +monthly@cleanup.timer:user
 {{- end }}
+
+{{ if includeTemplate "backup-script" . -}}
++daily@backup.timer:user           # runs ~/.local/bin/backup.sh
+{{- else -}}
+-daily@backup.timer:user
+{{- end }}

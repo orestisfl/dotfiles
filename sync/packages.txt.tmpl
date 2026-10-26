@@ -131,9 +131,12 @@ ripdrag-git
 aws-cli-v2
 firejail
 mage
+worktrunk
+{{- end }}
+
+{{ if eq .backup "restic" -}}
 rclone
 restic
-worktrunk
 {{- end }}
 
 {{ if .laptop -}}

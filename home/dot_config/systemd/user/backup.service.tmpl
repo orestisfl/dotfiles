@@ -1,3 +1,4 @@
+{{- if includeTemplate "backup-script" . -}}
 [Unit]
 Description=Perform backup
 StartLimitIntervalSec=3600
@@ -10,3 +11,4 @@ RestartSec=600
 
 [Install]
 WantedBy=network-online.target
+{{ end -}}
