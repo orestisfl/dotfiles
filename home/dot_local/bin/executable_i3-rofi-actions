@@ -26,22 +26,57 @@ switch_autorandr() {
 }
 export -f switch_autorandr
 
-# Hand the LG HDR 4K back to the desktop PC: stop driving it from the laptop,
-# then tell the monitor over DDC/CI to switch its input to HDMI2 (where the
-# PC is plugged in). Under X11 we reuse the autorandr "solo" profile (which
-# also turns off the HP); under sway we only disable the LG so the HP keeps
-# working as a secondary display.
-switch_monitor_to_pc() {
-    if [[ -n "${SWAYSOCK:-}" ]]; then
-        swaymsg output '"LG Electronics LG HDR 4K 301MAKRKFW57"' disable
-    else
-        autorandr --force --load solo
-    fi
-
-    ddcutil --model 'LG HDR 4K' setvcp xf4 x0091 \
-        --i2c-source-addr=x50 --noverify --trcfile i2c_execute
+# LG HDR 4K: find its HDMI connector in sysfs. Sets lg_bus (I2C bus number)
+# and lg_port (1 or 2) from the HDMI physical address in the EDID: the LG
+# reports 1.0.0.0 on HDMI1 and 2.0.0.0 on HDMI2.
+lg_find() {
+    local c hex
+    for c in /sys/class/drm/card*-HDMI-*; do
+        [[ -e "$c/ddc" && "$(<"$c/status")" == connected ]] || continue
+        grep -qa 'LG HDR 4K' "$c/edid" || continue
+        hex="$(od -An -v -tx1 "$c/edid" | tr -d '\n')"
+        [[ "$hex" =~ \ 03\ 0c\ 00\ ([12]) ]] || continue
+        lg_port="${BASH_REMATCH[1]}"
+        lg_bus="$(readlink -f "$c/ddc")"
+        lg_bus="${lg_bus##*/i2c-}"
+        return 0
+    done
+    return 1
 }
-export -f switch_monitor_to_pc
+
+# The LG only answers DDC/CI on the input it is showing. Dynamic sleep is off:
+# it would read those failures as a slow monitor, and the longer waits it saves
+# in ~/.cache/ddcutil/dsa would slow later calls on this bus. A fixed 0.1 sleep
+# multiplier keeps a probe at ~65ms (the standard waits take ~430ms).
+lg_ddc() {
+    ddcutil --bus "$lg_bus" --disable-dynamic-sleep --sleep-multiplier 0.1 --maxtries .,3,. "$@"
+}
+
+lg_active() {
+    lg_ddc getvcp 60 >/dev/null 2>&1
+}
+
+# Hand the LG to the other HDMI input via LG's DDC/CI side channel
+# (xF4 from source x50: x90 = HDMI1, x91 = HDMI2, xD0 = DP-1, xD1 = DP-2,
+# xD2 = USB-C). Losing DDC afterwards confirms the switch. Under sway also
+# disable the LG so its workspaces move to the other outputs.
+switch_monitor_input() {
+    local target=$((3 - lg_port))
+
+    lg_ddc setvcp xf4 "x009$((target - 1))" --i2c-source-addr=x50 --noverify || return
+    for _ in 1 2 3 4 5 6; do
+        sleep 0.5
+        lg_active && continue
+        if [[ -n "${SWAYSOCK:-}" ]]; then
+            swaymsg output '"LG Electronics LG HDR 4K 301MAKRKFW57"' disable
+        fi
+        return 0
+    done
+
+    echo "LG HDR 4K did not switch to HDMI$target." >&2
+    return 1
+}
+export -f switch_monitor_input
 
 ddcutil_brightness() {
     value="$(yad --entry --entry-text="$(ddcutil --model 'LG HDR 4K' getvcp 10 --brief | cut -d ' ' -f 4)")"
@@ -181,27 +216,34 @@ else
     }
 fi
 
-# 0x0090 = HDMI1
-# 0x0091 = HDMI2
-# 0x00D0 = DP-1
-# 0x00D1 = DP-2
-# 0x00D2 = USB-C
 if external_connected; then
     add_option "Change external monitor brightness" ddcutil_brightness
-    add_option "Switch monitor to PC" switch_monitor_to_pc
 fi
 
-options_len="${#options_order[@]}"
+# Only offered when the LG is showing this host. rofi reads stdin
+# asynchronously, so the entry is appended once the DDC probe answers
+# instead of delaying the menu.
+lg_label=
+if lg_find; then
+    lg_label="Switch monitor to HDMI$((3 - lg_port))"
+    options["$lg_label"]=switch_monitor_input
+fi
+
+lines=${#options_order[@]}
+[[ -n "$lg_label" ]] && lines=$((lines + 1))
 printf '%s\n' "${options_order[@]}"
 
 selection="$(
-    printf '%s\n' "${options_order[@]}" |
-        rofi -matching fuzzy -l "$options_len" -dmenu -i -p 'Pick action: ' |
-        tr -d '\r\n'
+    rofi -matching fuzzy -l "$lines" -dmenu -i -p 'Pick action: ' < <(
+        printf '%s\n' "${options_order[@]}"
+        [[ -n "$lg_label" ]] && lg_active && printf '%s\n' "$lg_label"
+    ) | tr -d '\r\n'
 )"
 
 [[ -n "$selection" ]] || exit 0
 action="${options[$selection]:-}"
 [[ -n "$action" ]] || exit 0
 
-out="$(run_action "$action" 2>&1)" || yad --error --text="Command failed: $out" --no-markup
+out="$(run_action "$action" 2>&1)" ||
+    yad --title="$selection" --image=dialog-error --text="Command failed: $out" \
+        --no-markup --selectable-labels --button=OK:0
