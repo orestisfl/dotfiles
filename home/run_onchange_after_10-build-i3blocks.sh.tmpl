@@ -3,19 +3,15 @@
 # Makefile changes (chezmoi hashes the rendered script, hence the per-file
 # sha256 lines below).
 #
-{{- range (glob (joinPath .chezmoi.sourceDir "dot_local/share/blocks/*.c")) }}
-# {{ base . }}: {{ include (trimPrefix (printf "%s/" $.chezmoi.sourceDir) .) | sha256sum }}
+{{- range (glob (joinPath .chezmoi.sourceDir "dot_local/share/blocks/*.[ch]")) }}
+# {{ base . }}: {{ include . | sha256sum }}
 {{- end }}
-# block_output.h: {{ include "dot_local/share/blocks/block_output.h" | sha256sum }}
 # Makefile: {{ include "dot_local/share/blocks/Makefile" | sha256sum }}
+# make: {{ lookPath "make" }}
+# ^ rehashes once make gets installed, so a skipped first run retries.
 
 set -euo pipefail
 
-blocks_dir="${HOME}/.local/share/blocks"
-if [[ ! -d "${blocks_dir}" ]]; then
-    echo "i3blocks: ${blocks_dir} missing, skipping build" >&2
-    exit 0
-fi
 if ! command -v make >/dev/null 2>&1; then
     echo "i3blocks: make not found, skipping build" >&2
     exit 0
@@ -23,4 +19,4 @@ fi
 
 output_mode="{{ if .wayland }}BLOCK_OUTPUT_IRONBAR{{ else }}BLOCK_OUTPUT_I3BLOCKS{{ end }}"
 
-make -j -C "${blocks_dir}" EXTRA_CFLAGS="-DBLOCK_OUTPUT_MODE=${output_mode}"
+make -j -C "${HOME}/.local/share/blocks" EXTRA_CFLAGS="-DBLOCK_OUTPUT_MODE=${output_mode}"
