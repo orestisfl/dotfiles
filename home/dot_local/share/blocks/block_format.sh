@@ -33,9 +33,9 @@ block_output_is_i3blocks() {
 }
 
 block_escape_markup() {
-    local text=${1//&/&amp;}
-    text=${text//</&lt;}
-    text=${text//>/&gt;}
+    local text=${1//&/"&amp;"}
+    text=${text//</"&lt;"}
+    text=${text//>/"&gt;"}
     printf '%s' "${text}"
 }
 
