@@ -6,11 +6,12 @@ bindsym $mod+Shift+Return exec --no-startup-id ghostty +new-window --working-dir
 bindsym Control+$alt+e    exec --no-startup-id "$term yazi"
 bindsym $mod+d            exec $menu
 bindsym $mod+Shift+d      exec rofi -show run
-bindsym $mod+backslash    exec keepassxc
 
-bindsym XF86Calculator exec speedcrunch
-bindsym XF86HomePage   exec firefox
-bindsym XF86WWW        exec firefox
+bindsym $mod+backslash    exec ~/.local/bin/app-scope keepassxc
+
+bindsym XF86Calculator exec ~/.local/bin/app-scope speedcrunch
+bindsym XF86HomePage   exec ~/.local/bin/app-scope firefox
+bindsym XF86WWW        exec ~/.local/bin/app-scope firefox
 
 bindsym XF86AudioRaiseVolume exec --no-startup-id "pamixer -i 5 && ~/.local/bin/notify-volume.sh"
 bindsym XF86AudioLowerVolume exec --no-startup-id "pamixer -d 5 && ~/.local/bin/notify-volume.sh"

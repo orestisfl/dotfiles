@@ -1,6 +1,11 @@
 configuration {
     ssh-command: "{terminal} -e {ssh-client} {host} [-p {port}]";
     run-shell-command: "{terminal} -e {cmd}";
+    run-command: "app-scope {cmd}";
+    /* drun defaults to GIO launch, which ignores run-command. */
+    drun {
+        gio-launch: false;
+    }
     kb-select-1: "";
     kb-select-2: "";
     kb-select-3: "";

@@ -3,7 +3,7 @@
 # --- Autostart --------------------------------------------------------------
 
 exec --no-startup-id /usr/lib/mate-polkit/polkit-mate-authentication-agent-1
-exec --no-startup-id keepassxc
+exec --no-startup-id ~/.local/bin/app-scope keepassxc
 exec --no-startup-id trash-empty -f 30
 exec --no-startup-id wlsunset -l 48.137 -L 11.575 -t 3500 -T 6500
 

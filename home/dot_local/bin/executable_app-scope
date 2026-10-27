@@ -1,0 +1,14 @@
+#!/bin/sh
+# app-scope - run CMD in its own transient systemd user scope (app.slice).
+
+[ $# -gt 0 ] || {
+    echo "usage: app-scope CMD [ARGS...]" >&2
+    exit 2
+}
+
+# No user manager: launch anyway rather than failing to start anything.
+[ -S "${XDG_RUNTIME_DIR:-/nonexistent}/systemd/private" ] || exec "$@"
+
+# --scope execs CMD in place, keeping cwd, env and startup-notification ids.
+exec systemd-run --user --scope --quiet --collect --slice=app.slice \
+    --unit="app-scope-$(systemd-escape -- "${1##*/}")-$$" -- "$@"
