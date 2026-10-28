@@ -1,4 +1,10 @@
-go.mod merge=union
-go.sum merge=union
 *.md diff=markdown
 *.mdx diff=markdown
+*.py diff=python
+*.go diff=golang
+*.rs diff=rust
+*.sh diff=bash
+*.c diff=cpp
+*.h diff=cpp
+*.cpp diff=cpp
+*.hpp diff=cpp

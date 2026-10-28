@@ -1,4 +1,6 @@
 .claude/
+.hermit/
+.idea/
 /.build/
 .DS_Store
 __pycache__/
