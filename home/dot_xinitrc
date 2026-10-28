@@ -53,7 +53,6 @@ systemd-cat -t polkit-mate-authentication-agent /usr/lib/mate-polkit/polkit-mate
 "$HOME/.local/bin/app-scope" keepassxc &  # Own cgroup, outside the X session's.
 
 setxkbmap -layout us,gr -option 'grp:alt_shift_toggle' -option 'compose:ralt' -option 'caps:escape'
-alttab -mk Super_L -kk grave -w 1 -d 1 &
 trash-empty -f 30&
 
 # Start graphical-session.target (via x11-session.target) for X11 services.
