@@ -1,0 +1,7 @@
+#!/bin/bash
+# pinentry-keyring - pinentry that unlocks the Secret Service keyring first.
+if [[ -n "$WAYLAND_DISPLAY$DISPLAY" ]] && command -v secret-tool >/dev/null; then
+	secret-tool lookup stored-by "GnuPG Pinentry" </dev/null >/dev/null 2>&1 || true
+fi
+
+exec /usr/bin/pinentry-gtk "$@"
