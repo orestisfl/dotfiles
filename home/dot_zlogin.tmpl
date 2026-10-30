@@ -37,7 +37,7 @@ if (( _stale )); then
     {
         register-python-argcomplete --shell zsh pipx register-python-argcomplete
         zoxide init zsh
-        atuin init zsh --disable-up-arrow
+        atuin init zsh --disable-up-arrow --bind-ai-resume
         if (( $+commands[elastic-package] )); then
             elastic-package completion zsh 2>/dev/null
         fi
