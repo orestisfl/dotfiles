@@ -75,4 +75,4 @@ yazi) args=(-e "$SHELL" -is run_yazi) ;;
     ;;
 esac
 ghostty +new-window --working-directory="$working_dir" "${args[@]}" ||
-    exec ghostty --working-directory="$working_dir" "${args[@]}"
+    exec "$HOME/.local/bin/app-scope" ghostty --working-directory="$working_dir" "${args[@]}"
