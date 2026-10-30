@@ -106,4 +106,13 @@ bindsym Control+space         exec --no-startup-id swaync-client --close-latest
 bindsym Control+Shift+space   exec --no-startup-id swaync-client --close-all
 bindsym Control+Shift+period  exec --no-startup-id swaync-client --action-default
 bindsym Control+grave         exec --no-startup-id swaync-client --toggle-panel
+{{- if .elastic }}
+
+bindsym $mod+u       exec --no-startup-id ~/.local/bin/deckhand next
+bindsym $mod+Shift+u exec --no-startup-id ~/.local/bin/deckhand prev
+bindsym $mod+i       exec --no-startup-id ~/.local/bin/deckhand pick
+bindsym $mod+n       exec --no-startup-id ~/.local/bin/deckhand deck
+bindsym $mod+p       exec --no-startup-id ~/.local/bin/deckhand pin
+
+{{- end }}
 {{- end }}

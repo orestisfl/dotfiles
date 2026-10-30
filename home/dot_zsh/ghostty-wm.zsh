@@ -27,6 +27,7 @@ if [[ -n "${_ghostty_wm_msg:-}" ]]; then
     _ghostty_wm_cwd_dir="${XDG_RUNTIME_DIR:-/tmp}/ghostty-cwd"
     _ghostty_wm_cwd_file="$_ghostty_wm_cwd_dir/$_ghostty_wm_id"
     _ghostty_wm_mark="_$_ghostty_wm_id"
+    export GHOSTTY_WM_MARK="$_ghostty_wm_mark"
     [[ -d "$_ghostty_wm_cwd_dir" ]] || mkdir -p -- "$_ghostty_wm_cwd_dir"
 
     _ghostty_wm_write_cwd() { print -r -- "$PWD" >| "$_ghostty_wm_cwd_file" }
@@ -54,5 +55,22 @@ if [[ -n "${_ghostty_wm_msg:-}" ]]; then
     add-zsh-hook zshexit _ghostty_wm_cleanup
     _ghostty_wm_write_cwd
 
-    zsh-defer _ghostty_wm_install_mark
+    if [[ -n "${DECKHAND_RUN:-}" ]]; then
+        # `deckhand restore` opened this window to resume an agent. Mark first so the agent
+        # can name its window, then run it as if typed: it lands in history, the shell stays.
+        _ghostty_wm_install_mark
+        _deckhand_run=$DECKHAND_RUN
+        unset DECKHAND_RUN
+        _deckhand_run_once() {
+            add-zle-hook-widget -d line-init _deckhand_run_once
+            BUFFER=$_deckhand_run
+            unset _deckhand_run
+            zle accept-line
+        }
+        autoload -Uz add-zle-hook-widget
+        zle -N _deckhand_run_once
+        add-zle-hook-widget line-init _deckhand_run_once
+    else
+        zsh-defer _ghostty_wm_install_mark
+    fi
 fi
