@@ -104,6 +104,6 @@ bindsym $mod+space input type:keyboard xkb_switch_layout next
 
 bindsym Control+space         exec --no-startup-id swaync-client --close-latest
 bindsym Control+Shift+space   exec --no-startup-id swaync-client --close-all
-bindsym Control+Shift+period  exec --no-startup-id swaync-client --action
+bindsym Control+Shift+period  exec --no-startup-id swaync-client --action-default
 bindsym Control+grave         exec --no-startup-id swaync-client --toggle-panel
 {{- end }}
