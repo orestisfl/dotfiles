@@ -1,5 +1,9 @@
 sourceDir = {{ .chezmoi.sourceDir | dir | quote }}
 
+[merge]
+    command = "nvim"
+    args = ["-d"]
+
 [data]
     xorg    = {{ eq .chezmoi.hostname "giraffe" }}
     wayland = {{ or (eq .chezmoi.hostname "carbon") (eq .chezmoi.hostname "gili") }}
