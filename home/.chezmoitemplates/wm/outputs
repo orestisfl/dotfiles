@@ -21,21 +21,7 @@ workspace zoom output eDP-1
 {{- else if .wayland -}}
 {{- if eq .chezmoi.hostname "carbon" -}}
 output eDP-1 {
-    resolution 1920x1200
-    position 0 903
-    scale 1.5
     bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
-}
-
-output "HP Inc. HP E27d G4 3CQ1110W1P" {
-    transform 270
-    scale 1.5
-    position 1280 0
-}
-
-output "LG Electronics LG HDR 4K 301MAKRKFW57" {
-    scale 1.7
-    position 2240 328
 }
 
 # First connected output in each list wins; falls back to the laptop panel.
