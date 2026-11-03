@@ -111,7 +111,8 @@ bindsym Control+grave         exec --no-startup-id swaync-client --toggle-panel
 bindsym $mod+u       exec --no-startup-id ~/.local/bin/deckhand next
 bindsym $mod+Shift+u exec --no-startup-id ~/.local/bin/deckhand prev
 bindsym $mod+i       exec --no-startup-id ~/.local/bin/deckhand pick
-bindsym $mod+n       exec --no-startup-id ~/.local/bin/deckhand deck
+bindsym $mod+n       exec --no-startup-id ~/.local/bin/deckhand deck --snooze 1h
+bindsym $mod+Shift+n exec --no-startup-id ~/.local/bin/deckhand snooze
 bindsym $mod+p       exec --no-startup-id ~/.local/bin/deckhand pin
 
 {{- end }}
