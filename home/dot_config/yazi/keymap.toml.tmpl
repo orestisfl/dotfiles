@@ -1,14 +1,14 @@
 [mgr]
 prepend_keymap = [
-    { on = [ "<C-n>" ], run = "shell 'ripdrag \"$@\" -x 2>/dev/null' --orphan" },
+    { on = [ "<C-n>" ], run = "shell 'ripdrag %s -x 2>/dev/null' --orphan" },
     { on = ["f"], run = "plugin jump-to-char", desc = "Jump to char" },
     { on = ["+"], run = "plugin zoom 1", desc = "Zoom in hovered file" },
     { on = ["-"], run = "plugin zoom -1", desc = "Zoom out hovered file" },
     { on = ["g", "t"], run = "cd ~/.local/share/Trash/files", desc = "Go to trash folder" },
 {{- if .wayland }}
-    { on = ["c", "o"], run = "shell 'cat \"$@\" | wl-copy'", desc = "Copy file contents to clipboard" },
+    { on = ["c", "o"], run = "shell 'cat %s | wl-copy'", desc = "Copy file contents to clipboard" },
 {{- else if .xorg }}
-    { on = ["c", "o"], run = "shell 'cat \"$@\" | xclip -selection clipboard'", desc = "Copy file contents to clipboard" },
+    { on = ["c", "o"], run = "shell 'cat %s | xclip -selection clipboard'", desc = "Copy file contents to clipboard" },
 {{- end }}
     { on = ["l"], run = "plugin smart-enter", desc = "Enter the child directory, or open the file" },
     { on = ["<enter>"], run = "plugin smart-enter", desc = "Enter the child directory, or open the file" },

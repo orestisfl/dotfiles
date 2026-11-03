@@ -15,7 +15,7 @@ open = [
 ]
 
 baobab = [
-	{ run = 'baobab "$1"', desc = "Baobab", orphan = true, for = "linux" },
+	{ run = 'baobab %s1', desc = "Baobab", orphan = true, for = "linux" },
 ]
 
 reveal = [
